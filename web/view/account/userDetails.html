@@ -1,0 +1,87 @@
+@@include('../../inc-header.html', {"title": "会员详情"})
+@@include('../../top-nav.html')
+@@include('../../left-nav.html')
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-th-list"></i> 会员详情</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active"><a href="#">会员详情</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div id="basicMessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--用户基本信息模板-->
+<script id="basicList" type="text/html">
+    <div style="padding: 20px; border: 1px solid lightgray;background: #f2f2f2;margin-bottom: 30px;">
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-9">
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ID</span>
+                            </div>
+                            <input name="id" type="text" value="<%= dataArr.id %>" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">昵称</span>
+                            </div>
+                            <input type="text" value="<%= dataArr.nickName %>" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">来源</span>
+                            </div>
+                            <input type="text" placeholder="" value="<%= dataArr.sourceText %>" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">创建时间</span>
+                            </div>
+                            <input type="text" placeholder="" value="<%= dataArr.createTime %>" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <% if(dataArr.avatar){ %>
+                <a target="_blank" href="<%= dataArr.avatar %>">
+                    <img src="<%= dataArr.avatar %>" style="display: inline-block;width:100px;height: 95px">
+                </a>
+                <% } %>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-6">
+                <% if (dataArr.status==1) { %>
+                <button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>
+                <% } else { %>
+                <button class="btn btn-primary" type="button" data-operate="allow">允许登录</button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</script>
+<script data-main="/public/js/module/account/userDetails"></script>
+@@include('../../inc-footer.html')
