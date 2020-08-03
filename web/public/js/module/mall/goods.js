@@ -12,7 +12,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">上架</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">下架</button>',
         soldOutButton = '<button class="btn btn-warning" type="button" data-operate="soldOut">售罄</button>',
-        delButton = '<button class="btn btn-danger" type="button" data-operate="del">删除</button>';
+        delButton = '<button class="btn btn-danger" type="button" data-operate="del">删除</button>',
+        handButton = '<button class="btn btn-success" type="button" data-operate="hand">手动同步</button>',
+        autoButton = '<button class="btn btn-primary" type="button" data-operate="auto">自动同步</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -27,7 +29,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             if(anchorId!=''){
                 var dateParam = {
                     pageNo: 1,
-                    pageSize:50,
+                    pageSize:50000,
                     status:'',
                     title:'',
                     date:'',
@@ -265,6 +267,22 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             hound.error("商品地址复制失败", "", 1000);
         });
     }
+
+    function closeWindow(){
+        $(".close").one("click",function(){
+            utils.modal.modal('hide');
+            loadData();
+        });
+        $(".secondCancel").one("click",function(){
+            utils.modal.modal('hide');
+            loadData();
+        });
+        var footerCancel = $(".modal-footer").find("button").eq(1);
+        footerCancel.one("click",function(){
+            utils.modal.modal('hide');
+            loadData();
+        });
+    }
     //页面操作配置
     var operates = {
         //编辑
@@ -289,11 +307,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }, 'lg');
                 uploadFile();
                 getDateArr();
+                closeWindow();
             });
         },
         sameCancel:function($this){
             var footer = $(".modal-footer");
-            footer.find("button").eq(1).click();
+            //footer.find("button").eq(1).click();
+            utils.modal.modal('hide');
+            loadData();
         },
         sameUpdate:function($this){
             var footer = $(".modal-footer");
@@ -322,8 +343,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }, 'lg');
                 uploadFile();
                 getDateArr();
+                closeWindow();
                 utils.loading(false);
                 hound.success("同步成功", "", 1000);
+            });
+        },
+        updateTaoPwd:function($this){
+            var id = $("input[name=id]").val();
+            hound.confirm('确认更新淘口令吗?', '', function () {
+                utils.ajaxSubmit(apis.goods.getPwdById, {id: id}, function (data) {
+                    $(".pwd").val(data);
+                });
             });
         },
         //查看
@@ -376,6 +406,22 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     loadData();
                 });
             });
+        },
+        hand:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认手动同步吗?', '', function () {
+                utils.ajaxSubmit(apis.goods.handSyncById, {id: id}, function (data) {
+                    loadData();
+                });
+            });
+        },
+        auto:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认自动同步吗?', '', function () {
+                utils.ajaxSubmit(apis.goods.autoSyncById, {id: id}, function (data) {
+                    loadData();
+                });
+            });
         }
     };
 
@@ -388,7 +434,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         source:'',
         categoryId:'',
         dateId:'',
-        date:''
+        date:'',
+        id:'',
+        syncWay:''
     };
 
     var anchorArr;
@@ -397,7 +445,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function getDownLists(){
         var anchorParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             name:'',
             status:''
         };
@@ -406,7 +454,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var categoryParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             title:'',
             status:'',
             orderBy:1
@@ -416,7 +464,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var dateParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             status:'',
             title:'',
             date:'',
@@ -434,14 +482,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.goods[n.status];
                 n.sourceText = consts.status.source[n.source];
+                n.syncWayText = consts.status.syncWay[n.syncWay];
                 if(n.status=="1"){
-                    n.materialButtonGroup = comButtons + stopButton + soldOutButton + delButton;
+                    n.materialButtonGroup = comButtons + stopButton + delButton;
                 }else if(n.status=="2"){
-                    n.materialButtonGroup = comButtons + startBouutn + soldOutButton + delButton;
+                    n.materialButtonGroup = comButtons + startBouutn + delButton;
                 }else if(n.status=="3"){
                     n.materialButtonGroup = comButtons + startBouutn + stopButton + delButton;
                 }
-            })
+                if(n.syncWay=="1"){
+                    n.materialButtonGroup = n.materialButtonGroup + autoButton;
+                }else{
+                    n.materialButtonGroup = n.materialButtonGroup + handButton;
+                }
+            });
             data.anchorArr = anchorArr;
             data.categoryArr = categoryArr;
             data.dateArr = dateArr;
@@ -450,6 +504,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             data.sourceText = listDropDown.sourceText;
             data.statusText = listDropDown.statusText;
             data.dateText = listDropDown.dateText;
+            data.syncWayText = listDropDown.syncWayText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -468,7 +523,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         categoryText:'分类',
         sourceText:'来源',
         statusText:'状态',
-        dateText:'带货日期'
+        dateText:'带货日期',
+        syncWayText:'同步方式'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -495,6 +551,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         ($(this).text()=="所有") ? listDropDown.dateText = "带货日期" : listDropDown.dateText = $(this).text();
         param.pageNo = 1;
         loadData();
+    }).on('click', '#dropSyncWayOptions a[data-id]', function () {
+        param.syncWay = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.syncWayText = "同步方式" : listDropDown.syncWayText = $(this).text();
+        param.pageNo = 1;
+        loadData();
     });
     setInterval(function () {
         var $date = $sampleTable.find('#date');
@@ -508,8 +569,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     },500);
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.title = $("#searchCont").val();
-        loadData();
+        var selectSearchLabel = $("#selectsearchlabel").text();
+        if(selectSearchLabel=="商品Id"){
+            param.id = $("#searchCont").val();
+            param.title = '';
+            loadData();
+        }else if(selectSearchLabel=="标题"){
+            param.id = '';
+            param.title = $("#searchCont").val();
+            loadData();
+        }
     });
     $('#searchCont').on('keypress',function(event){
         if (event.keyCode == 13) {

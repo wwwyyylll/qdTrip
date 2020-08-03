@@ -106,6 +106,68 @@ define("apis", function() {
             syncById:{
                 c:'goods',
                 a:'syncById'
+            },
+            autoSyncById:{
+                c:'goods',
+                a:'autoSyncById'
+            },
+            handSyncById:{
+                c:'goods',
+                a:'handSyncById'
+            },
+            getPwdById:{
+                c:'goods',
+                a:'getPwdById'
+            }
+        },
+        expectAnchorVote:{
+            getLists:{
+                c:'expectAnchorVote',
+                a:'getLists'
+            },
+            getById:{
+                c:'expectAnchorVote',
+                a:'getById'
+            },
+            passById:{
+                c:'expectAnchorVote',
+                a:'passById'
+            },
+            noPassById:{
+                c:'expectAnchorVote',
+                a:'noPassById'
+            },
+            usedById:{
+                c:'expectAnchorVote',
+                a:'usedById'
+            },
+            updCntById:{
+                c:'expectAnchorVote',
+                a:'updCntById'
+            }
+        },
+        categoryRelation:{
+            getLists:{
+                c:'categoryRelation',
+                a:'getLists'
+            },
+            getById:{
+                c:'categoryRelation',
+                a:'getById'
+            },
+            updateById:{
+                c:'categoryRelation',
+                a:'updateById'
+            }
+        },
+        searchTaobaoKeywords:{
+            getLists:{
+                c:'searchTaobaoKeywords',
+                a:'getLists'
+            },
+            getItemByKeywordsId:{
+                c:'searchTaobaoKeywords',
+                a:'getItemByKeywordsId'
             }
         },
         img:{
@@ -210,7 +272,7 @@ define("apis", function() {
             getLists:{
                 c:'goodsClickStat',
                 a:'getLists'
-            },
+            }
         },
         admin:{
             getLists:{

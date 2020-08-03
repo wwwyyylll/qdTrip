@@ -70,7 +70,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function getDownLists(){
         var anchorParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             name:'',
             status:''
         };
@@ -88,7 +88,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var dateParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             status:'',
             title:'',
             date:'',

@@ -40,7 +40,10 @@
                         <a style="text-decoration: underline;word-wrap: break-word;word-break:break-all;margin-left: 4px" target="_blank" href="@@HOSTview/mall/goodsShortageRegistration.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
                     </p>
                     <% }else if(dataArr[i].type == 2){ %>
-
+                    <p class="app-notification__message">
+                        <i class="fa fa-envelope" style="font-size: 13px;color:#00635a"></i>
+                        <a style="text-decoration: underline;word-wrap: break-word;word-break:break-all;margin-left: 4px" target="_blank" href="@@HOSTview/mall/categoryRelation.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
+                    </p>
                     <% }else if(dataArr[i].type == 3){ %>
 
                     <% }else{ %>

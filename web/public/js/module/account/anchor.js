@@ -167,7 +167,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function getTagArr(){
         var tagParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             name:'',
             status:''
         };

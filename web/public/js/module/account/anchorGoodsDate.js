@@ -103,7 +103,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function getAnchorArr(){
         var anchorParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:500000,
             name:'',
             status:''
         };
@@ -155,7 +155,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         if(selectSearchLabel=="主播"){
             var param = {
                 pageNo: 1,
-                pageSize:50,
+                pageSize:500000,
                 name:$("#searchCont").val(),
                 status:''
             };
