@@ -31,8 +31,8 @@ module.exports = function(grunt) {
                     wwwroot: './',
                     globals: {
                         SITE: '带货笔记',
-                        HOST: '',
-                        API: '',
+                        HOST: 'http://console.dhbiji.com/',
+                        API: 'http://api.dhbiji.com/api/console/b.php',
                         HTML: '.html',
                         DEBUG: 0,
                         BUILD: new Date().getTime()
@@ -198,7 +198,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: '<%= config.dist %>',
                     src: ['**/*', '!**/inc-*.html'],
-                    dest: '<%= config.dist %>/../../whzg-svn/'
+                    dest: '<%= config.dist %>/../../console-dhbiji/'
                 }]
             }
         },

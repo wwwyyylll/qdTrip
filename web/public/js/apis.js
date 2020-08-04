@@ -141,9 +141,9 @@ define("apis", function() {
                 c:'expectAnchorVote',
                 a:'usedById'
             },
-            updCntById:{
+            update:{
                 c:'expectAnchorVote',
-                a:'updCntById'
+                a:'update'
             }
         },
         categoryRelation:{

@@ -126,9 +126,14 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">主播名称</span>
+                            <span class="input-group-text">主播标签</span>
                         </div>
-                        <input type="text" disabled value="<%= dataArr.name %>" class="form-control">
+                        <select name="anchorTagId" class="form-control" required>
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < anchorTagArr.length; i++) { %>
+                            <option value="<%= anchorTagArr[i].id %>" <% if(dataArr.anchorTagId==anchorTagArr[i].id) { %> selected <% } %>><%= anchorTagArr[i].name %>【<%- anchorTagArr[i].statusText %>】</option>
+                            <% }%>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -136,9 +141,9 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">主播标签</span>
+                            <span class="input-group-text">主播名称</span>
                         </div>
-                        <input type="text" disabled value="<%= dataArr.anchorTagName %>" class="form-control">
+                        <input type="text" name="name" placeholder="请输入主播名称" value="<%= dataArr.name %>" class="form-control" required>
                     </div>
                 </div>
             </div>

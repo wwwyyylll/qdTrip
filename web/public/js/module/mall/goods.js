@@ -436,7 +436,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         dateId:'',
         date:'',
         id:'',
-        syncWay:''
+        syncWay:'',
+        externalId:''
+    };
+    var listDropDown = {
+        anchorText:'主播',
+        categoryText:'分类',
+        sourceText:'来源',
+        statusText:'状态',
+        dateText:'带货日期',
+        syncWayText:'同步方式'
     };
 
     var anchorArr;
@@ -513,19 +522,25 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        param.status = 2;
+        listDropDown.statusText = "下架";
+    }else{
+        param.status = '';
+        listDropDown.statusText = "状态";
+    }
+
     getDownLists();
     setTimeout(function(){
         loadData();
     },100);
     utils.bindList($(document), operates);
-    var listDropDown = {
-        anchorText:'主播',
-        categoryText:'分类',
-        sourceText:'来源',
-        statusText:'状态',
-        dateText:'带货日期',
-        syncWayText:'同步方式'
-    };
+
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
@@ -570,12 +585,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     $("#search").on("click",function(){
         param.pageNo = 1;
         var selectSearchLabel = $("#selectsearchlabel").text();
-        if(selectSearchLabel=="商品Id"){
+        if(selectSearchLabel=="商品ID"){
             param.id = $("#searchCont").val();
             param.title = '';
+            param.externalId = '';
+            loadData();
+        }else if(selectSearchLabel=="淘宝商品ID"){
+            param.id = '';
+            param.title = '';
+            param.externalId = $("#searchCont").val();
             loadData();
         }else if(selectSearchLabel=="标题"){
             param.id = '';
+            param.externalId = '';
             param.title = $("#searchCont").val();
             loadData();
         }

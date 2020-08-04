@@ -39,8 +39,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         keywordsId:'',
-        onlyShowTmall:'',
-        onlyShowCoupon:'',
+        shopType:'',
+        haveCoupon:'',
         orderByVolume:'',
         orderByPrice:''
     };
@@ -59,7 +59,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $("#itemPagination").html(utils.pagination(parseInt(data.cnt), itemParam.pageNo));
 
             $("#itemTable").on('click', '#dropShopTypeOptions a[data-id]', function () {
-                itemParam.onlyShowTmall = $(this).data('id');
+                itemParam.shopType = $(this).data('id');
                 ($(this).text()=="所有") ? listDropDown.shopTypeText = "店铺类型" : listDropDown.shopTypeText = $(this).text();
                 itemParam.pageNo = 1;
                 itemLoadData();
@@ -67,9 +67,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 itemParam.orderByPrice = $(this).data('id');
                 ($(this).text()=="所有") ? listDropDown.priceText = "价格" : listDropDown.priceText = $(this).text();
                 itemParam.pageNo = 1;
+                itemParam.orderByVolume = '';
+                listDropDown.volumeText = '销量';
                 itemLoadData();
             }).on('click', '#dropCouponOptions a[data-id]', function () {
-                itemParam.onlyShowCoupon = $(this).data('id');
+                itemParam.haveCoupon = $(this).data('id');
                 ($(this).text()=="所有") ? listDropDown.couponText = "优惠券" : listDropDown.couponText = $(this).text();
                 itemParam.pageNo = 1;
                 itemLoadData();
@@ -77,6 +79,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 itemParam.orderByVolume = $(this).data('id');
                 ($(this).text()=="所有") ? listDropDown.volumeText = "销量" : listDropDown.volumeText = $(this).text();
                 itemParam.pageNo = 1;
+                itemParam.orderByPrice = '';
+                listDropDown.priceText = '价格';
                 itemLoadData();
             });
         });

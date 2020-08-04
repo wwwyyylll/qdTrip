@@ -11,7 +11,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         passBouutn =  '<button class="btn btn-primary" type="button" data-operate="pass">审核通过</button>',
         noPassButton = '<button class="btn btn-danger" type="button" data-operate="noPass">审核不通过</button>',
         usedButton = '<button class="btn btn-success" type="button" data-operate="used">收录</button>',
-        editButton = '<button class="btn btn-primary" type="button" data-operate="editCnt">更改投票数</button>';
+        editButton = '<button class="btn btn-primary" type="button" data-operate="editCnt">编辑</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -43,11 +43,12 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             utils.ajaxSubmit(apis.expectAnchorVote.getById, {id: id}, function (data) {
                 var getByIdData = {
-                    dataArr:data
+                    dataArr:data,
+                    anchorTagArr:anchorTagArr
                 };
-                utils.renderModal('编辑投票数', template('modalDiv', getByIdData), function(){
+                utils.renderModal('编辑', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
-                        utils.ajaxSubmit(apis.expectAnchorVote.updCntById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.ajaxSubmit(apis.expectAnchorVote.update, $("#visaPassportForm").serialize(), function (data) {
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
@@ -119,16 +120,33 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         orderByCnt:''
     };
 
+    var anchorTagArr;
+    function getAnchorTagArr(){
+        var anchorTagParam = {
+            pageNo: 1,
+            pageSize:50000,
+            name:'',
+            status:''
+        };
+        utils.ajaxSubmit(apis.anchorTag.getLists, anchorTagParam, function (data) {
+            $.each(data.dataArr,function(i,n){
+                n.statusText = consts.status.ordinary[n.status];
+            });
+            anchorTagArr = data.dataArr;
+        });
+    }
+    getAnchorTagArr();
+
     function loadData() {
         utils.ajaxSubmit(apis.expectAnchorVote.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.expectAnchorVote[n.status];
                 if(n.status==1){
-                    n.materialButtonGroup = passBouutn + noPassButton ;
+                    n.materialButtonGroup = editButton + passBouutn + noPassButton ;
                 }else if(n.status==2){
-                    n.materialButtonGroup = usedButton + editButton ;
+                    n.materialButtonGroup = editButton + usedButton ;
                 }else if(n.status==3){
-                    n.materialButtonGroup = "<span style='color:orangered'>------</span>" ;
+                    n.materialButtonGroup = editButton ;
                 }else{
                     n.materialButtonGroup = editButton;
                 }
