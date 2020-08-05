@@ -146,6 +146,12 @@ define("apis", function() {
                 a:'update'
             }
         },
+        expectAnchorVoteUser:{
+            getLists:{
+                c:'expectAnchorVoteUser',
+                a:'getLists'
+            }
+        },
         categoryRelation:{
             getLists:{
                 c:'categoryRelation',

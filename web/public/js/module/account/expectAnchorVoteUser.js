@@ -11,8 +11,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         passBouutn =  '<button class="btn btn-primary" type="button" data-operate="pass">审核通过</button>',
         noPassButton = '<button class="btn btn-danger" type="button" data-operate="noPass">审核不通过</button>',
         usedButton = '<button class="btn btn-success" type="button" data-operate="used">收录</button>',
-        editButton = '<button class="btn btn-primary" type="button" data-operate="editCnt">编辑</button>',
-        userButton = '<button class="btn btn-warning" type="button" data-operate="userLog">投票日志</button>';
+        editButton = '<button class="btn btn-primary" type="button" data-operate="editCnt">编辑</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -27,7 +26,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         };
         utils.renderModal('新增分类', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
-                utils.ajaxSubmit(apis.expectAnchorVote.create,$("#visaPassportForm").serialize(),function(data){
+                utils.ajaxSubmit(apis.expectAnchorVoteUser.create,$("#visaPassportForm").serialize(),function(data){
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
@@ -39,21 +38,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     //页面操作配置
     var operates = {
-        userLog:function($this){
-            var id = $this.closest("tr").attr("data-id");
-            window.open("@@HOSTview/account/expectAnchorVoteUser.html?id=" + id);
-        },
         //编辑
         editCnt:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.expectAnchorVote.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.expectAnchorVoteUser.getById, {id: id}, function (data) {
                 var getByIdData = {
                     dataArr:data,
                     anchorTagArr:anchorTagArr
                 };
                 utils.renderModal('编辑', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
-                        utils.ajaxSubmit(apis.expectAnchorVote.update, $("#visaPassportForm").serialize(), function (data) {
+                        utils.ajaxSubmit(apis.expectAnchorVoteUser.update, $("#visaPassportForm").serialize(), function (data) {
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
@@ -65,7 +60,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.expectAnchorVote.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.expectAnchorVoteUser.getById, {id: id}, function (data) {
                 var getByIdData = {
                     dataArr:data
                 };
@@ -77,7 +72,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认无效吗?', '', function () {
-                utils.ajaxSubmit(apis.expectAnchorVote.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.expectAnchorVoteUser.offById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -86,7 +81,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认有效吗?', '', function () {
-                utils.ajaxSubmit(apis.expectAnchorVote.onById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.expectAnchorVoteUser.onById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -94,7 +89,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pass:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认审核通过吗?', '', function () {
-                utils.ajaxSubmit(apis.expectAnchorVote.passById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.expectAnchorVoteUser.passById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -102,7 +97,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         noPass:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认审核不通过吗?', '', function () {
-                utils.ajaxSubmit(apis.expectAnchorVote.noPassById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.expectAnchorVoteUser.noPassById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -110,7 +105,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         used:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认收录吗?', '', function () {
-                utils.ajaxSubmit(apis.expectAnchorVote.usedById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.expectAnchorVoteUser.usedById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -120,9 +115,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var param = {
         pageNo: 1,
         pageSize:10,
-        status:'',
-        name:'',
-        orderByCnt:''
+        anchorName:'',
+        expectAnchorVoteId:''
     };
 
     var anchorTagArr;
@@ -143,18 +137,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     getAnchorTagArr();
 
     function loadData() {
-        utils.ajaxSubmit(apis.expectAnchorVote.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.expectAnchorVoteUser.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.expectAnchorVote[n.status];
-                if(n.status==1){
-                    n.materialButtonGroup = editButton + passBouutn + noPassButton ;
-                }else if(n.status==2){
-                    n.materialButtonGroup = editButton + usedButton + userButton ;
-                }else if(n.status==3){
-                    n.materialButtonGroup = editButton ;
-                }else{
-                    n.materialButtonGroup = editButton + userButton;
-                }
             });
             data.statusText = listDropDown.statusText;
             data.orderByCntText = listDropDown.orderByCntText;
@@ -164,6 +149,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0].indexOf('html')=='-1'){
+        param.expectAnchorVoteId = urlParam[0];
+    }else{
+        param.expectAnchorVoteId = '';
+    }
+
     loadData();
     utils.bindList($(document), operates);
     var listDropDown = {
@@ -177,13 +173,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         loadData();
     }).on('click', '#dropSortOptions a[data-id]', function () {
         param.orderByCnt = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.orderByCntText = "总投票数" : listDropDown.orderByCntText = $(this).text();
+        ($(this).text()=="所有") ? listDropDown.orderByCntText = "排序" : listDropDown.orderByCntText = $(this).text();
         param.pageNo = 1;
         loadData();
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.name = $("#searchCont").val();
+        param.anchorName = $("#searchCont").val();
         loadData();
     });
     $('#searchCont').on('keypress',function(event){
