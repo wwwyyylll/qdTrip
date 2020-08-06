@@ -191,6 +191,10 @@ define("apis", function() {
                 c:'anchor',
                 a:'getLists'
             },
+            getAllLists:{
+                c:'anchor',
+                a:'getAllLists'
+            },
             create:{
                 c:'anchor',
                 a:'create'

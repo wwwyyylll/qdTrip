@@ -68,9 +68,42 @@
             </div>
         </th>
         <th>最新收录</th>
-        <th>收录总期数</th>
-        <th>带货商品总数</th>
-        <th>点击数</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= dateCntText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropDate" id="dropDateOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
+                </div>
+            </div>
+        </th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropGoods" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= goodsCntText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropGoods" id="dropGoodsOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
+                </div>
+            </div>
+        </th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropClick" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= clickCntText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropClick" id="dropClickOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
+                </div>
+            </div>
+        </th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

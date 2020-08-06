@@ -101,14 +101,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     var anchorArr;
     function getAnchorArr(){
-        var anchorParam = {
-            pageNo: 1,
-            pageSize:500000,
-            name:'',
-            status:''
-        };
-        utils.ajaxSubmit(apis.anchor.getLists, anchorParam, function (data) {
-            anchorArr = data.dataArr;
+        utils.ajaxSubmit(apis.anchor.getAllLists, '', function (data) {
+            $.each(data,function(i,n){
+                $.each(n.anchorArr,function(i,n){
+                    n.statusText = consts.status.ordinary[n.status];
+                });
+            });
+            anchorArr = data;
         });
     }
     getAnchorArr();

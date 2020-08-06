@@ -114,7 +114,11 @@
                         <select name="anchorId" class="form-control" required>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < anchorArr.length; i++) { %>
-                            <option value="<%= anchorArr[i].id %>" <% if(dataArr.anchorId==anchorArr[i].id) { %> selected <% } %>><%= anchorArr[i].name %></option>
+                            <optgroup label='-----<%= anchorArr[i].tagArr.name  %>-----' class='title'>
+                                <% for (var j = 0; j < anchorArr[i].anchorArr.length; j++) { %>
+                                <option value="<%= anchorArr[i].anchorArr[j].id %>" <% if(dataArr.anchorId==anchorArr[i].anchorArr[j].id) { %> selected <% } %>><%= anchorArr[i].anchorArr[j].name %>【<%- anchorArr[i].anchorArr[j].statusText %>】</option>
+                                <% }%>
+                            </optgroup>
                             <% }%>
                         </select>
                     </div>

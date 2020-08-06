@@ -160,7 +160,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         name:'',
         status:'',
-        tagId:''
+        tagId:'',
+        orderByDateCnt:'',
+        orderByGoodsCnt:'',
+        orderByClickCnt:''
     };
 
     var tagArr;
@@ -186,6 +189,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             data.tagArr = tagArr;
             data.statusText = listDropDown.statusText;
             data.anchorTagText = listDropDown.anchorTagText;
+            data.dateCntText = listDropDown.dateCntText;
+            data.goodsCntText = listDropDown.goodsCntText;
+            data.clickCntText = listDropDown.clickCntText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -199,7 +205,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //列表筛选事件绑定
     var listDropDown = {
         statusText:'状态',
-        anchorTagText:'主播标签'
+        anchorTagText:'主播标签',
+        dateCntText:'收录总期数',
+        goodsCntText:'带货商品总数',
+        clickCntText:'点击数'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -210,6 +219,33 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.tagId = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.anchorTagText = "主播标签" : listDropDown.anchorTagText = $(this).text();
         param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropDateOptions a[data-id]', function () {
+        param.orderByDateCnt = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.dateCntText = "收录总期数" : listDropDown.dateCntText = $(this).text();
+        param.pageNo = 1;
+        param.orderByGoodsCnt = '';
+        param.orderByClickCnt = '';
+        listDropDown.goodsCntText = "带货商品总数";
+        listDropDown.clickCntText = "点击数";
+        loadData();
+    }).on('click', '#dropGoodsOptions a[data-id]', function () {
+        param.orderByGoodsCnt = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.goodsCntText = "带货商品总数" : listDropDown.goodsCntText = $(this).text();
+        param.pageNo = 1;
+        param.orderByDateCnt = '';
+        param.orderByClickCnt = '';
+        listDropDown.dateCntText = "收录总期数";
+        listDropDown.clickCntText = "点击数";
+        loadData();
+    }).on('click', '#dropClickOptions a[data-id]', function () {
+        param.orderByClickCnt = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.clickCntText = "点击数" : listDropDown.clickCntText = $(this).text();
+        param.pageNo = 1;
+        param.orderByDateCnt = '';
+        param.orderByGoodsCnt = '';
+        listDropDown.dateCntText = "收录总期数";
+        listDropDown.goodsCntText = "带货商品总数";
         loadData();
     });
     $("#search").on("click",function(){
