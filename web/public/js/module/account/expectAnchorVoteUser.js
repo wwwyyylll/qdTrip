@@ -127,7 +127,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             name:'',
             status:''
         };
-        utils.ajaxSubmit(apis.anchorTag.getLists, anchorTagParam, function (data) {
+        utils.ajaxSubmit(apis.tag.getLists, anchorTagParam, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
             });

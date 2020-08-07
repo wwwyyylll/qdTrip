@@ -196,7 +196,9 @@
         </td>
         <td>
             <div style="margin-bottom: 5px"><%= dataArr[i].dateArr.date %></div>
-            <div><%= dataArr[i].dateArr.title %></div>
+            <div>
+                <a href="@@HOSTview/account/anchorGoodsDate.html?id=<%= dataArr[i].dateArr.id %>" target="_blank" style="text-decoration: underline"><%= dataArr[i].dateArr.title %></a>
+            </div>
             <span class="dateId" style="display: none"><%= dataArr[i].dateArr.id %></span>
         </td>
         <td>

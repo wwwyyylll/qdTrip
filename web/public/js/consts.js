@@ -66,6 +66,10 @@ define("consts", function() {
             haveCoupon:{
                 '1':'<span style="color:green">有</span>',
                 '2':'<span style="color:red">无</span>'
+            },
+            anchorType:{
+                '1':'<span style="color:green">带货平台</span>',
+                '2':'<span style="color:orange">主播性质</span>'
             }
         }
     }

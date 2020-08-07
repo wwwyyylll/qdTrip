@@ -8,7 +8,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-primary" type="button" data-operate="edit">编辑</button>'+
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
-        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>';
+        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
+        lookGoodsButton = '<button class="btn btn-info" type="button" data-operate="lookGoods">查看商品</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -87,6 +88,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     loadData();
                 });
             });
+        },
+        lookGoods:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            window.open("@@HOSTview/mall/goods.html?dateId=" + id);
         }
     }
 
@@ -96,7 +101,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         status:'',
         title:'',
         date:'',
-        anchorId:''
+        anchorId:'',
+        id:'',
+        orderByGoodsCnt:''
     };
 
     var anchorArr;
@@ -117,9 +124,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //根据状态值显示对应的状态文字 + 显示对应的 允许登录/禁止登录 按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + lookGoodsButton : n.materialButtonGroup = comButtons + startBouutn + lookGoodsButton;
             });
             data.statusText = listDropDown.statusText;
+            data.goodsCntText = listDropDown.goodsCntText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -127,15 +135,32 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0].indexOf('html')=='-1'){
+        param.id = urlParam[0];
+    }else{
+        param.id = '';
+    }
+
     loadData();
     utils.bindList($(document), operates);
     //列表筛选事件绑定
     var listDropDown = {
-        statusText:'状态'
+        statusText:'状态',
+        goodsCntText:'商品总数'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropGoodsCntOptions a[data-id]', function () {
+        param.orderByGoodsCnt = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.goodsCntText = "商品总数" : listDropDown.goodsCntText = $(this).text();
         param.pageNo = 1;
         loadData();
     });

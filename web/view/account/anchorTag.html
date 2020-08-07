@@ -52,6 +52,18 @@
     <tr>
         <th>ID</th>
         <th>名称</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= typeText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropType" id="dropTypeOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">带货平台</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">主播性质</a>
+                </div>
+            </div>
+        </th>
         <th>颜色1（左边RGB）</th>
         <th>颜色2（右边RGB）</th>
         <th class="em-min-7">
@@ -76,6 +88,7 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td><%= dataArr[i].name %></td>
+        <td><%- dataArr[i].typeText %></td>
         <td>
             <span style="color:#<%= dataArr[i].color1 %>"><%= dataArr[i].color1 %></span>
         </td>
@@ -133,6 +146,20 @@
                             <span class="input-group-text">color2</span>
                         </div>
                         <input type="text" name="color2" placeholder="请输入右边的RGB" value="<%= dataArr.color2 %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">类型</span>
+                        </div>
+                        <select name="type" class="form-control" required>
+                            <option value="">请选择</option>
+                            <option value="1" <% if(dataArr.type==1){ %> selected <% } %>>带货平台</option>
+                            <option value="2" <% if(dataArr.type==2){ %> selected <% } %>>主播性质</option>
+                        </select>
                     </div>
                 </div>
             </div>

@@ -525,14 +525,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var loc = location.href;
     var n1 = loc.length;//地址的总长度
     var n2 = loc.indexOf("=");//取得=号的位置
+    var n3 = loc.indexOf("?");//取得?号的位置
     var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
-    var urlParam = id.split("=");
-    if(urlParam[0]==1){
-        param.status = 2;
-        listDropDown.statusText = "下架";
+    if(loc.substr(n3).indexOf("dateId")!='-1'){
+        var urlParam = id.split("=");
+        param.dateId = urlParam[0];
     }else{
-        param.status = '';
-        listDropDown.statusText = "状态";
+        var urlParam = id.split("=");
+        if(urlParam[0]==1){
+            param.status = 2;
+            listDropDown.statusText = "下架";
+        }else{
+            param.status = '';
+            listDropDown.statusText = "状态";
+        }
     }
 
     getDownLists();

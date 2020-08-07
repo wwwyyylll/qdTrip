@@ -187,8 +187,8 @@
                         </div>
                         <select name="tagId" class="form-control">
                             <option value="">请选择</option>
-                            <% for (var i = 0; i < tagArr.length; i++) { %>
-                            <option value="<%= tagArr[i].id %>" <% if(dataArr.tagArr.id==tagArr[i].id) { %> selected <% } %>><%= tagArr[i].name %></option>
+                            <% for (var i = 0; i < tagArr1.length; i++) { %>
+                            <option value="<%= tagArr1[i].id %>" <% if(dataArr.tagArr.id==tagArr1[i].id) { %> selected <% } %>><%= tagArr1[i].name %></option>
                             <% }%>
                         </select>
                     </div>
@@ -205,7 +205,7 @@
                 <div class="col-5">
                     <div class="input-group">
                         <span style="margin-top:6px;margin-right: 10px">上传图片</span>
-                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar1" class="uploadImg d-none">选择图片文件</label>
                         <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
                     </div>
                 </div>
@@ -224,8 +224,128 @@
                     </div>
                 </div>
             </div>
+            <!-- 测试环境-->
+            <div class="form-row uploadFile1" style="margin-bottom: 15px">
+                <div class="col-5">
+                    <div class="input-group">
+                        <span style="margin-top:6px;margin-right: 10px">上传头像</span>
+                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar2" class="uploadImg1 d-none">选择头像文件</label>
+                        <button type="button" class="btn btn-default avatarUpload1" disabled>上传头像文件</button>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="input-group">
+                        <% if (dataArr.avatar) { %>
+                        <h6 class="imgUrl1">
+                            <a target='_blank' href='<%= dataArr.avatar %>'>
+                                <img src="<%= dataArr.avatar %>" style="display: inline-block;width:100px;height: 33px;">
+                            </a>
+                        </h6>
+                        <% } else { %>
+                        <h6 style="margin-top: 9px" class="imgUrl1"><span style="color:red">暂无头像</span></h6>
+                        <% } %>
+                        <input type="hidden" name="avatar" value="<%= dataArr.avatar %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">副标题</span>
+                        </div>
+                        <input type="text" name="subTitle" placeholder="请输入副标题" value="<%= dataArr.subTitle %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row singItem" style="margin-bottom: 15px">
+                <div class="col-7">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span style="margin-top:6px;margin-right: 10px">标签1</span>
+                            <span class="input-group-text">带货平台</span>
+                            <input type="hidden" name="tag[0][id]" <% if(dataArr.id){ %> value="<%= dataArr.tagArr[0].id %>" <% }else{ %> value="0" <% } %>>
+                            <input type="hidden" name="tag[0][type]" value="1">
+                        </div>
+                        <select name="tag[0][val]" class="form-control" required>
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < tagArr1.length; i++) { %>
+                            <option value="<%= tagArr1[i].id %>" <% if(dataArr.tagArr[0].tag==tagArr1[i].id) { %> selected <% } %>><%= tagArr1[i].name %></option>
+                            <% }%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row singItem" style="margin-bottom: 15px">
+                <div class="col-7">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span style="margin-top:6px;margin-right: 10px">标签2</span>
+                            <span class="input-group-text">主播性质</span>
+                            <input type="hidden" name="tag[1][id]" <% if(dataArr.id){ %> value="<%= dataArr.tagArr[1].id %>" <% }else{ %> value="0" <% } %>>
+                            <input type="hidden" name="tag[1][type]" value="2">
+                        </div>
+                        <select name="tag[1][val]" class="form-control" required>
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < tagArr2.length; i++) { %>
+                            <option value="<%= tagArr2[i].id %>" <% if(dataArr.tagArr[1].tag==tagArr2[i].id) { %> selected <% } %>><%= tagArr2[i].name %></option>
+                            <% }%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-5">
+                    <div class="input-group">
+                        <button type="button" class="btn btn-success" data-operate="addTag">添加用户自定义标签</button>
+                    </div>
+                </div>
+            </div>
+            <div class="customTagDiv">
+                <% for (var i = 0; i < dataArr.tagArr.length; i++) { %>
+                <% if(dataArr.tagArr[i].type==3){ %>
+                <div class="form-row singItem" style="margin-bottom: 15px">
+                    <div class="col-7">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">用户自定义标签<span class="tagNumber"><%= i-1 %></span></span>
+                                <input type="hidden" name="tag[][id]" value="<%= dataArr.tagArr[i].id %>">
+                                <input type="hidden" name="tag[][type]" value="3">
+                            </div>
+                            <input type="text" name="tag[][val]" class="form-control" value="<%= dataArr.tagArr[i].tag %>">
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <button type="button" class="btn btn-danger" data-operate="delTag">删除</button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <% } %>
+            </div>
+            <div class="delItemArr"></div>
         </fieldset>
     </form>
+</script>
+<script id="customTagItem" type="text/html">
+    <div class="form-row singItem" style="margin-bottom: 15px">
+        <div class="col-7">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">用户自定义标签<span class="tagNumber"></span></span>
+                    <input type="hidden" name="tag[][id]" value="0">
+                    <input type="hidden" name="tag[][type]" value="3">
+                </div>
+                <input type="text" name="tag[][val]" class="form-control">
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="input-group">
+                <button type="button" class="btn btn-danger" data-operate="delTag">删除</button>
+            </div>
+        </div>
+    </div>
 </script>
 <script data-main="/public/js/module/account/anchor"></script>
 @@include('../../inc-footer.html')

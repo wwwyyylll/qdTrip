@@ -58,7 +58,18 @@
             <input type="text" autocomplete="off" class="em-7 py-0 px-1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择日期..." id="date">
         </th>
         <th>标题</th>
-        <th>商品总数</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropGoodsCnt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= goodsCntText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropGoodsCnt" id="dropGoodsCntOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
+                </div>
+            </div>
+        </th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -83,7 +94,7 @@
         <td><%= dataArr[i].anchorName %></td>
         <td><%= dataArr[i].date %></td>
         <td><%= dataArr[i].title %></td>
-        <td><%= dataArr[i].goodsCnt %></td>
+        <td><%= dataArr[i].goodsCnt %> / <%= dataArr[i].goodsAllCnt %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>

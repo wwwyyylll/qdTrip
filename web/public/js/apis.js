@@ -214,31 +214,35 @@ define("apis", function() {
             onById:{
                 c:'anchor',
                 a:'onById'
+            },
+            updMaxGoodsDateById:{
+                c:'anchor',
+                a:'updMaxGoodsDateById'
             }
         },
-        anchorTag:{
+        tag:{
             getLists:{
-                c:'anchorTag',
+                c:'tag',
                 a:'getLists'
             },
             create:{
-                c:'anchorTag',
+                c:'tag',
                 a:'create'
             },
             getById:{
-                c:'anchorTag',
+                c:'tag',
                 a:'getById'
             },
             updateById:{
-                c:'anchorTag',
+                c:'tag',
                 a:'updateById'
             },
             offById:{
-                c:'anchorTag',
+                c:'tag',
                 a:'offById'
             },
             onById:{
-                c:'anchorTag',
+                c:'tag',
                 a:'onById'
             }
         },
