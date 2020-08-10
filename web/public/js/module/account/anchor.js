@@ -258,7 +258,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         tagId:'',
         orderByDateCnt:'',
         orderByGoodsCnt:'',
-        orderByClickCnt:''
+        orderByClickCnt:'',
+        orderByMaxGoodsDate:''
     };
 
     var tagArr;
@@ -310,6 +311,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             data.dateCntText = listDropDown.dateCntText;
             data.goodsCntText = listDropDown.goodsCntText;
             data.clickCntText = listDropDown.clickCntText;
+            data.maxGoodsDateText = listDropDown.maxGoodsDateText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -326,7 +328,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         anchorTagText:'主播标签',
         dateCntText:'收录总期数',
         goodsCntText:'带货商品总数',
-        clickCntText:'点击数'
+        clickCntText:'点击数',
+        maxGoodsDateText:'最新收录'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -344,8 +347,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.pageNo = 1;
         param.orderByGoodsCnt = '';
         param.orderByClickCnt = '';
+        param.orderByMaxGoodsDate = '';
         listDropDown.goodsCntText = "带货商品总数";
         listDropDown.clickCntText = "点击数";
+        listDropDown.maxGoodsDateText = "最新收录"
         loadData();
     }).on('click', '#dropGoodsOptions a[data-id]', function () {
         param.orderByGoodsCnt = $(this).data('id');
@@ -353,8 +358,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.pageNo = 1;
         param.orderByDateCnt = '';
         param.orderByClickCnt = '';
+        param.orderByMaxGoodsDate = '';
         listDropDown.dateCntText = "收录总期数";
         listDropDown.clickCntText = "点击数";
+        listDropDown.maxGoodsDateText = "最新收录"
         loadData();
     }).on('click', '#dropClickOptions a[data-id]', function () {
         param.orderByClickCnt = $(this).data('id');
@@ -362,8 +369,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.pageNo = 1;
         param.orderByDateCnt = '';
         param.orderByGoodsCnt = '';
+        param.orderByMaxGoodsDate = '';
         listDropDown.dateCntText = "收录总期数";
         listDropDown.goodsCntText = "带货商品总数";
+        listDropDown.maxGoodsDateText = "最新收录"
+        loadData();
+    }).on('click', '#dropMaxGoodsDateOptions a[data-id]', function () {
+        param.orderByMaxGoodsDate = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.maxGoodsDateText = "最新收录" : listDropDown.maxGoodsDateText = $(this).text();
+        param.pageNo = 1;
+        param.orderByDateCnt = '';
+        param.orderByGoodsCnt = '';
+        param.orderByClickCnt = '';
+        listDropDown.dateCntText = "收录总期数";
+        listDropDown.goodsCntText = "带货商品总数";
+        listDropDown.clickCntText = "点击数";
         loadData();
     });
     $("#search").on("click",function(){

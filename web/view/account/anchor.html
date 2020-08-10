@@ -54,20 +54,19 @@
         <th>姓名</th>
         <th>图片</th>
         <th>排序</th>
+        <th>主播标签</th>
         <th class="em-min-7">
             <div class="dropdown">
-                <span class="dropdown-toggle" id="dropAnchorTag" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <%= anchorTagText %>
+                <span class="dropdown-toggle" id="dropMaxGoodsDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= maxGoodsDateText %>
                 </span>
-                <div class="dropdown-menu" aria-labelledby="dropAnchorTag" id="dropAnchorTagOptions">
+                <div class="dropdown-menu" aria-labelledby="dropMaxGoodsDate" id="dropMaxGoodsDateOptions">
                     <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <% for(var j=0;j < tagArr.length;j++){ %>
-                    <a class="dropdown-item" href="javascript:" data-id="<%= tagArr[j].id %>"><%= tagArr[j].name %></a>
-                    <% } %>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
                 </div>
             </div>
         </th>
-        <th>最新收录</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -104,6 +103,9 @@
                 </div>
             </div>
         </th>
+        <th>收藏数</th>
+        <th>直播数</th>
+        <th>分享数</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -124,7 +126,6 @@
     <% if (dataArr.length > 0) { %>
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
-        //pic: "http://www.baidu1.com"
         <td><%= dataArr[i].id %></td>
         <td><%= dataArr[i].name %></td>
         <td>
@@ -137,11 +138,18 @@
             <% } %>
         </td>
         <td><%= dataArr[i].sort %></td>
-        <td><%= dataArr[i].tagArr.name %></td>
+        <td>
+            <% for(var j=0;j < dataArr[i].tagArr.length;j++){ %>
+            <div style="margin-bottom: 5px"><%= dataArr[i].tagArr[j].tagName %></div>
+            <% } %>
+        </td>
         <td><%= dataArr[i].maxGoodsDate %></td>
         <td><%= dataArr[i].dateCnt %></td>
         <td><%= dataArr[i].goodsCnt %></td>
         <td><%= dataArr[i].clickCnt %></td>
+        <td><%= dataArr[i].favoriteCnt %></td>
+        <td><%= dataArr[i].liveRecordingRemindCnt %></td>
+        <td><%= dataArr[i].shareCnt %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
@@ -180,17 +188,14 @@
                         <input type="text" name="sort" placeholder="请输入排序" value="<%= dataArr.sort %>" class="form-control" required>
                     </div>
                 </div>
-                <div class="col-4">
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">主播标签</span>
+                            <span class="input-group-text">副标题</span>
                         </div>
-                        <select name="tagId" class="form-control">
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < tagArr1.length; i++) { %>
-                            <option value="<%= tagArr1[i].id %>" <% if(dataArr.tagArr.id==tagArr1[i].id) { %> selected <% } %>><%= tagArr1[i].name %></option>
-                            <% }%>
-                        </select>
+                        <input type="text" name="subTitle" placeholder="请输入副标题" value="<%= dataArr.subTitle %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -249,46 +254,32 @@
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
+                <div class="col-6 singItem">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">副标题</span>
-                        </div>
-                        <input type="text" name="subTitle" placeholder="请输入副标题" value="<%= dataArr.subTitle %>" class="form-control" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row singItem" style="margin-bottom: 15px">
-                <div class="col-7">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span style="margin-top:6px;margin-right: 10px">标签1</span>
                             <span class="input-group-text">带货平台</span>
-                            <input type="hidden" name="tag[0][id]" <% if(dataArr.id){ %> value="<%= dataArr.tagArr[0].id %>" <% }else{ %> value="0" <% } %>>
+                            <input type="hidden" name="tag[0][id]" <% if(dataArr.id){ %> <% if(dataArr.tagArr.length>=2){ %> value="<%= dataArr.tagArr[0].id %>" <% }else{ %> value="0" <% } %><% } %>>
                             <input type="hidden" name="tag[0][type]" value="1">
                         </div>
                         <select name="tag[0][val]" class="form-control" required>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < tagArr1.length; i++) { %>
-                            <option value="<%= tagArr1[i].id %>" <% if(dataArr.tagArr[0].tag==tagArr1[i].id) { %> selected <% } %>><%= tagArr1[i].name %></option>
+                            <option value="<%= tagArr1[i].id %>"  <% if(dataArr.tagArr.length>=2){ %>  <% if(dataArr.tagArr[0].tag==tagArr1[i].id) { %> selected <% } %><% } %>><%= tagArr1[i].name %></option>
                             <% }%>
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="form-row singItem" style="margin-bottom: 15px">
-                <div class="col-7">
+                <div class="col-6 singItem">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span style="margin-top:6px;margin-right: 10px">标签2</span>
                             <span class="input-group-text">主播性质</span>
-                            <input type="hidden" name="tag[1][id]" <% if(dataArr.id){ %> value="<%= dataArr.tagArr[1].id %>" <% }else{ %> value="0" <% } %>>
+                            <input type="hidden" name="tag[1][id]" <% if(dataArr.id){ %> <% if(dataArr.tagArr.length>=2){ %> value="<%= dataArr.tagArr[1].id %>" <% }else{ %> value="0" <% } %><% } %>>
                             <input type="hidden" name="tag[1][type]" value="2">
                         </div>
                         <select name="tag[1][val]" class="form-control" required>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < tagArr2.length; i++) { %>
-                            <option value="<%= tagArr2[i].id %>" <% if(dataArr.tagArr[1].tag==tagArr2[i].id) { %> selected <% } %>><%= tagArr2[i].name %></option>
+                            <option value="<%= tagArr2[i].id %>"<% if(dataArr.tagArr.length>=2){ %>  <% if(dataArr.tagArr[1].tag==tagArr2[i].id) { %> selected <% } %><% } %>><%= tagArr2[i].name %></option>
                             <% }%>
                         </select>
                     </div>

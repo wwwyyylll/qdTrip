@@ -82,6 +82,7 @@
                 </div>
             </div>
         </th>
+        <th>创建人</th>
         <th>创建时间</th>
         <th>操作</th>
     </tr>
@@ -96,6 +97,7 @@
         <td><%= dataArr[i].title %></td>
         <td><%= dataArr[i].goodsCnt %> / <%= dataArr[i].goodsAllCnt %></td>
         <td><%- dataArr[i].statusText %></td>
+        <td><%= dataArr[i].operatorName %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
