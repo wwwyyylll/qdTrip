@@ -64,6 +64,7 @@ define("consts", function() {
                 '4':'<span style="color:red">审核不通过</span>'
             },
             haveCoupon:{
+                '0':'',
                 '1':'<span style="color:green">有</span>',
                 '2':'<span style="color:red">无</span>'
             },

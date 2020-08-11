@@ -30,6 +30,9 @@
                         <div class="btn-group" style="margin-left:1%">
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
+                        <div class="btn-group" style="margin-left:1%">
+                            <div class="btn btn-success" style="outline:none" data-operate="batchUpd">批量纠正日期</div>
+                        </div>
                         <div class="btn-group" style="float:right">
                             <button id="addModal" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="outline:none;margin-left: 3px">新增</button>
                         </div>
@@ -258,13 +261,34 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">带货平台</span>
-                            <input type="hidden" name="tag[0][id]" <% if(dataArr.id){ %> <% if(dataArr.tagArr.length>=2){ %> value="<%= dataArr.tagArr[0].id %>" <% }else{ %> value="0" <% } %><% } %>>
+                            <input type="hidden" name="tag[0][id]"
+                            <% if(dataArr.id){ %>
+                                <% if(dataArr.tagArr.length>=2){ %>
+                                    <% for (var i = 0; i < dataArr.tagArr.length; i++) { %>
+                                        <% if(dataArr.tagArr[i].type==1){ %>
+                                            value="<%= dataArr.tagArr[i].id %>"
+                                        <% }%>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                            >
                             <input type="hidden" name="tag[0][type]" value="1">
                         </div>
                         <select name="tag[0][val]" class="form-control" required>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < tagArr1.length; i++) { %>
-                            <option value="<%= tagArr1[i].id %>"  <% if(dataArr.tagArr.length>=2){ %>  <% if(dataArr.tagArr[0].tag==tagArr1[i].id) { %> selected <% } %><% } %>><%= tagArr1[i].name %></option>
+                            <option value="<%= tagArr1[i].id %>"
+                            <% if(dataArr.tagArr.length>=2){ %>
+                                <% for (var j = 0; j < dataArr.tagArr.length; j++) { %>
+                                    <% if(dataArr.tagArr[j].type==1){ %>
+                                        <% if(dataArr.tagArr[j].tag==tagArr1[i].id) { %>
+                                        selected
+                                        <% } %>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                            ><%= tagArr1[i].name %>
+                            </option>
                             <% }%>
                         </select>
                     </div>
@@ -273,13 +297,34 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">主播性质</span>
-                            <input type="hidden" name="tag[1][id]" <% if(dataArr.id){ %> <% if(dataArr.tagArr.length>=2){ %> value="<%= dataArr.tagArr[1].id %>" <% }else{ %> value="0" <% } %><% } %>>
+                            <input type="hidden" name="tag[1][id]"
+                            <% if(dataArr.id){ %>
+                                <% if(dataArr.tagArr.length>=2){ %>
+                                    <% for (var i = 0; i < dataArr.tagArr.length; i++) { %>
+                                        <% if(dataArr.tagArr[i].type==2){ %>
+                                            value="<%= dataArr.tagArr[i].id %>"
+                                        <% } %>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                            >
                             <input type="hidden" name="tag[1][type]" value="2">
                         </div>
                         <select name="tag[1][val]" class="form-control" required>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < tagArr2.length; i++) { %>
-                            <option value="<%= tagArr2[i].id %>"<% if(dataArr.tagArr.length>=2){ %>  <% if(dataArr.tagArr[1].tag==tagArr2[i].id) { %> selected <% } %><% } %>><%= tagArr2[i].name %></option>
+                            <option value="<%= tagArr2[i].id %>"
+                            <% if(dataArr.tagArr.length>=2){ %>
+                                <% for (var j = 0; j < dataArr.tagArr.length; j++) { %>
+                                    <% if(dataArr.tagArr[j].type==2){ %>
+                                        <% if(dataArr.tagArr[j].tag==tagArr2[i].id) { %>
+                                        selected
+                                        <% } %>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                            ><%= tagArr2[i].name %>
+                            </option>
                             <% }%>
                         </select>
                     </div>

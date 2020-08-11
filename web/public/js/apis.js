@@ -218,6 +218,10 @@ define("apis", function() {
             updMaxGoodsDateById:{
                 c:'anchor',
                 a:'updMaxGoodsDateById'
+            },
+            batchUpdMaxGoodsDate:{
+                c:'anchor',
+                a:'batchUpdMaxGoodsDate'
             }
         },
         tag:{
@@ -270,6 +274,24 @@ define("apis", function() {
             onById:{
                 c:'anchorGoodsDate',
                 a:'onById'
+            },
+            sendNotice:{
+                c:'anchorGoodsDate',
+                a:'sendNotice'
+            }
+        },
+        anchorCompleteRecord:{
+            getLists:{
+                c:'anchorCompleteRecord',
+                a:'getLists'
+            },
+            save:{
+                c:'anchorCompleteRecord',
+                a:'save'
+            },
+            getById:{
+                c:'anchorCompleteRecord',
+                a:'getById'
             }
         },
         goodsSoldOutSign:{

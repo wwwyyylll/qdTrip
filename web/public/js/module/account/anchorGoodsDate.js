@@ -9,7 +9,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
-        lookGoodsButton = '<button class="btn btn-info" type="button" data-operate="lookGoods">查看商品</button>';
+        lookGoodsButton = '<button class="btn btn-info" type="button" data-operate="lookGoods">查看商品</button>',
+        sendNoticeButton = '<button class="btn btn-success" type="button" data-operate="sendNotice">发送直播通知</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -89,6 +90,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             });
         },
+        //发送直播通知
+        sendNotice:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认发送直播通知吗?', '', function () {
+                utils.ajaxSubmit(apis.anchorGoodsDate.sendNotice, {id: id}, function (data) {
+                    loadData();
+                });
+            });
+        },
         lookGoods:function($this){
             var id = $this.closest("tr").attr("data-id");
             window.open("@@HOSTview/mall/goods.html?dateId=" + id);
@@ -108,7 +118,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     var anchorArr;
     function getAnchorArr(){
-        utils.ajaxSubmit(apis.anchor.getAllLists, '', function (data) {
+        var aaa = {
+            pageNo: 1,
+            pageSize:10
+        };
+        utils.ajaxSubmit(apis.anchor.getAllLists, aaa, function (data) {
             $.each(data,function(i,n){
                 $.each(n.anchorArr,function(i,n){
                     n.statusText = consts.status.ordinary[n.status];
@@ -124,7 +138,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //根据状态值显示对应的状态文字 + 显示对应的 允许登录/禁止登录 按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + lookGoodsButton : n.materialButtonGroup = comButtons + startBouutn + lookGoodsButton;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + lookGoodsButton + sendNoticeButton : n.materialButtonGroup = comButtons + startBouutn + lookGoodsButton + sendNoticeButton;
             });
             data.statusText = listDropDown.statusText;
             data.goodsCntText = listDropDown.goodsCntText;

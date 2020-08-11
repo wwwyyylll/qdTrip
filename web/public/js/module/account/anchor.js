@@ -162,6 +162,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     //页面操作配置
     var operates = {
+        //批量纠正日期
+        batchUpd:function(){
+            hound.confirm('确认批量纠正日期吗?', '', function () {
+                utils.ajaxSubmit(apis.anchor.batchUpdMaxGoodsDate, '', function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            });
+        },
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
