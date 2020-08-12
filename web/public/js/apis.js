@@ -360,6 +360,16 @@ define("apis", function() {
                 a:'getLists'
             }
         },
+        guestbook:{
+            getLists:{
+                c:'guestbook',
+                a:'getLists'
+            },
+            replyById:{
+                c:'guestbook',
+                a:'replyById'
+            }
+        },
 
         role:{
             getLists:{

@@ -1,15 +1,15 @@
-@@include('../../inc-header.html', {"title": "镇长信箱"})
+@@include('../../inc-header.html', {"title": "留言板"})
 @@include('../../top-nav.html')
 @@include('../../left-nav.html')
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> 镇长信箱</h1>
+            <h1><i class="fa fa-th-list"></i> 留言板</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active"><a href="#">镇长信箱</a></li>
+            <li class="breadcrumb-item active"><a href="#">留言板</a></li>
         </ul>
     </div>
     <div class="row">
@@ -53,9 +53,11 @@
         <th>ID</th>
         <th>用户昵称</th>
         <th>提交时间</th>
-        <th style="width:25%;word-wrap: break-word;word-break:break-all;">内容</th>
-        <th style="width:25%;word-wrap: break-word;word-break:break-all;">回复内容</th>
+        <th style="width:10%;word-wrap: break-word;word-break:break-all;">原因</th>
+        <th style="width:10%;word-wrap: break-word;word-break:break-all;">其他原因</th>
+        <th style="width:15%;word-wrap: break-word;word-break:break-all;">回复内容</th>
         <th>回复时间</th>
+        <th>回复人</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -77,13 +79,15 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td>
-            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].userId %>"><%= dataArr[i].nickName %></a>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].createUserArr.id %>"><%= dataArr[i].createUserArr.nickName %></a>
         </td>
         <td><%= dataArr[i].createTime %></td>
-        <td style="width:25%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].content %></td>
-        <td style="width:25%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].replyContent %></td>
+        <td style="width:10%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].reason %></td>
+        <td style="width:10%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].otherReason %></td>
+        <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].replyContent %></td>
         <td><%= dataArr[i].replyTime %></td>
-        <td><%- dataArr[i].statusText + " / " + dataArr[i].unReadText %></td>
+        <td><%= dataArr[i].replyUserArr.userName %></td>
+        <td><%- dataArr[i].statusText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>
@@ -103,50 +107,13 @@
     <form id="visaPassportForm" disabled="true">
         <fieldset>
             <input type="hidden" name="id" value="<%= dataArr.id %>">
-            <div class="form-row">
-                <div class="col-10">
-                    <div class="form-row" style="margin-bottom: 15px">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">提交人</span>
-                                </div>
-                                <input type="text" name="nickName" value="<%= dataArr.nickName %>" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row" style="margin-bottom: 15px">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">提交时间</span>
-                                </div>
-                                <input type="text" name="createTime" value="<%= dataArr.createTime %>" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <% if (dataArr.avatar !='') { %>
-                <div class="col-2">
-                    <div>
-                        <img src="<%= dataArr.avatar %>" alt="" style="display: inline-block;width:100px;height: 90px">
-                    </div>
-                </div>
-                <% } else { %>
-                <div class="col-2">
-                    <div>
-                        <img src="http://xn--0zwv61a3umlc.xn--tfr330an9v.com/public/img/background/newlist-header.png" alt="" style="display: inline-block;width:100px;height: 90px">
-                    </div>
-                </div>
-                <% } %>
-            </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">回复内容</span>
                         </div>
-                        <textarea style="resize:vertical;min-height: 54px" class="form-control" name="content" placeholder="请输入回复内容" required></textarea>
+                        <textarea style="resize:vertical;min-height: 70px" class="form-control" name="content" placeholder="请输入回复内容" required></textarea>
                     </div>
                 </div>
             </div>

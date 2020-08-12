@@ -30,6 +30,9 @@
                         <div class="btn-group" style="margin-left:1%">
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
+                        <div class="btn-group" style="margin-left:1%">
+                            <div class="btn btn-success" style="outline:none" data-operate="dateSearch">历史日期</div>
+                        </div>
                     </div>
                 </div>
                 <div class="tile-body">
@@ -48,6 +51,11 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th>日期</th>
+        <!--<th class="em-min-8">-->
+            <!--<div>日期</div>-->
+            <!--<input type="text" autocomplete="off" class="em-9 py-0 px-1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择日期..." id="date">-->
+        <!--</th>-->
         <th>主播</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -61,10 +69,6 @@
                     <% } %>
                 </div>
             </div>
-        </th>
-        <th class="em-min-8">
-            <div>带货日期</div>
-            <input type="text" autocomplete="off" class="em-9 py-0 px-1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择带货日期..." id="date">
         </th>
         <!--<th class="em-min-7">-->
             <!--<div class="dropdown">-->
@@ -91,7 +95,8 @@
                 </div>
             </div>
         </th>
-        <th>创建时间</th>
+        <th>操作人</th>
+        <th>操作时间</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -100,12 +105,17 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
+        <td><%= dataArr[i].date %></td>
         <td><%= dataArr[i].anchorName %></td>
         <td><%= dataArr[i].tagName %></td>
-        <td><%= dataArr[i].date %></td>
         <td><%- dataArr[i].hasLiveBroadcastText %></td>
         <td><%- dataArr[i].statusText %></td>
-        <td><%= dataArr[i].createTime %></td>
+        <td><%= dataArr[i].operatorName %></td>
+        <td>
+            <% if(dataArr[i].status==1){ %>
+            <%= dataArr[i].updateTime %>
+            <% } %>
+        </td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>
@@ -125,6 +135,16 @@
     <form id="visaPassportForm" disabled="true">
         <fieldset>
             <input type="hidden" name="id" value="<%= dataArr.id %>">
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">日期</span>
+                        </div>
+                        <input type="text" disabled value="<%= dataArr.date %>" class="form-control">
+                    </div>
+                </div>
+            </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
@@ -149,16 +169,6 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">主播带货日期</span>
-                        </div>
-                        <input type="text" disabled value="<%= dataArr.date %>" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
                             <span class="input-group-text">是否有直播</span>
                         </div>
                         <select name="hasLiveBroadcast" class="form-control" required>
@@ -166,6 +176,22 @@
                             <option value="1">是</option>
                             <option value="2">否</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
+<script id="dateSearchDiv" type="text/html">
+    <form id="dateSearchForm" disabled="true">
+        <fieldset>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">日期</span>
+                        </div>
+                        <input type="text" autocomplete="off" class="form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择日期..." id="date" required>
                     </div>
                 </div>
             </div>

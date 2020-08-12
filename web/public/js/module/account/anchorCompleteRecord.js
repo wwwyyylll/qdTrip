@@ -13,6 +13,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     //页面操作配置
     var operates = {
+        dateSearch:function(){
+            utils.renderModal('历史日期', template('dateSearchDiv',''), function(){
+                if($("#dateSearchForm").valid()){
+                    var date = $("#date").val();
+                    param.date = date;
+                    param.pageNo = 1;
+                    utils.modal.modal('hide');
+                    loadData();
+                }
+            }, 'md');
+        },
         complete:function($this){
             var id = $this.closest("tr").attr("data-id");
             utils.ajaxSubmit(apis.anchorCompleteRecord.getById, {id: id}, function (data) {
@@ -70,7 +81,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
-            $sampleTable.find('#date').val(param.date);
+            //$sampleTable.find('#date').val(param.date);
         });
     }
     // 页面首次加载列表数据
@@ -95,16 +106,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.pageNo = 1;
         loadData();
     });
-    setInterval(function () {
-        var $date = $sampleTable.find('#date');
-        if ($date.length === 1) {
-            if ($date.val() !== param.date) {
-                param.date = $date.val();
-                param.pageNo = 1;
-                loadData();
-            }
-        }
-    },500);
+    //setInterval(function () {
+    //    var $date = $sampleTable.find('#date');
+    //    if ($date.length === 1) {
+    //        if ($date.val() !== param.date) {
+    //            param.date = $date.val();
+    //            param.pageNo = 1;
+    //            loadData();
+    //        }
+    //    }
+    //},500);
     $("#search").on("click",function(){
         param.pageNo = 1;
         param.anchorName = $("#searchCont").val();

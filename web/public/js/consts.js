@@ -64,13 +64,17 @@ define("consts", function() {
                 '4':'<span style="color:red">审核不通过</span>'
             },
             haveCoupon:{
-                '0':'',
+                '-1':'',
                 '1':'<span style="color:green">有</span>',
                 '2':'<span style="color:red">无</span>'
             },
             anchorType:{
                 '1':'<span style="color:green">带货平台</span>',
                 '2':'<span style="color:orange">主播性质</span>'
+            },
+            guestBook:{
+                '1':'<span style="color:red">待回复</span>',
+                '2':'<span style="color:green">已回复</span>'
             }
         }
     }

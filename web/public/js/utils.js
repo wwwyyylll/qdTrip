@@ -107,7 +107,7 @@ define("utils", ["consts", "apis"], function(consts, apis) {
          * @param loadData
          */
         bindPagination: function($pagination, param, loadData) {
-            $pagination.on('click', '.pagination a', function () {
+            $pagination.one('click', '.pagination a', function () {
                 param.pageNo = $(this).data('page');
                 loadData();
             }).on('blur', '.pagination input', function () {

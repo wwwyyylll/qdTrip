@@ -113,7 +113,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         date:'',
         anchorId:'',
         id:'',
-        orderByGoodsCnt:''
+        orderByGoodsCnt:'',
+        isNotice:''
     };
 
     var anchorArr;
@@ -138,10 +139,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //根据状态值显示对应的状态文字 + 显示对应的 允许登录/禁止登录 按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + lookGoodsButton + sendNoticeButton : n.materialButtonGroup = comButtons + startBouutn + lookGoodsButton + sendNoticeButton;
+                (n.isNotice=='2')? n.noticeText = "<span style='color:red'>未发送</span>" : n.noticeText = "<span style='color:green'>已发送"+ "【" + n.noticeCnt + "个】" +"用户</span>" ;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + lookGoodsButton : n.materialButtonGroup = comButtons + startBouutn + lookGoodsButton ;
+                (n.isNotice=='2')? n.materialButtonGroup = n.materialButtonGroup + sendNoticeButton : n.materialButtonGroup = n.materialButtonGroup ;
             });
             data.statusText = listDropDown.statusText;
             data.goodsCntText = listDropDown.goodsCntText;
+            data.sendStatusText = listDropDown.sendStatusText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -165,7 +169,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //列表筛选事件绑定
     var listDropDown = {
         statusText:'状态',
-        goodsCntText:'商品总数'
+        goodsCntText:'商品总数',
+        sendStatusText:'直播通知状态'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -175,6 +180,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropGoodsCntOptions a[data-id]', function () {
         param.orderByGoodsCnt = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.goodsCntText = "商品总数" : listDropDown.goodsCntText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropSendStatusOptions a[data-id]', function () {
+        param.isNotice = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.sendStatusText = "直播通知状态" : listDropDown.sendStatusText = $(this).text();
         param.pageNo = 1;
         loadData();
     });
