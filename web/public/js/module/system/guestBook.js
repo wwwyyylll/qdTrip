@@ -15,9 +15,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var operates = {
         reply:function($this){
             var id = $this.closest("tr").attr("data-id");
+            var tr = $this.closest("tr");
+            var nickName = tr.find("td").eq(1).find("a").text();
+            var reason = tr.find("td").eq(2).text();
+            var otherReason = tr.find("td").eq(3).text();
             var getByIdData = {
                 dataArr:{
-                    id:id
+                    id:id,
+                    nickName:nickName,
+                    reason:reason,
+                    otherReason:otherReason
                 }
             };
             utils.renderModal('回复', template('modalDiv', getByIdData), function(){
@@ -37,12 +44,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         status:''
     };
-
+    var listDropDown = {
+        statusText:'状态'
+    };
     function loadData() {
         utils.ajaxSubmit(apis.guestbook.getLists, param, function (data) {
             //根据状态值显示对应的状态文字 + 显示 有效/无效按钮  置顶/取消置顶按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.guestBook[n.status];
+                n.isReadText = consts.status.isRead[n.isRead];
                 (n.status=="1")? n.materialButtonGroup = comButtons: n.materialButtonGroup = '';
             });
             data.statusText = listDropDown.statusText;
@@ -52,11 +62,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        param.status = 1;
+        listDropDown.statusText = "待回复";
+    }else{
+        param.status = '';
+        listDropDown.statusText = "状态";
+    }
+
     loadData();
     utils.bindList($(document), operates);
-    var listDropDown = {
-        statusText:'状态'
-    };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();

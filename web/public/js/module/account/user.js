@@ -6,7 +6,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //按钮组集合
     var comButtons = '<button class="btn btn-info" type="button" data-operate="look">查看详情</button>',
         allowButton = '<button class="btn btn-primary" type="button" data-operate="allow">允许登录</button>',
-        disableButton = '<button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>';
+        disableButton = '<button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>',
+        addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">添加分销商</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -58,7 +59,32 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             })
         },
-    }
+        addDist:function($this){
+            var userId = $this.closest("tr").attr("data-id");
+            var tr = $this.closest("tr");
+            var nickName = tr.find("td").eq(1).find("a").text();
+
+            var initialData = {
+                dataArr:{
+                    userId:userId,
+                    nickName:nickName,
+                    name:'',
+                    adZoneId:'',
+                    content:''
+                }
+            };
+            utils.renderModal('添加分销商', template('addDistDiv',initialData), function(){
+                if($("#addDistForm").valid()){
+                    utils.ajaxSubmit(apis.distributors.create,$("#addDistForm").serialize(),function(data){
+                        hound.success("添加成功","",1000);
+                        utils.modal.modal('hide');
+                        param.pageNo = 1;
+                        loadData();
+                    })
+                }
+            }, 'md');
+        }
+    };
 
     // 页面首次加载列表数据
     //打开的对应的页面nav + active属性
@@ -89,6 +115,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.statusText = consts.status.user[n.status];
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
+                (n.isDistributors=='yes')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
             });
             data.statusText = listDropDown.statusText;
             data.sourceText = listDropDown.sourceText;

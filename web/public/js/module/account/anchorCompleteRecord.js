@@ -49,7 +49,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         status:'',
         anchorName:'',
         tagId:'',
-        date:''
+        date:'',
+        hasLiveBroadcast:''
     };
 
     var tagArr;
@@ -103,6 +104,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropTagOptions a[data-id]', function () {
         param.tagId = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.TagText = "主播标签" : listDropDown.TagText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropHasLiveBroadcastOptions a[data-id]', function () {
+        param.hasLiveBroadcast = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.hasLiveBroadcastText = "是否有直播" : listDropDown.hasLiveBroadcastText = $(this).text();
         param.pageNo = 1;
         loadData();
     });

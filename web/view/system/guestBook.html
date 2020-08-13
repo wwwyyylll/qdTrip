@@ -52,12 +52,12 @@
     <tr>
         <th>ID</th>
         <th>用户昵称</th>
-        <th>提交时间</th>
         <th style="width:10%;word-wrap: break-word;word-break:break-all;">原因</th>
         <th style="width:10%;word-wrap: break-word;word-break:break-all;">其他原因</th>
+        <th>提交时间</th>
         <th style="width:15%;word-wrap: break-word;word-break:break-all;">回复内容</th>
-        <th>回复时间</th>
         <th>回复人</th>
+        <th>回复时间</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -70,6 +70,7 @@
                 </div>
             </div>
         </th>
+        <th>用户是否已读</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -81,13 +82,14 @@
         <td>
             <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].createUserArr.id %>"><%= dataArr[i].createUserArr.nickName %></a>
         </td>
-        <td><%= dataArr[i].createTime %></td>
         <td style="width:10%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].reason %></td>
         <td style="width:10%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].otherReason %></td>
+        <td><%= dataArr[i].createTime %></td>
         <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].replyContent %></td>
-        <td><%= dataArr[i].replyTime %></td>
         <td><%= dataArr[i].replyUserArr.userName %></td>
+        <td><%= dataArr[i].replyTime %></td>
         <td><%- dataArr[i].statusText %></td>
+        <td><%- dataArr[i].isReadText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>
@@ -97,7 +99,7 @@
     <% } %>
     <% } else { %>
     <tr>
-        <td colspan="8">没有符合条件的记录</td>
+        <td colspan="11">没有符合条件的记录</td>
     </tr>
     <% } %>
     </tbody>
@@ -107,6 +109,46 @@
     <form id="visaPassportForm" disabled="true">
         <fieldset>
             <input type="hidden" name="id" value="<%= dataArr.id %>">
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">ID</span>
+                        </div>
+                        <input type="text" class="form-control" value="<%= dataArr.id %>" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">用户昵称</span>
+                        </div>
+                        <input type="text" class="form-control" value="<%= dataArr.nickName %>" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">原因</span>
+                        </div>
+                        <input type="text" class="form-control" value="<%= dataArr.reason %>" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">其他原因</span>
+                        </div>
+                        <input type="text" class="form-control" value="<%= dataArr.otherReason %>" disabled>
+                    </div>
+                </div>
+            </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">

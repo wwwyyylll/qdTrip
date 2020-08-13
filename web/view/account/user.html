@@ -295,5 +295,63 @@
         </fieldset>
     </form>
 </script>
+<!--Modal添加分销商-->
+<script id="addDistDiv" type="text/html">
+    <form id="addDistForm" disabled="true">
+        <fieldset>
+            <input type="hidden" name="userId" value="<%= dataArr.userId %>">
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">会员ID</span>
+                        </div>
+                        <input type="text" disabled value="<%= dataArr.userId %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">会员昵称</span>
+                        </div>
+                        <input type="text" disabled value="<%= dataArr.nickName %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">分销商名称</span>
+                        </div>
+                        <input type="text" name="name" placeholder="请输入分销商名称" value="<%= dataArr.name %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">推广位</span>
+                        </div>
+                        <input type="text" name="adZoneId" placeholder="请输入推广位ID" value="<%= dataArr.adZoneId %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">备注</span>
+                        </div>
+                        <input type="text" name="content" placeholder="请输入备注" value="<%= dataArr.content %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
 <script data-main="/public/js/module/account/user"></script>
 @@include('../../inc-footer.html')

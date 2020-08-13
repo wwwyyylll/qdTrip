@@ -75,6 +75,10 @@ define("consts", function() {
             guestBook:{
                 '1':'<span style="color:red">待回复</span>',
                 '2':'<span style="color:green">已回复</span>'
+            },
+            isRead:{
+                '1':'<span style="color:green">已读</span>',
+                '2':'<span style="color:red">未读</span>'
             }
         }
     }

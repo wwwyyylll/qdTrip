@@ -354,6 +354,32 @@ define("apis", function() {
                 a:'allowLoginById'
             }
         },
+        distributors:{
+            getLists:{
+                c:'distributors',
+                a:'getLists'
+            },
+            create:{
+                c:'distributors',
+                a:'create'
+            },
+            getById:{
+                c:'distributors',
+                a:'getById'
+            },
+            updateById:{
+                c:'distributors',
+                a:'updateById'
+            },
+            onById:{
+                c:'distributors',
+                a:'onById'
+            },
+            offById:{
+                c:'distributors',
+                a:'offById'
+            }
+        },
         warn:{
             getLists:{
                 c:'warn',
