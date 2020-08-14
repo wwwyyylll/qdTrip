@@ -7,30 +7,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var comButtons = '<button class="btn btn-info" type="button" data-operate="look">查看详情</button>',
         allowButton = '<button class="btn btn-primary" type="button" data-operate="allow">允许登录</button>',
         disableButton = '<button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>',
-        addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">添加分销商</button>';
+        addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">设为分销商</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
         $("#searchCont").val("");
         $("#searchCont").attr("data-id",'');
-    })
-
-    //新增
-    $addModal.on("click",function(){
-        var initialData = {
-            dataArr:{}
-        };
-        utils.renderModal('新增', template('modalDiv',initialData), function(){
-            if($("#visaPassportForm").valid()){
-                utils.ajaxSubmit(apis.user.create,$("#visaPassportForm").serialize(),function(data){
-                    hound.success("添加成功","",1000);
-                    utils.modal.modal('hide');
-                    param.pageNo = 1;
-                    loadData();
-                })
-            }
-        }, 'lg');
-    })
+    });
 
     //页面操作配置
     var operates = {
@@ -73,12 +56,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     content:''
                 }
             };
-            utils.renderModal('添加分销商', template('addDistDiv',initialData), function(){
+            utils.renderModal('设为分销商', template('addDistDiv',initialData), function(){
                 if($("#addDistForm").valid()){
+                    utils.loading(true);
                     utils.ajaxSubmit(apis.distributors.create,$("#addDistForm").serialize(),function(data){
-                        hound.success("添加成功","",1000);
+                        utils.loading(false);
+                        hound.success("设置成功","",1000);
                         utils.modal.modal('hide');
-                        param.pageNo = 1;
                         loadData();
                     })
                 }
@@ -113,9 +97,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //根据状态值显示对应的状态文字 + 显示对应的 允许登录/禁止登录 按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.user[n.status];
+                n.isDistributorsText = consts.status.isBind[n.isDistributors];
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
-                (n.isDistributors=='yes')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
+                (n.isDistributors=='1')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
             });
             data.statusText = listDropDown.statusText;
             data.sourceText = listDropDown.sourceText;

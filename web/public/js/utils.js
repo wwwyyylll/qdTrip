@@ -36,7 +36,7 @@ define("utils", ["consts", "apis"], function(consts, apis) {
     });
 
     $.hound.setDefault({
-        loadingText: '读取中……'
+        loadingText: 'loading……'
     });
     $.hound.setHandle({
         success: function (json, success) {

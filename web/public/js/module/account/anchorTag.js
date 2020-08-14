@@ -103,7 +103,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         };
         utils.renderModal('新增主播标签', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
+                utils.loading(true);
                 utils.ajaxSubmit(apis.tag.create,$("#visaPassportForm").serialize(),function(data){
+                    utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
@@ -126,7 +128,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 };
                 utils.renderModal('编辑主播标签', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.tag.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();

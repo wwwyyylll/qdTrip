@@ -148,7 +148,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.renderModal('新增主播', template('modalDiv',initialData), function(){
             utils.reInputName($(".singItem"));
             if($("#visaPassportForm").valid()){
+                utils.loading(true);
                 utils.ajaxSubmit(apis.anchor.create,$("#visaPassportForm").serialize(),function(data){
+                    utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
@@ -184,7 +186,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     utils.reInputName($(".singItem"));
                     utils.reInputName($(".delItemSingle"));
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.anchor.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();

@@ -170,12 +170,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         };
         utils.renderModal('新增商品', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
+                utils.loading(true);
                 utils.ajaxSubmit(apis.goods.create,$("#visaPassportForm").serialize(),function(data){
                     $.cookie('anchorId',$("select[name=anchorId]").val());
                     $.cookie('dateId',$("select[name=dateId]").val());
                     utils.ajaxSubmit(apis.goods.getMaxSortByDateId,{anchorId:$.cookie('anchorId'),dateId:$.cookie('dateId')},function(data){
                         $.cookie('sort',data);
                     });
+                    utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
@@ -298,7 +300,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
                 utils.renderModal('编辑商品', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.goods.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
@@ -334,7 +338,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
                 utils.renderModal('编辑商品', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.goods.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();

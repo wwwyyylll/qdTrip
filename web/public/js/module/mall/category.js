@@ -24,7 +24,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         };
         utils.renderModal('新增分类', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
+                utils.loading(true);
                 utils.ajaxSubmit(apis.category.create,$("#visaPassportForm").serialize(),function(data){
+                    utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
@@ -45,7 +47,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 };
                 utils.renderModal('编辑分类', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.category.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();

@@ -66,6 +66,7 @@
             <!--</div>-->
         <!--</th>-->
         <th>来源</th>
+        <th>是否分销商</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -97,6 +98,7 @@
             <% } %>
         </td>
         <td><%- dataArr[i].sourceText %></td>
+        <td><%- dataArr[i].isDistributorsText %></td>
         <td><%- dataArr[i].statusText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
@@ -295,7 +297,7 @@
         </fieldset>
     </form>
 </script>
-<!--Modal添加分销商-->
+<!--Moda设为分销商-->
 <script id="addDistDiv" type="text/html">
     <form id="addDistForm" disabled="true">
         <fieldset>

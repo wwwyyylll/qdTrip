@@ -32,7 +32,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 };
                 utils.renderModal('完成', template('modalDiv', getByIdData),function(){
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.anchorCompleteRecord.save, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("操作成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();

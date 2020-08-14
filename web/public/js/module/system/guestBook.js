@@ -29,7 +29,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             };
             utils.renderModal('回复', template('modalDiv', getByIdData), function(){
                 if($("#visaPassportForm").valid()) {
+                    utils.loading(true);
                     utils.ajaxSubmit(apis.guestbook.replyById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.loading(false);
                         hound.success("回复成功", "", 1000);
                         utils.modal.modal('hide');
                         loadData();

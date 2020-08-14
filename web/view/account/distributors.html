@@ -17,13 +17,14 @@
             <div class="tile">
                 <div class="row" style="margin-bottom:20px ">
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <div class="btn-group economy-wards" role="group" aria-label="Button group with nested dropdown">
                             <input type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
                             <button class="btn btn-secondary" type="button" id="selectsearchlabel">分销商名称</button>
                             <div class="btn-group" role="group">
                                 <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item searchlabel" href="#">分销商名称</a>
+                                    <a class="dropdown-item searchlabel" href="#">会员昵称</a>
                                 </div>
                             </div>
                         </div>
@@ -52,9 +53,11 @@
     <tr>
         <th>ID</th>
         <th>会员ID</th>
+        <th>会员昵称</th>
         <th>名称</th>
         <th>推广位</th>
         <th>备注</th>
+        <th style="width:10%;word-wrap: break-word;word-break:break-all;">连接</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -77,9 +80,15 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td><%= dataArr[i].userId %></td>
+        <td>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].userId %>"><%= dataArr[i].nickName %></a>
+        </td>
         <td><%= dataArr[i].name %></td>
         <td><%= dataArr[i].adZoneId %></td>
         <td><%= dataArr[i].content %></td>
+        <td style="width:10%;word-wrap: break-word;word-break:break-all;">
+            <%= dataArr[i].url %>
+        </td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
@@ -91,7 +100,7 @@
     <% } %>
     <% } else { %>
     <tr>
-        <td colspan="8">没有符合条件的记录</td>
+        <td colspan="10">没有符合条件的记录</td>
     </tr>
     <% } %>
     </tbody>
@@ -119,6 +128,16 @@
                             <span class="input-group-text">会员ID</span>
                         </div>
                         <input type="text" disabled value="<%= dataArr.userId %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">会员昵称</span>
+                        </div>
+                        <input type="text" disabled value="<%= dataArr.nickName %>" class="form-control">
                     </div>
                 </div>
             </div>

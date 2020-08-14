@@ -26,7 +26,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 };
                 utils.renderModal('编辑分销商', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
+                        utils.loading(true);
                         utils.ajaxSubmit(apis.distributors.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
@@ -70,7 +72,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
-        name:''
+        name:'',
+        userId:''
     };
 
     function loadData() {
@@ -98,14 +101,72 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.pageNo = 1;
         loadData();
     });
+    $("#searchCont").on("input",function(){
+        var selectSearchLabel = $("#selectsearchlabel").text();
+        if(selectSearchLabel=="会员昵称"){
+            var param = {
+                pageNo: 1,
+                pageSize:10000000,
+                status:'',
+                nickName:$("#searchCont").val(),
+                warn:''
+            };
+            utils.ajaxSubmit(apis.user.getLists, param, function (data) {
+                if(data.dataArr.length!=0){
+                    var $economyAbilityItem = '';
+                    $.each(data.dataArr, function (i, v) {
+                        $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.nickName +'</div>'
+                    })
+                    $('.ability-list').remove();
+                    var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
+                    $("#searchCont").closest('.economy-wards').append($abilityList);
+
+                    $('.economy-ability-item').click(function(){
+                        $('.ability-list').remove();
+                        var $index = $(this).index();
+                        $("#searchCont").val(data.dataArr[$index].nickName);
+                        $("#searchCont").attr("data-id",data.dataArr[$index].id);
+                    });
+                }else{
+                    $('.ability-list').remove();
+                    var $abilityList = '<div class="ability-list">'+
+                        '<div data-id="-1" class="economy-ability-item">无数据</div>'
+                        +'</div>';
+                    $("#searchCont").closest('.economy-wards').append($abilityList);
+
+                    $('.economy-ability-item').click(function(){
+                        $('.ability-list').remove();
+                        var $index = $(this).index();
+                        $("#searchCont").val("无数据");
+                        $("#searchCont").attr("data-id","-1");
+                    });
+                }
+            });
+        }
+    });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.name = $("#searchCont").val();
-        loadData();
+        var selectSearchLabel = $("#selectsearchlabel").text();
+        if(selectSearchLabel=="分销商名称"){
+            param.name = $("#searchCont").val();
+            param.userId = '';
+            loadData();
+        }else if(selectSearchLabel=="会员昵称"){
+            if($("#searchCont").val()==''){
+                param.userId = '';
+            }else{
+                param.userId = $("#searchCont").attr("data-id");
+            }
+            param.name = '';
+            loadData();
+        }
     });
     $('#searchCont').on('keypress',function(event){
         if (event.keyCode == 13) {
             $('#search').click();
         }
     });
+    $(document).on("click",function(){
+        $('.ability-list').remove();
+    })
 });
