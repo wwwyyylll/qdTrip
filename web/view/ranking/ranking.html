@@ -1,15 +1,15 @@
-@@include('../../inc-header.html', {"title": "商品管理"})
+@@include('../../inc-header.html', {"title": "排行榜管理"})
 @@include('../../top-nav.html')
 @@include('../../left-nav.html')
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> 商品管理</h1>
+            <h1><i class="fa fa-th-list"></i> <span class="rankingTitle1"></span></h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active"><a href="#">商品管理</a></li>
+            <li class="breadcrumb-item active"><a href="#"><span class="rankingTitle2"></span></a></li>
         </ul>
     </div>
     <div class="row">
@@ -32,10 +32,7 @@
                         <div class="btn-group" style="margin-left:1%">
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
-                        <div class="btn-group" style="float:right">
-                            <button id="addModal" class="btn btn-primary" style="outline:none;margin-left: 3px">新增</button>
-                        </div>
-                        <div class="btn-group" style="float:right;margin-right: 5px">
+                        <div class="btn-group batchImportDiv" style="float:right;margin-right: 5px;display: none">
                             <button id="batchImport" class="btn btn-primary" style="outline:none;margin-left: 3px">批量导入</button>
                         </div>
                     </div>
@@ -54,20 +51,7 @@
 <!-- 列表模板 -->
 <script id="batchImportModal" type="text/html">
     <form id="importExcelForm" disabled="true">
-        <div class="form-row" style="margin-bottom: 15px">
-            <div class="col-7">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">来源</span>
-                    </div>
-                    <select name="source" class="form-control">
-                        <option value="">请选择</option>
-                        <!--<option value="1">京东</option>-->
-                        <option value="2" selected>淘宝</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        <h4 style="margin-bottom: 15px;color: red"><%= rankingTitle %></h4>
         <div class="form-row uploadFileBatchDiv" style="margin-bottom: 15px">
             <div class="col-7">
                 <div class="input-group">
@@ -86,6 +70,10 @@
         </div>
     </form>
 </script>
+<!-- title -->
+<script id="titleItem" type="text/html">
+    <%= rankingArr.title %>
+</script>
 <!-- 列表模板 -->
 <script id="visaListItem" type="text/html">
     <thead>
@@ -94,24 +82,7 @@
         <th style="width:8%;word-wrap: break-word;word-break:break-all;">标题</th>
         <th style="width:8%;word-wrap: break-word;word-break:break-all;">店铺</th>
         <th style="width:8%;word-wrap: break-word;word-break:break-all;">价格</th>
-        <!--<th>封面图</th>-->
-        <th class="em-min-7">
-            <div class="dropdown">
-                <span class="dropdown-toggle" id="dropAnchor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <%= anchorText %>
-                </span>
-                <div class="dropdown-menu" aria-labelledby="dropAnchor" id="dropAnchorOptions">
-                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <% for(var k=0;k < anchorArr.length;k++){ %>
-                    <a class="dropdown-item" href="javascript:" data-id="<%= anchorArr[k].id %>"><%= anchorArr[k].name %></a>
-                    <% } %>
-                </div>
-            </div>
-        </th>
-        <th class="em-min-8">
-            <div>带货日期</div>
-            <input type="text" autocomplete="off" class="em-7 py-0 px-1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择日期..." id="date">
-        </th>
+        <% if(rankingArr.from == 2){ %>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -125,18 +96,12 @@
                 </div>
             </div>
         </th>
-        <th class="em-min-7">
-            <div class="dropdown">
-                <span class="dropdown-toggle" id="dropSource" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <%= sourceText %>
-                </span>
-                <div class="dropdown-menu" aria-labelledby="dropdownVisaStatus" id="dropSourceOptions">
-                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <a class="dropdown-item" href="javascript:" data-id="1">京东</a>
-                    <a class="dropdown-item" href="javascript:" data-id="2">淘宝</a>
-                </div>
-            </div>
+        <% }else{ %>
+        <th class="em-min-8">
+            <div>日期</div>
+            <input type="text" autocomplete="off" class="em-7 py-0 px-1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择日期..." id="date">
         </th>
+        <% } %>
         <th style="width:9%;word-wrap: break-word;word-break:break-all;">淘口令</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -162,7 +127,6 @@
                 </div>
             </div>
         </th>
-        <th>排序</th>
         <th>添加人</th>
         <th style="width:100px;word-wrap: break-word;word-break:break-all;">最后更新时间</th>
         <th style="width: 160px">操作</th>
@@ -183,39 +147,19 @@
             <div style="margin-bottom: 5px;color: red"><%= dataArr[i].itemArr.couponInfo %></div>
             <div style="margin-bottom: 5px;color: #009688"><%= dataArr[i].itemArr.itemDescription %></div>
         </td>
-        <!--<td>-->
-            <!--<% if (dataArr[i].coverImg) { %>-->
-            <!--<a target="_blank" href="<%= dataArr[i].coverImg %>"><img src="<%= dataArr[i].coverImg %>" alt="" style="display: inline-block;width:50px;height: 50px"></a>-->
-            <!--<% } else { %>-->
-            <!--<span style="color:red">暂无图片</span>-->
-            <!--<% } %>-->
-        <!--</td>-->
         <td>
-            <%= dataArr[i].anchorArr.name %>
-            <span class="anchorId" style="display: none"><%= dataArr[i].anchorArr.id %></span>
-        </td>
-        <td>
-            <div style="margin-bottom: 5px"><%= dataArr[i].dateArr.date %></div>
-            <div>
-                <a href="@@HOSTview/account/anchorGoodsDate.html?id=<%= dataArr[i].dateArr.id %>" target="_blank" style="text-decoration: underline"><%= dataArr[i].dateArr.title %></a>
-            </div>
-            <span class="dateId" style="display: none"><%= dataArr[i].dateArr.id %></span>
-        </td>
-        <td>
+            <% if(rankingArr.from == 2){ %>
             <%= dataArr[i].categoryArr.title %>
             <span class="categoryId" style="display: none"><%= dataArr[i].categoryArr.id %></span>
-        </td>
-        <td><%- dataArr[i].sourceText %></td>
-        <td style="width:9%;word-wrap: break-word;word-break:break-all;">
-            <% if(dataArr[i].source==1){ %>
-            <a target="_blank" href="<%= dataArr[i].url %>"><%= dataArr[i].url %></a>
-            <% }else if(dataArr[i].source==2){ %>
-            <a target="_blank" href="<%= dataArr[i].url %>"><%= dataArr[i].itemArr.pwd %></a>
+            <% }else{ %>
+            <%= dataArr[i].date %>
             <% } %>
+        </td>
+        <td style="width:9%;word-wrap: break-word;word-break:break-all;">
+            <a target="_blank" href="<%= dataArr[i].url %>"><%= dataArr[i].itemArr.pwd %></a>
         </td>
         <td><%- dataArr[i].statusText %></td>
         <td><%- dataArr[i].syncWayText %></td>
-        <td><%= dataArr[i].sort %></td>
         <td><%= dataArr[i].operatorName %></td>
         <td style="width:100px;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].updateTime %></td>
         <td>
@@ -232,7 +176,7 @@
     <% } %>
     </tbody>
 </script>
-<!--Modal新增,编辑，查看-->
+<!--Modal查看-->
 <script id="modalDiv" type="text/html">
     <form id="visaPassportForm" disabled="true">
         <fieldset>
@@ -252,86 +196,30 @@
                 </div>
             </div>
             <% } %>
-            <!--<div class="form-row" style="margin-bottom: 15px">-->
-                <!--<div class="col-12">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-prepend">-->
-                            <!--<span class="input-group-text">标题</span>-->
-                        <!--</div>-->
-                        <!--<input type="text" name="title" placeholder="请输入标题" value="<%= dataArr.title %>" class="form-control" required>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">主播</span>
-                        </div>
-                        <select name="anchorId" class="form-control" required>
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < anchorArr.length; i++) { %>
-                            <option value="<%= anchorArr[i].id %>" <% if(dataArr.anchorArr.id==anchorArr[i].id) { %> selected <% } %>><%= anchorArr[i].name %></option>
-                            <% }%>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-9">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">带货日期</span>
-                        </div>
-                        <select name="dateId" class="form-control" required>
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < dateArr.length; i++) { %>
-                            <% if(dateArr[i].anchorId == dataArr.anchorArr.id){ %>
-                            <option value="<%= dateArr[i].id %>" <% if(dataArr.dateArr.id==dateArr[i].id) { %> selected <% } %>><%= dateArr[i].date %>  <%= dateArr[i].title %>  【<%= dateArr[i].statusText %>】</option>
-                            <% }%>
-                            <% }%>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">来源</span>
-                        </div>
-                        <select name="source" class="form-control" required>
-                            <option value="">请选择</option>
-                            <option value="1" <% if(dataArr.source==1){ %> selected <% } %>>京东</option>
-                            <option value="2" <% if(dataArr.source==2){ %> selected <% } %>>淘宝</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">分类</span>
                         </div>
-                        <select name="categoryId" class="form-control" required>
+                        <% if(goodsFrom==2){ %>
+                        <select name="categoryId" class="form-control"  disabled>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < categoryArr.length; i++) { %>
                             <option value="<%= categoryArr[i].id %>" <% if(dataArr.categoryArr.id==categoryArr[i].id) { %> selected <% } %>><%= categoryArr[i].title %></option>
                             <% }%>
                         </select>
+                        <% }else{ %>
+                        <input type="text" name="categoryId" class="form-control" value=""  disabled>
+                        <% } %>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">排序</span>
+                            <span class="input-group-text">排序值</span>
                         </div>
-                        <input type="text" name="sort" placeholder="请输入排序" value="<%= dataArr.sort %>" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">销量</span>
-                        </div>
-                        <input type="text" name="salesNum" placeholder="请输入销量" value="<%= dataArr.salesNum %>" class="form-control" required>
+                        <input type="text" name="salesNum" placeholder="请输入排序值" value="<%= dataArr.salesNum %>" class="form-control"  disabled>
                     </div>
                 </div>
             </div>
@@ -341,7 +229,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">商品信息-宝贝id</span>
                         </div>
-                        <input type="text" name="itemId" placeholder="请输入商品信息-宝贝id" value="<%= dataArr.itemArr.itemId %>" class="form-control" required>
+                        <input type="text" name="itemId" placeholder="请输入商品信息-宝贝id" value="<%= dataArr.itemArr.itemId %>" class="form-control"  disabled>
                     </div>
                 </div>
                 <% if(dataArr.id){ %>
@@ -353,24 +241,6 @@
                 </div>
                 <% } %>
             </div>
-            <!--<div class="form-row" style="margin-bottom: 15px;display: none">-->
-                <!--<div class="col-6">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-prepend">-->
-                            <!--<span class="input-group-text">备注1</span>-->
-                        <!--</div>-->
-                        <!--<input type="text" name="memo1" placeholder="请输入备注1" value="<%= dataArr.memo1 %>" class="form-control">-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-6">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-prepend">-->
-                            <!--<span class="input-group-text">相关ID</span>-->
-                        <!--</div>-->
-                        <!--<input type="text" name="memo2" placeholder="请输入相关ID" value="<%= dataArr.memo2 %>" class="form-control">-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-row" style="margin-bottom: 5px;display: none">
                 <div class="col-12">
                     <h5 class="imgSizeMessage" style="color: red">
@@ -401,10 +271,6 @@
                         <% } %>
                         <!--<input type="hidden" name="coverImg" value="<%= dataArr.coverImg %>">-->
                     </div>
-                </div>
-                <div class="col-7">
-                    <button type="button" class="btn btn-default secondCancel" data-operate="sameCancel" style="float: right">取消</button>
-                    <button type="button" class="btn btn-primary" data-operate="sameUpdate" style="float: right;margin-right: 10px">确定</button>
                 </div>
                 <% } %>
             </div>
@@ -628,6 +494,6 @@
         </fieldset>
     </form>
 </script>
-<script data-main="/public/js/module/mall/goods"></script>
+<script data-main="/public/js/module/ranking/ranking"></script>
 <script type="text/javascript" src="/public/js/plugins/clipboard.min.js"></script>
 @@include('../../inc-footer.html')

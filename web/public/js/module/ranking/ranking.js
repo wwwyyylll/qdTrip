@@ -1,17 +1,14 @@
 require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var searchlabel = $(".searchlabel");
-    var $addModal = $("#addModal");
     var $sampleTable = $('#sampleTable');
     var $visaPagination = $("#visaPagination");
     var $searchCont = $("#searchCont");
     var $batchImport = $("#batchImport");
     //按钮组集合
     var comButtons =
-            '<button class="btn btn-primary" type="button" data-operate="edit">编辑</button>'+
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">上架</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">下架</button>',
-        soldOutButton = '<button class="btn btn-warning" type="button" data-operate="soldOut">售罄</button>',
         delButton = '<button class="btn btn-danger" type="button" data-operate="del">删除</button>',
         handButton = '<button class="btn btn-success" type="button" data-operate="hand">手动同步</button>',
         autoButton = '<button class="btn btn-primary" type="button" data-operate="auto">自动同步</button>';
@@ -20,83 +17,34 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#selectsearchlabel").text($(this).text());
         $("#searchCont").val("");
         $("#searchCont").attr("data-id",'');
-    })
+    });
 
-    function getDateArr(){
-        $("select[name=anchorId]").on("change",function(){
-            var anchorId = $(this).val();
-            $.cookie('anchorId',anchorId);
-            if(anchorId!=''){
-                var dateParam = {
-                    pageNo: 1,
-                    pageSize:50000,
-                    status:'',
-                    title:'',
-                    date:'',
-                    anchorId:anchorId
-                };
-                utils.ajaxSubmit(apis.anchorGoodsDate.getLists, dateParam, function (data) {
-                    var optionArr = '<option value="">请选择</option>';
-                    $.each(data.dataArr,function(i,n){
-                        n.statusText = consts.status.goodsText[n.status];
-                        optionArr+= "<option value='"+ n.id +"'>"+ n.date + "&nbsp;&nbsp;" + n.title + "【" + n.statusText + "】" +"</option>";
-                    });
-                    $("select[name=dateId]").html("");
-                    $("select[name=dateId]").html(optionArr);
-                })
-            }else{
-                $("select[name=dateId]").html('<option value="">请选择</option>');
-            }
-            $("input[name=sort]").val("1");
-        });
-        $("select[name=source]").on("change",function(){
-            if($(this).val()==2){
-                $("input[name=url]").attr("placeholder","请输入商品淘口令");
-                $("input[name=url]").parent().find("span").text("商品淘口令");
-            }else{
-                $("input[name=url]").attr("placeholder","请输入商品链接");
-                $("input[name=url]").parent().find("span").text("商品链接");
-            }
-        });
-        $(".close").on("click",function(){
-            $.cookie('anchorId',$("select[name=anchorId]").val());
-            $.cookie('dateId',$("select[name=dateId]").val());
-            utils.ajaxSubmit(apis.goods.getMaxSortByDateId,{anchorId:$.cookie('anchorId'),dateId:$.cookie('dateId')},function(data){
-                $.cookie('sort',data);
-            });
-        });
-        $(".modal-footer").find("button").eq(1).on("click",function(){
-            $.cookie('anchorId',$("select[name=anchorId]").val());
-            $.cookie('dateId',$("select[name=dateId]").val());
-            utils.ajaxSubmit(apis.goods.getMaxSortByDateId,{anchorId:$.cookie('anchorId'),dateId:$.cookie('dateId')},function(data){
-                $.cookie('sort',data);
-            });
-        })
+    var rankingId;
+    var rankingTitle;
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0].indexOf('html')=="-1"){
+        rankingId = urlParam[0];
     }
 
     var importFileData = '';
     $batchImport.on("click",function(){
-        utils.renderModal('批量导入', template('batchImportModal',''), function(){
+        var batchData = {
+            rankingTitle:rankingTitle
+        };
+        utils.renderModal('批量导入', template('batchImportModal',batchData), function(){
             utils.loading(true);
-            //console.log(importFileData);
-            //var importData = {
-            //    source:$("select[name=source]").val(),
-            //    file:importFileData
-            //}
-            //utils.ajaxSubmit(apis.goods.importFromExcel, importData, function (data) {
-            //    hound.success("导入成功", "", 1000);
-            //    utils.modal.modal('hide');
-            //    loadData();
-            //})
-
             var formFile = new FormData();
-            formFile.append("c", "goods");
+            formFile.append("c", "rankingGoods");
             formFile.append("a", "importFromExcel");
             formFile.append("linkUserName", consts.param.linkUserName);
             formFile.append("linkPassword", consts.param.linkPassword);
             formFile.append("signature", consts.param.signature);
             formFile.append("userToken", $.cookie('userToken'));
-            formFile.append("source", $("select[name=source]").val());
+            formFile.append("rankingId", rankingId);
             formFile.append("file", importFileData);
 
             $.ajax({
@@ -138,64 +86,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $(".imgUrl").html('<i class="fa fa-folder mr-2"></i>' + file.name)
             };
             reader.readAsDataURL(file);
-
-            //if(file){
-            //    var url = URL.createObjectURL(file);
-            //    var base64 = blobToDataURL(file,function(base64Url) {
-            //        importFileData = base64Url;
-            //    })
-            //}
         });
     });
 
-    //新增商品
-    $addModal.on("click",function(){
-        var initialData = {
-            dataArr:{
-                anchorArr:{
-                    id:$.cookie('anchorId')
-                },
-                dateArr:{
-                    id:$.cookie('dateId')
-                },
-                categoryArr:{},
-                itemArr:{},
-                shopArr:{},
-                sort:$.cookie('sort'),
-                source:2
-            },
-            anchorArr:anchorArr,
-            categoryArr:categoryArr,
-            dateArr:dateArr
-        };
-        utils.renderModal('新增商品', template('modalDiv',initialData), function(){
-            if($("#visaPassportForm").valid()){
-                utils.loading(true);
-                utils.ajaxSubmit(apis.goods.create,$("#visaPassportForm").serialize(),function(data){
-                    $.cookie('anchorId',$("select[name=anchorId]").val());
-                    $.cookie('dateId',$("select[name=dateId]").val());
-                    utils.ajaxSubmit(apis.goods.getMaxSortByDateId,{anchorId:$.cookie('anchorId'),dateId:$.cookie('dateId')},function(data){
-                        $.cookie('sort',data);
-                    });
-                    utils.loading(false);
-                    hound.success("添加成功","",1000);
-                    utils.modal.modal('hide');
-                    param.pageNo = 1;
-                    loadData();
-                })
-            }
-        }, 'lg');
-        uploadFile();
-        getDateArr();
-        $("select[name=dateId]").on("change",function(){
-            var anchorId = $("select[name=anchorId]").val();
-            var dateId = $(this).val();
-            $.cookie('dateId',dateId);
-            utils.ajaxSubmit(apis.goods.getMaxSortByDateId,{anchorId:anchorId,dateId:dateId},function(data){
-               $("input[name=sort]").val(data);
-            })
-        })
-    })
     function blobToDataURL(blob,cb) {
         var reader = new FileReader();
         reader.onload = function (evt) {
@@ -290,18 +183,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.goods.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.rankingGoods.getById, {id: id,rankingId:rankingId}, function (data) {
                 var getByIdData = {
-                    dataArr:data,
-                    anchorArr:anchorArr,
+                    dataArr:data.dataArr,
                     categoryArr:categoryArr,
-                    dateArr:dateArr
+                    goodsFrom:goodsFrom
                 };
                 getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
                 utils.renderModal('编辑商品', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
                         utils.loading(true);
-                        utils.ajaxSubmit(apis.goods.updateById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.ajaxSubmit(apis.rankingGoods.updateById, $("#visaPassportForm").serialize(), function (data) {
                             utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
@@ -310,7 +202,6 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     }
                 }, 'lg');
                 uploadFile();
-                getDateArr();
                 closeWindow();
             });
         },
@@ -328,28 +219,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $("input[name=id]").val();
             var itemId = $("input[name=itemId]").val();
             utils.loading(true);
-            utils.ajaxSubmit(apis.goods.syncById, {id: id,itemId:itemId}, function (data) {
-                var getByIdData = {
-                    dataArr:data,
-                    anchorArr:anchorArr,
-                    categoryArr:categoryArr,
-                    dateArr:dateArr
-                };
-                getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
-                utils.renderModal('编辑商品', template('modalDiv', getByIdData), function(){
-                    if($("#visaPassportForm").valid()) {
-                        utils.loading(true);
-                        utils.ajaxSubmit(apis.goods.updateById, $("#visaPassportForm").serialize(), function (data) {
-                            utils.loading(false);
-                            hound.success("编辑成功", "", 1000);
-                            utils.modal.modal('hide');
-                            loadData();
-                        })
-                    }
-                }, 'lg');
-                uploadFile();
-                getDateArr();
-                closeWindow();
+            utils.ajaxSubmit(apis.rankingGoods.syncById, {id: id,itemId:itemId,rankingId:rankingId}, function (data) {
+                //var getByIdData = {
+                //    dataArr:data.dataArr,
+                //    categoryArr:categoryArr
+                //};
+                //getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
+                //utils.renderModal('查看商品', template('modalDiv', getByIdData),'', 'lg');
+                //uploadFile();
+                //closeWindow();
                 utils.loading(false);
                 hound.success("同步成功", "", 1000);
             });
@@ -357,7 +235,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         updateTaoPwd:function($this){
             var id = $("input[name=id]").val();
             hound.confirm('确认更新淘口令吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.getPwdById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.getPwdById, {id: id,rankingId:rankingId}, function (data) {
                     $(".pwd").val(data);
                 });
             });
@@ -365,23 +243,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.goods.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.rankingGoods.getById, {id: id,rankingId:rankingId}, function (data) {
                 var getByIdData = {
-                    dataArr:data,
-                    anchorArr:anchorArr,
-                    categoryArr:categoryArr,
-                    dateArr:dateArr
+                    dataArr:data.dataArr,
+                    categoryArr:categoryArr
                 };
                 getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
                 utils.renderModal('查看商品', template('modalDiv', getByIdData),'', 'lg');
-                $("#visaPassportForm").append($("fieldset").prop('disabled', true));
             });
         },
         //无效
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认下架吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.offById, {id: id,rankingId:rankingId}, function (data) {
                     loadData();
                 });
             });
@@ -390,16 +265,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认上架吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.onById, {id: id}, function (data) {
-                    loadData();
-                });
-            });
-        },
-        //售罄
-        soldOut:function($this){
-            var id = $this.closest("tr").attr("data-id");
-            hound.confirm('确认售罄吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.soldOutById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.onById, {id: id,rankingId:rankingId}, function (data) {
                     loadData();
                 });
             });
@@ -408,7 +274,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         del:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认删除吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.delById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.delById, {id: id,rankingId:rankingId}, function (data) {
                     loadData();
                 });
             });
@@ -416,7 +282,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         hand:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认手动同步吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.handSyncById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.handSyncById, {id: id,rankingId:rankingId}, function (data) {
                     loadData();
                 });
             });
@@ -424,7 +290,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         auto:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认自动同步吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.autoSyncById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.autoSyncById, {id: id,rankingId:rankingId}, function (data) {
                     loadData();
                 });
             });
@@ -435,68 +301,26 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
-        title:'',
-        anchorId:'',
-        source:'',
-        categoryId:'',
-        dateId:'',
-        date:'',
         id:'',
+        title:'',
+        categoryId:'',
         syncWay:'',
-        externalId:''
+        itemId:'',
+        date:'',
+        rankingId:rankingId
     };
     var listDropDown = {
-        anchorText:'主播',
         categoryText:'分类',
-        sourceText:'来源',
         statusText:'状态',
-        dateText:'带货日期',
         syncWayText:'同步方式'
     };
 
-    var anchorArr;
     var categoryArr;
-    var dateArr;
-    function getDownLists(){
-        var anchorParam = {
-            pageNo: 1,
-            pageSize:50000,
-            name:'',
-            status:''
-        };
-        utils.ajaxSubmit(apis.anchor.getLists, anchorParam, function (data) {
-            anchorArr = data.dataArr;
-        });
-        var categoryParam = {
-            pageNo: 1,
-            pageSize:50000,
-            title:'',
-            status:'',
-            orderBy:1
-        };
-        utils.ajaxSubmit(apis.category.getLists, categoryParam, function (data) {
-            categoryArr = data.dataArr;
-        });
-        var dateParam = {
-            pageNo: 1,
-            pageSize:50000,
-            status:'',
-            title:'',
-            date:'',
-            anchorId:''
-        };
-        utils.ajaxSubmit(apis.anchorGoodsDate.getLists, dateParam, function (data) {
-            dateArr = data.dataArr;
-            $.each(dateArr,function(i,n){
-                n.statusText = consts.status.goodsText[n.status];
-            })
-        });
-    }
+    var goodsFrom;
     function loadData() {
-        utils.ajaxSubmit(apis.goods.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.rankingGoods.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.goods[n.status];
-                n.sourceText = consts.status.source[n.source];
                 n.syncWayText = consts.status.syncWay[n.itemArr.syncWay];
                 if(n.status=="1"){
                     n.materialButtonGroup = comButtons + stopButton + delButton;
@@ -511,16 +335,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     n.materialButtonGroup = n.materialButtonGroup + handButton;
                 }
             });
-            data.anchorArr = anchorArr;
-            data.categoryArr = categoryArr;
-            data.dateArr = dateArr;
-            data.anchorText = listDropDown.anchorText;
+            categoryArr = data.category;
+            goodsFrom = data.rankingArr.from;
             data.categoryText = listDropDown.categoryText;
-            data.sourceText = listDropDown.sourceText;
             data.statusText = listDropDown.statusText;
-            data.dateText = listDropDown.dateText;
             data.syncWayText = listDropDown.syncWayText;
             $sampleTable.html(template('visaListItem', data));
+            $(".rankingTitle1").html(template('titleItem', data));
+            $(".rankingTitle2").html(template('titleItem', data));
+            rankingTitle = data.rankingArr.title;
+            (data.rankingArr.from==1)? $(".batchImportDiv").show() : $(".batchImportDiv").hide();
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
             $sampleTable.find('#date').val(param.date);
@@ -528,29 +352,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
-    var loc = location.href;
-    var n1 = loc.length;//地址的总长度
-    var n2 = loc.indexOf("=");//取得=号的位置
-    var n3 = loc.indexOf("?");//取得?号的位置
-    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
-    if(loc.substr(n3).indexOf("dateId")!='-1'){
-        var urlParam = id.split("=");
-        param.dateId = urlParam[0];
-    }else{
-        var urlParam = id.split("=");
-        if(urlParam[0]==1){
-            param.status = 2;
-            listDropDown.statusText = "下架";
-        }else{
-            param.status = '';
-            listDropDown.statusText = "状态";
-        }
-    }
-
-    getDownLists();
-    setTimeout(function(){
-        loadData();
-    },100);
+    loadData();
     utils.bindList($(document), operates);
 
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
@@ -558,24 +360,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
         param.pageNo = 1;
         loadData();
-    }).on('click', '#dropAnchorOptions a[data-id]', function () {
-        param.anchorId = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.anchorText = "主播" : listDropDown.anchorText = $(this).text();
-        param.pageNo = 1;
-        loadData();
     }).on('click', '#dropCategoryOptions a[data-id]', function () {
         param.categoryId = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.categoryText = "分类" : listDropDown.categoryText = $(this).text();
-        param.pageNo = 1;
-        loadData();
-    }).on('click', '#dropSourceOptions a[data-id]', function () {
-        param.source = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.sourceText = "来源" : listDropDown.sourceText = $(this).text();
-        param.pageNo = 1;
-        loadData();
-    }).on('click', '#dropDateOptions a[data-id]', function () {
-        param.dateId = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.dateText = "带货日期" : listDropDown.dateText = $(this).text();
         param.pageNo = 1;
         loadData();
     }).on('click', '#dropSyncWayOptions a[data-id]', function () {
@@ -600,16 +387,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         if(selectSearchLabel=="商品ID"){
             param.id = $("#searchCont").val();
             param.title = '';
-            param.externalId = '';
+            param.itemId = '';
             loadData();
         }else if(selectSearchLabel=="淘宝商品ID"){
             param.id = '';
             param.title = '';
-            param.externalId = $("#searchCont").val();
+            param.itemId = $("#searchCont").val();
             loadData();
         }else if(selectSearchLabel=="标题"){
             param.id = '';
-            param.externalId = '';
+            param.itemId = '';
             param.title = $("#searchCont").val();
             loadData();
         }

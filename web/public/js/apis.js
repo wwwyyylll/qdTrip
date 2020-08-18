@@ -396,6 +396,54 @@ define("apis", function() {
                 a:'replyById'
             }
         },
+        ranking:{
+            getLists:{
+                c:'ranking',
+                a:'getLists'
+            }
+        },
+        rankingGoods:{
+            importFromExcel:{
+                c:'rankingGoods',
+                a:'importFromExcel'
+            },
+            getLists:{
+                c:'rankingGoods',
+                a:'getLists'
+            },
+            getById:{
+                c:'rankingGoods',
+                a:'getById'
+            },
+            onById:{
+                c:'rankingGoods',
+                a:'onById'
+            },
+            offById:{
+                c:'rankingGoods',
+                a:'offById'
+            },
+            delById:{
+                c:'rankingGoods',
+                a:'delById'
+            },
+            syncById:{
+                c:'rankingGoods',
+                a:'syncById'
+            },
+            autoSyncById:{
+                c:'rankingGoods',
+                a:'autoSyncById'
+            },
+            handSyncById:{
+                c:'rankingGoods',
+                a:'handSyncById'
+            },
+            getPwdById:{
+                c:'rankingGoods',
+                a:'getPwdById'
+            }
+        },
 
         role:{
             getLists:{

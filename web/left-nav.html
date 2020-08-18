@@ -22,6 +22,11 @@
                 <li><a class="treeview-item" href="@@HOSTview/account/anchorCompleteRecord.html"><i class="icon fa fa-circle-o"></i> 主播完成记录</a></li>
             </ul>
         </li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">排行榜管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu" id="rankingDiv">
+
+            </ul>
+        </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="@@HOSTview/mall/shop.html"><i class="icon fa fa-circle-o"></i> 店铺管理</a></li>
@@ -58,3 +63,8 @@
         </li>
     </ul>
 </aside>
+<script id="rankingItem" type="text/html">
+    <% for(var i=0;i < dataArr.length;i++){ %>
+    <li><a class="treeview-item" href="@@HOSTview/ranking/ranking.html?id=<%= dataArr[i].id %>"><i class="icon fa fa-circle-o"></i> <%= dataArr[i].title %> </a></li>
+    <% } %>
+</script>
