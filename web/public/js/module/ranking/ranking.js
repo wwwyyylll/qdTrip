@@ -6,7 +6,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var $batchImport = $("#batchImport");
     //按钮组集合
     var comButtons =
-            '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
+            '<button class="btn btn-primary" type="button" data-operate="look">编辑</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">上架</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">下架</button>',
         delButton = '<button class="btn btn-danger" type="button" data-operate="del">删除</button>',
@@ -220,16 +220,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var itemId = $("input[name=itemId]").val();
             utils.loading(true);
             utils.ajaxSubmit(apis.rankingGoods.syncById, {id: id,itemId:itemId,rankingId:rankingId}, function (data) {
-                //var getByIdData = {
-                //    dataArr:data.dataArr,
-                //    categoryArr:categoryArr
-                //};
-                //getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
-                //utils.renderModal('查看商品', template('modalDiv', getByIdData),'', 'lg');
-                //uploadFile();
-                //closeWindow();
                 utils.loading(false);
+                var getByIdData = {
+                    dataArr:data.dataArr,
+                    categoryArr:categoryArr
+                };
+                getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
+                utils.renderModal('编辑商品', template('modalDiv', getByIdData),'', 'lg');
+                uploadFile();
+                closeWindow();
                 hound.success("同步成功", "", 1000);
+                loadData();
             });
         },
         updateTaoPwd:function($this){
@@ -249,7 +250,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     categoryArr:categoryArr
                 };
                 getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
-                utils.renderModal('查看商品', template('modalDiv', getByIdData),'', 'lg');
+                utils.renderModal('编辑商品', template('modalDiv', getByIdData),'', 'lg');
             });
         },
         //无效

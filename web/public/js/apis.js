@@ -400,6 +400,26 @@ define("apis", function() {
             getLists:{
                 c:'ranking',
                 a:'getLists'
+            },
+            create:{
+                c:'ranking',
+                a:'create'
+            },
+            getById:{
+                c:'ranking',
+                a:'getById'
+            },
+            updateById:{
+                c:'ranking',
+                a:'updateById'
+            },
+            onById:{
+                c:'ranking',
+                a:'onById'
+            },
+            offById:{
+                c:'ranking',
+                a:'offById'
             }
         },
         rankingGoods:{

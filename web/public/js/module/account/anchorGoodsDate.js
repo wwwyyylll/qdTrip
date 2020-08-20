@@ -99,7 +99,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认发送直播通知吗?', '', function () {
                 utils.ajaxSubmit(apis.anchorGoodsDate.sendNotice, {id: id}, function (data) {
-                    loadData();
+                    hound.success(data,"",'').then(function(){
+                        loadData();
+                    });
                 });
             });
         },

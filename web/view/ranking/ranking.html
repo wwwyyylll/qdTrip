@@ -197,6 +197,16 @@
             </div>
             <% } %>
             <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">标题</span>
+                        </div>
+                        <input type="text" name="title" value="<%= dataArr.itemArr.title %>" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -229,7 +239,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">商品信息-宝贝id</span>
                         </div>
-                        <input type="text" name="itemId" placeholder="请输入商品信息-宝贝id" value="<%= dataArr.itemArr.itemId %>" class="form-control"  disabled>
+                        <input type="text" name="itemId" placeholder="请输入商品信息-宝贝id" value="<%= dataArr.itemArr.itemId %>" class="form-control">
                     </div>
                 </div>
                 <% if(dataArr.id){ %>

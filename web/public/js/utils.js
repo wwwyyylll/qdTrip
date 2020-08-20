@@ -47,6 +47,7 @@ define("utils", ["consts", "apis"], function(consts, apis) {
                     }
                     break;
                 case 'A00001':
+                    me.loading(false);
                     $.hound.error(json.message);
                     //$.hound.redirect(consts.login, json.message);
                     break;
@@ -62,6 +63,7 @@ define("utils", ["consts", "apis"], function(consts, apis) {
                     location.href = '@@HOSTlogin.html';
                     break;
                 default:
+                    me.loading(false);
                     $.hound.error(json.message);
                     break;
             }

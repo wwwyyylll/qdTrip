@@ -64,6 +64,7 @@
     </ul>
 </aside>
 <script id="rankingItem" type="text/html">
+    <li><a class="treeview-item" href="@@HOSTview/ranking/rankingList.html"><i class="icon fa fa-circle-o"></i> 排行榜管理 </a></li>
     <% for(var i=0;i < dataArr.length;i++){ %>
     <li><a class="treeview-item" href="@@HOSTview/ranking/ranking.html?id=<%= dataArr[i].id %>"><i class="icon fa fa-circle-o"></i> <%= dataArr[i].title %> </a></li>
     <% } %>

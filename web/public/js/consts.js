@@ -79,6 +79,10 @@ define("consts", function() {
             isRead:{
                 '1':'<span style="color:green">已读</span>',
                 '2':'<span style="color:red">未读</span>'
+            },
+            ranking:{
+                '1':'<span style="color:red">抖音</span>',
+                '2':'<span style="color:orange">淘宝</span>'
             }
         }
     }
