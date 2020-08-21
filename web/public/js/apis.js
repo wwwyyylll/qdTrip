@@ -294,6 +294,20 @@ define("apis", function() {
                 a:'getById'
             }
         },
+        rankingCompleteRecord:{
+            getLists:{
+                c:'rankingCompleteRecord',
+                a:'getLists'
+            },
+            save:{
+                c:'rankingCompleteRecord',
+                a:'save'
+            },
+            getById:{
+                c:'rankingCompleteRecord',
+                a:'getById'
+            }
+        },
         goodsSoldOutSign:{
             getLists:{
                 c:'goodsSoldOutSign',
@@ -333,6 +347,32 @@ define("apis", function() {
             },
             offById:{
                 c:'admin',
+                a:'offById'
+            }
+        },
+        searchSystemKeywords:{
+            getLists:{
+                c:'searchSystemKeywords',
+                a:'getLists'
+            },
+            create:{
+                c:'searchSystemKeywords',
+                a:'create'
+            },
+            getById:{
+                c:'searchSystemKeywords',
+                a:'getById'
+            },
+            updateById:{
+                c:'searchSystemKeywords',
+                a:'updateById'
+            },
+            onById:{
+                c:'searchSystemKeywords',
+                a:'onById'
+            },
+            offById:{
+                c:'searchSystemKeywords',
                 a:'offById'
             }
         },

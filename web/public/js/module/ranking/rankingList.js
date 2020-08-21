@@ -36,7 +36,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         }, 'lg');
         $(".modal-body").css({background:"#ece9e9"});
         uploadFile();
+        showIndex();
     });
+
+    function showIndex(){
+        $("select[name=isShowSearchIndex]").change(function(){
+            if($(this).val()==1){
+                $(this).closest(".col-6").next(".col-6").show();
+            }else{
+                $(this).closest(".col-6").next(".col-6").hide();
+            }
+        })
+    }
 
     //上传图片文件
     function blobToDataURL(blob,cb) {
@@ -126,6 +137,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }, 'lg');
                 $(".modal-body").css({background:"#ece9e9"});
                 uploadFile();
+                showIndex();
             });
         },
         //查看
@@ -174,6 +186,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
                 n.sourceText = consts.status.ranking[n.source];
+                n.isShowSearchIndexText = consts.status.isBind[n.isShowSearchIndex];
+                n.showSearchIndexPositionText = consts.status.indexPosition[n.showSearchIndexPosition];
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
             });
             data.statusText = listDropDown.statusText;

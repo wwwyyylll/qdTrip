@@ -82,6 +82,7 @@
         <th style="width:15%;word-wrap: break-word;word-break:break-all;">标题</th>
         <th>来源</th>
         <th>排序</th>
+        <th>是否显示在搜索首页+位置</th>
         <th>首页标题图</th>
         <th>首页背景图</th>
         <th>商品列表页头部图</th>
@@ -111,6 +112,12 @@
         <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
         <td><%- dataArr[i].sourceText %></td>
         <td><%= dataArr[i].sort %></td>
+        <td>
+            <%- dataArr[i].isShowSearchIndexText %>
+            <% if(dataArr[i].isShowSearchIndex==1){ %>
+            <%- dataArr[i].showSearchIndexPositionText %>
+            <% } %>
+        </td>
         <td style="background: #e2e2e2">
             <% if(dataArr[i].indexTitlePic){ %>
             <a href="<%= dataArr[i].indexTitlePic %>" target="_blank">
@@ -204,6 +211,34 @@
                             <span class="input-group-text">商品列表页背景颜色</span>
                         </div>
                         <input type="text" name="listBackgroundColor" placeholder="请输入商品列表页背景颜色" value="<%= dataArr.listBackgroundColor %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">是否显示在搜索首页</span>
+                        </div>
+                        <select name="isShowSearchIndex" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="1" <% if(dataArr.isShowSearchIndex==1){ %> selected <% } %>>是</option>
+                            <option value="2" <% if(dataArr.isShowSearchIndex==2){ %> selected <% } %>>否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6" <% if(dataArr.isShowSearchIndex==1){ %> style="display:block" <% }else{ %> style="display:none" <% } %>>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">搜索页广告位位置</span>
+                        </div>
+                        <select name="showSearchIndexPosition" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="1" <% if(dataArr.showSearchIndexPosition==1){ %> selected <% } %>>左一</option>
+                            <option value="2" <% if(dataArr.showSearchIndexPosition==2){ %> selected <% } %>>左二</option>
+                            <option value="3" <% if(dataArr.showSearchIndexPosition==3){ %> selected <% } %>>右一</option>
+                            <option value="4" <% if(dataArr.showSearchIndexPosition==4){ %> selected <% } %>>右二</option>
+                        </select>
                     </div>
                 </div>
             </div>

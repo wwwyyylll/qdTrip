@@ -83,6 +83,12 @@ define("consts", function() {
             ranking:{
                 '1':'<span style="color:red">抖音</span>',
                 '2':'<span style="color:orange">淘宝</span>'
+            },
+            indexPosition:{
+                '1':'<span style="color:red">【左一】</span>',
+                '2':'<span style="color:orange">【左二】</span>',
+                '3':'<span style="color:green">【右一】</span>',
+                '4':'<span style="color:blue">【右二】</span>'
             }
         }
     }
