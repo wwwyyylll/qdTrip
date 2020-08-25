@@ -87,6 +87,7 @@
         <th>首页背景图</th>
         <th>商品列表页头部图</th>
         <th>商品列表页背景颜色</th>
+        <th>分享小图</th>
         <th style="width:8%;word-wrap: break-word;word-break:break-all;">备注</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -140,6 +141,13 @@
             <% } %>
         </td>
         <td><%= dataArr[i].listBackgroundColor %></td>
+        <td>
+            <% if(dataArr[i].sharePic){ %>
+            <a href="<%= dataArr[i].sharePic %>" target="_blank">
+                <img src="<%= dataArr[i].sharePic%>" style="display: inline-block;width:50px;height: 50px">
+            </a>
+            <% } %>
+        </td>
         <td style="width:8%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].memo %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
@@ -235,8 +243,8 @@
                         <select name="showSearchIndexPosition" class="form-control">
                             <option value="">请选择</option>
                             <option value="1" <% if(dataArr.showSearchIndexPosition==1){ %> selected <% } %>>左一</option>
-                            <option value="2" <% if(dataArr.showSearchIndexPosition==2){ %> selected <% } %>>左二</option>
-                            <option value="3" <% if(dataArr.showSearchIndexPosition==3){ %> selected <% } %>>右一</option>
+                            <option value="3" <% if(dataArr.showSearchIndexPosition==3){ %> selected <% } %>>左二</option>
+                            <option value="2" <% if(dataArr.showSearchIndexPosition==2){ %> selected <% } %>>右一</option>
                             <option value="4" <% if(dataArr.showSearchIndexPosition==4){ %> selected <% } %>>右二</option>
                         </select>
                     </div>
@@ -307,6 +315,35 @@
                     <% } %>
                     <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
                     <input type="hidden" name="listHeaderPic" value="<%= dataArr.listHeaderPic %>">
+                </div>
+            </div>
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
+                <div class="input-group">
+                    <span style="margin-top:6px;margin-right: 10px">上传分享小图</span>
+                    <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                    <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    <span class="temporaryFile" style="display: none"></span>
+                    <% if (dataArr.sharePic) { %>
+                    <h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">
+                        <a target='_blank' href='<%= dataArr.sharePic %>'>
+                            <img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.sharePic %>">
+                        </a>
+                    </h6>
+                    <% } else { %>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无分享小图</span></h6>
+                    <% } %>
+                    <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
+                    <input type="hidden" name="sharePic" value="<%= dataArr.sharePic %>">
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">分享副标题</span>
+                        </div>
+                        <input type="text" name="shareSubTitle" placeholder="请输入分享副标题" value="<%= dataArr.shareSubTitle %>" class="form-control">
+                    </div>
                 </div>
             </div>
         </fieldset>

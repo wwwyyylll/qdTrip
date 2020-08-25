@@ -324,6 +324,12 @@ define("apis", function() {
                 a:'getLists'
             }
         },
+        rankingClickStat:{
+            getLists:{
+                c:'rankingClickStat',
+                a:'getLists'
+            }
+        },
         admin:{
             getLists:{
                 c:'admin',

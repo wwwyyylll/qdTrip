@@ -86,8 +86,8 @@ define("consts", function() {
             },
             indexPosition:{
                 '1':'<span style="color:red">【左一】</span>',
-                '2':'<span style="color:orange">【左二】</span>',
-                '3':'<span style="color:green">【右一】</span>',
+                '3':'<span style="color:orange">【左二】</span>',
+                '2':'<span style="color:green">【右一】</span>',
                 '4':'<span style="color:blue">【右二】</span>'
             }
         }
