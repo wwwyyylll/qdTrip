@@ -13,6 +13,36 @@ define("consts", function() {
                 '1':'<span style="color:green">有效</span>',
                 '2':'<span style="color:red">无效</span>'
             },
+            goodsStatus:{
+                '1':'<span style="color:green">上架</span>',
+                '2':'<span style="color:red">下架</span>',
+                '3':'<span style="color:orange">已删除</span>'
+            },
+            orderStatus:{
+                '1':'<span style="color:orange">待支付</span>',
+                '2':'<span style="color:green">已支付</span>',
+                '3':'<span style="color:red">已发货</span>',
+                '4':'<span style="color:green">已完成</span>',
+                '5':'<span style="color:red">已关闭</span>',
+                '6':'<span style="color:gray">已取消</span>',
+                '7':'<span style="color:green">提交供应商</span>',
+                '8':'<span style="color:red">申请退款</span>'
+            },
+            orderLogStatus:{
+                '1':'<span style="color:orange">待支付</span>',
+                '2':'<span style="color:green">已支付</span>',
+                '3':'<span style="color:red">已发货</span>',
+                '4':'<span style="color:green">已完成</span>',
+                '5':'<span style="color:red">已退款</span>',
+                '6':'<span style="color:gray">已取消</span>',
+                '7':'<span style="color:green">提交供应商</span>',
+                '8':'<span style="color:red">申请退款</span>'
+            },
+            userType:{
+                '1':'用户',
+                '2':'管理员',
+                '3':'系统'
+            },
             user:{
                 '1':'<span style="color:green">允许登录</span>',
                 '2':'<span style="color:red">禁止登录</span>'

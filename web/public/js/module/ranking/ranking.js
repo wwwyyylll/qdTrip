@@ -235,8 +235,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         updateTaoPwd:function($this){
             var id = $("input[name=id]").val();
+            var itemId = $("input[name=itemId]").val();
             hound.confirm('确认更新淘口令吗?', '', function () {
-                utils.ajaxSubmit(apis.rankingGoods.getPwdById, {id: id,rankingId:rankingId}, function (data) {
+                utils.ajaxSubmit(apis.rankingGoods.getPwdById, {itemId: itemId,rankingId:rankingId}, function (data) {
                     $(".pwd").val(data);
                 });
             });
@@ -244,14 +245,26 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.rankingGoods.getById, {id: id,rankingId:rankingId}, function (data) {
-                var getByIdData = {
-                    dataArr:data.dataArr,
-                    categoryArr:categoryArr
-                };
-                getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
-                utils.renderModal('编辑商品', template('modalDiv', getByIdData),'', 'lg');
-            });
+            if($this.text()=="编辑"){
+                utils.ajaxSubmit(apis.rankingGoods.getById, {id: id,rankingId:rankingId}, function (data) {
+                    var getByIdData = {
+                        dataArr:data.dataArr,
+                        categoryArr:categoryArr
+                    };
+                    getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
+                    utils.renderModal('编辑商品', template('modalDiv', getByIdData),'', 'lg');
+                });
+            }else if($this.text()=="查看"){
+                utils.ajaxSubmit(apis.rankingGoods.getById, {id: id,rankingId:rankingId}, function (data) {
+                    var getByIdData = {
+                        dataArr:data.dataArr,
+                        categoryArr:categoryArr
+                    };
+                    getByIdData.dataArr.statusText = consts.status.goods[getByIdData.dataArr.status];
+                    utils.renderModal('查看商品', template('modalDiv', getByIdData),'', 'lg');
+                    $("#visaPassportForm").append($("fieldset").prop('disabled', true));
+                });
+            }
         },
         //无效
         setOff:function($this){
@@ -323,17 +336,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.goods[n.status];
                 n.syncWayText = consts.status.syncWay[n.itemArr.syncWay];
-                if(n.status=="1"){
-                    n.materialButtonGroup = comButtons + stopButton + delButton;
-                }else if(n.status=="2"){
-                    n.materialButtonGroup = comButtons + startBouutn + delButton;
-                }else if(n.status=="3"){
-                    n.materialButtonGroup = comButtons + startBouutn + stopButton + delButton;
-                }
-                if(n.itemArr.syncWay=="1"){
-                    n.materialButtonGroup = n.materialButtonGroup + autoButton;
-                }else{
-                    n.materialButtonGroup = n.materialButtonGroup + handButton;
+                if(n.isCanOpt=="yes"){
+                    if(n.status=="1"){
+                        n.materialButtonGroup = comButtons + stopButton + delButton;
+                    }else if(n.status=="2"){
+                        n.materialButtonGroup = comButtons + startBouutn + delButton;
+                    }else if(n.status=="3"){
+                        n.materialButtonGroup = comButtons + startBouutn + stopButton + delButton;
+                    }
+                    if(n.itemArr.syncWay=="1"){
+                        n.materialButtonGroup = n.materialButtonGroup + autoButton;
+                    }else{
+                        n.materialButtonGroup = n.materialButtonGroup + handButton;
+                    }
+                }else if(n.isCanOpt=="no"){
+                    n.materialButtonGroup = '<button class="btn btn-info" type="button" data-operate="look">查看</button>';
                 }
             });
             categoryArr = data.category;

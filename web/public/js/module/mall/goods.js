@@ -356,8 +356,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         updateTaoPwd:function($this){
             var id = $("input[name=id]").val();
+            var itemId = $("input[name=itemId]").val();
             hound.confirm('确认更新淘口令吗?', '', function () {
-                utils.ajaxSubmit(apis.goods.getPwdById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.goods.getPwdById, {itemId: itemId}, function (data) {
                     $(".pwd").val(data);
                 });
             });

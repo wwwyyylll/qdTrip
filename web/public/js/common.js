@@ -54,13 +54,27 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
     getRankingList();
     //打开的对应的页面nav + active属性
     var currentUrl = window.location.href;
-    var itemArr = $(".treeview-item");
+    var itemArr = $(".common-item");
     if(currentUrl.length>1){
         $.each(itemArr,function(i,n){
             if(currentUrl.indexOf($(this).attr("href"))!= -1){
                 $(this).closest(".treeview").addClass("is-expanded");
+                $(this).closest("ul").show();
                 $(this).addClass("active");
             }
         });
     }
+    //三级导航栏
+    $(".three_menu_item").on("click",function(){
+        var threeList = $(this).parent().find(".three_list");
+        if(threeList.css("display")=="block"){
+            threeList.slideUp(100);
+            $(this).find("i").eq(1).removeClass("three_item_rotate");
+            $(this).find("i").eq(1).addClass("three_item_rotate1");
+        }else{
+            threeList.slideDown(100);
+            $(this).find("i").eq(1).addClass("three_item_rotate");
+            $(this).find("i").eq(1).removeClass("three_item_rotate1");
+        }
+    });
 });
