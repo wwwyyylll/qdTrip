@@ -160,7 +160,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         status:'',
         supplierId:'',
         categoryId:'',
-        tagId:''
+        tagId:'',
+        willExpire:''
     };
 
     var categoryArr;
@@ -213,6 +214,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        param.willExpire = 1;
+    }else{
+        param.willExpire = '';
+    }
+
     getDownLists();
     setTimeout(function(){
         loadData();

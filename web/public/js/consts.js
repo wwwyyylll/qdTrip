@@ -13,6 +13,10 @@ define("consts", function() {
                 '1':'<span style="color:green">有效</span>',
                 '2':'<span style="color:red">无效</span>'
             },
+            ordinary1:{
+                '1':'【有效】',
+                '2':'【无效】'
+            },
             goodsStatus:{
                 '1':'<span style="color:green">上架</span>',
                 '2':'<span style="color:red">下架</span>',

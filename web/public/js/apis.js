@@ -734,6 +734,32 @@ define("apis", function() {
                 a:'getLists'
             }
         },
+        subject:{
+            getLists:{
+                c:'subject',
+                a:'getLists'
+            },
+            create:{
+                c:'subject',
+                a:'create'
+            },
+            getById:{
+                c:'subject',
+                a:'getById'
+            },
+            updateById:{
+                c:'subject',
+                a:'updateById'
+            },
+            onById:{
+                c:'subject',
+                a:'onById'
+            },
+            offById:{
+                c:'subject',
+                a:'offById'
+            }
+        },
 
         role:{
             getLists:{

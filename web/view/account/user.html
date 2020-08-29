@@ -53,19 +53,18 @@
         <th>ID</th>
         <th>昵称</th>
         <th>头像</th>
-        <!--<th class="em-min-7">-->
-            <!--<div class="dropdown">-->
-                <!--<span class="dropdown-toggle" id="dropTop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
-                    <!--<%= sourceText %>-->
-                <!--</span>-->
-                <!--<div class="dropdown-menu" aria-labelledby="dropTop" id="dropTopOptions">-->
-                    <!--<a class="dropdown-item" href="javascript:" data-id="">所有</a>-->
-                    <!--<a class="dropdown-item" href="javascript:" data-id="1">weixin</a>-->
-                    <!--<a class="dropdown-item" href="javascript:" data-id="2">机器人</a>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</th>-->
-        <th>来源</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropTop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= sourceText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropTop" id="dropTopOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">微信</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">机器人</a>
+                </div>
+            </div>
+        </th>
         <th>是否分销商</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -79,6 +78,7 @@
                 </div>
             </div>
         </th>
+        <th>注册日期</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -100,6 +100,7 @@
         <td><%- dataArr[i].sourceText %></td>
         <td><%- dataArr[i].isDistributorsText %></td>
         <td><%- dataArr[i].statusText %></td>
+        <td><%= dataArr[i].createTime %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
                 <a target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].id %>" class="btn btn-info">查看详情</a>

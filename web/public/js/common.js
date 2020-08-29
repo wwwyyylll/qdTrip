@@ -45,6 +45,8 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
                 $.each(itemArr,function(i,n){
                     if(currentUrl.indexOf($(this).attr("href"))!= -1){
                         $(this).closest(".treeview").addClass("is-expanded");
+                        $(this).closest("ul").show();
+                        $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
                         $(this).addClass("active");
                     }
                 });
@@ -60,6 +62,7 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
             if(currentUrl.indexOf($(this).attr("href"))!= -1){
                 $(this).closest(".treeview").addClass("is-expanded");
                 $(this).closest("ul").show();
+                $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
                 $(this).addClass("active");
             }
         });

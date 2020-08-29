@@ -1,14 +1,7 @@
 require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var initialData = {
-        dataArr:{
-            isExpressFeeSuperposition:"2"
-        },
-        imagesArr:[{}],
+        dataArr:{},
         specsArr:[{}],
-        deliveryTimeArr:{},
-        isExpressFeeSuperpositionArr: {},
-        tagArr:{},
-        exoressArr:{}
     };
     //上传图片文件
     function blobToDataURL(blob,cb) {
@@ -78,14 +71,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var operates = {
         addSpec:function(){
             var data = {
-                dataArr:{
-                    isExpressFeeSuperposition:"2"
-                },
-                deliveryTimeArr:initialData.deliveryTimeArr,
-                isExpressFeeSuperpositionArr:initialData.isExpressFeeSuperpositionArr,
-                tagArr:initialData.tagArr,
-                exoressArr:initialData.exoressArr,
-                specsArr:{},
+                dataArr:{},
+                specsArr:{}
             };
             $(".specDiv").append(template('specItem', data));
             var specNumber = $(".specNumber");
@@ -101,27 +88,6 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 var specNumber = $(".specNumber");
                 for(var i=0;i<specNumber.length;i++){
                     specNumber.eq(i).text(i+1);
-                }
-            });
-        },
-        addImg:function(){
-            var data = {
-                dataArr:{}
-            };
-            $(".imgDiv").append(template('imgItem', data));
-            var imgNumber = $(".imgNumber");
-            for(var i=0;i<imgNumber.length;i++){
-                imgNumber.eq(i).text(i+1);
-            }
-            uploadFile();
-        },
-        delImg:function($this){
-            hound.confirm('确认删除吗?', '', function () {
-                var imgItem = $this.closest(".imgItem");
-                imgItem.remove();
-                var imgNumber = $(".imgNumber");
-                for(var i=0;i<imgNumber.length;i++){
-                    imgNumber.eq(i).text(i+1);
                 }
             });
         },
@@ -188,7 +154,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                 utils.reInputName($(".delImgSingle"));
                                 utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
                                     hound.success("添加成功","",'').then(function(){
-                                        window.location.href = "@@HOSTview/store/edit.html?id=" + data.id;
+                                        window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
                                     });
                                 })
                             }
@@ -203,7 +169,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                         utils.reInputName($(".delImgSingle"));
                         utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
                             hound.success("添加成功","",'').then(function(){
-                                window.location.href = "@@HOSTview/store/edit.html?id=" + data.id;
+                                window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
                             });
                         })
                     }
@@ -217,86 +183,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     utils.reInputName($(".delImgSingle"));
                     utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
                         hound.success("添加成功","",'').then(function(){
-                            window.location.href = "@@HOSTview/store/edit.html?id=" + data.id;
+                            window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
                         });
                     })
                 }
             }
         }
-    }
+    };
     $(document).on("click",function(){
         $('.ability-list').remove();
     });
-
-    function getConstsLists(){
-        utils.ajaxSubmit(apis.mallGoods.getConstLists, '', function (data) {
-            initialData.deliveryTimeArr = data.deliveryTimeArr;
-            initialData.isExpressFeeSuperpositionArr = data.isExpressFeeSuperpositionArr;
-        });
-        var labelParam = {
-            pageNo: 1,
-            pageSize:10,
-            name:'',
-            status:'',
-        };
-        utils.ajaxSubmit(apis.mallTag.getLists, labelParam, function (data) {
-            initialData.tagArr = data.dataArr;
-        });
-        var expressParam = {
-            pageNo: 1,
-            pageSize:10,
-            title:'',
-            status:''
-        };
-        utils.ajaxSubmit(apis.mallExpressFee.getLists, expressParam, function (data) {
-            initialData.exoressArr = data.dataArr;
-        });
-    }
     utils.bindList($(document), operates);
     // 页面首次加载列表数据
-    getConstsLists();
     setTimeout(function(){
         $("#goodsForm").html(template('goodsFormContent', initialData));
         $("#tabContent1").html(template('specList', initialData));
-        $("#tabContent2").html(template('imgList', initialData));
-        $(document).ready(function () {
-            $(".sortable-list").sortable({
-                connectWith: ".connectList"
-            }).disableSelection();
-        });
-        $("#headerTab1").on("click",function(){
-            $("#tabContent1").show();
-            $("#tabContent2").hide();
-            $("#tabContent3").hide();
-            $(this).css({color:"orange"});
-            $("#headerTab2").css({color:"#555555"});
-            $("#headerTab3").css({color:"#555555"});
-        });
-        $("#headerTab2").on("click",function(){
-            $("#tabContent2").show();
-            $("#tabContent1").hide();
-            $("#tabContent3").hide();
-            $(this).css({color:"orange"});
-            $("#headerTab1").css({color:"#555555"});
-            $("#headerTab3").css({color:"#555555"});
-            $(document).mouseup(function(){
-                var sort = $(".agile-list li").find(".sort");
-                setTimeout(function(){
-                    var sort=$(".agile-list li").find(".sort");
-                    for(var j=0;j<sort.length;j++){
-                        sort.eq(j).val(j+1)
-                    }
-                },50)
-            });
-        });
-        $("#headerTab3").on("click",function(){
-            $("#tabContent3").show();
-            $("#tabContent1").hide();
-            $("#tabContent2").hide();
-            $(this).css({color:"orange"});
-            $("#headerTab1").css({color:"#555555"});
-            $("#headerTab2").css({color:"#555555"});
-        });
         uploadFile();
         var E = window.wangEditor;
         var editor = new E('#editor');
@@ -306,35 +207,5 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $(".w-e-text-container").css({"height":"500px"});
         $(".w-e-text-container").css({"z-index":"100"});
         $("#editor").find(".w-e-menu").css({"z-index":"101"});
-
-        $(".supplierName").on("input",function(){
-            var param = {
-                pageNo: 1,
-                pageSize:50,
-                name:$(".supplierName").val(),
-                status:'',
-                source:'',
-                accountType:''
-            };
-            utils.ajaxSubmit(apis.mallSupplier.getLists, param, function (data) {
-                if(data.dataArr.length!=0){
-                    var $economyAbilityItem = '';
-                    $.each(data.dataArr, function (i, v) {
-                        v.statusText = consts.status.ordinary1[v.status];
-                        $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.name + v.statusText +'</div>'
-                    });
-                    $('.ability-list').remove();
-                    var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
-                    $(".supplierName").closest('.economy-wards').append($abilityList);
-
-                    $('.economy-ability-item').click(function(){
-                        $('.ability-list').remove();
-                        var $index = $(this).index();
-                        $(".supplierName").val(data.dataArr[$index].name + data.dataArr[$index].statusText);
-                        $(".supplierId").val(data.dataArr[$index].id);
-                    });
-                }
-            });
-        });
     },100);
 });
