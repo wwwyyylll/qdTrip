@@ -48,6 +48,20 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
                         $(this).closest("ul").show();
                         $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
                         $(this).addClass("active");
+                    }else if(currentUrl.indexOf("store/add.html")!= -1 || currentUrl.indexOf("store/edit.html")!= -1 || currentUrl.indexOf("store/look.html")!= -1){
+                        if($(this).attr("href").indexOf("store/goods.html")!= -1){
+                            $(this).closest(".treeview").addClass("is-expanded");
+                            $(this).closest("ul").show();
+                            $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
+                            $(this).addClass("active");
+                        }
+                    }else if(currentUrl.indexOf("subject/add.html")!= -1 || currentUrl.indexOf("subject/edit.html")!= -1 || currentUrl.indexOf("subject/look.html")!= -1){
+                        if($(this).attr("href").indexOf("subject/subject.html")!= -1){
+                            $(this).closest(".treeview").addClass("is-expanded");
+                            $(this).closest("ul").show();
+                            $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
+                            $(this).addClass("active");
+                        }
                     }
                 });
             }
@@ -64,6 +78,20 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
                 $(this).closest("ul").show();
                 $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
                 $(this).addClass("active");
+            }else if(currentUrl.indexOf("store/add.html")!= -1 || currentUrl.indexOf("store/edit.html")!= -1 || currentUrl.indexOf("store/look.html")!= -1){
+                if($(this).attr("href").indexOf("store/goods.html")!= -1){
+                    $(this).closest(".treeview").addClass("is-expanded");
+                    $(this).closest("ul").show();
+                    $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
+                    $(this).addClass("active");
+                }
+            }else if(currentUrl.indexOf("subject/add.html")!= -1 || currentUrl.indexOf("subject/edit.html")!= -1 || currentUrl.indexOf("subject/look.html")!= -1){
+                if($(this).attr("href").indexOf("subject/subject.html")!= -1){
+                    $(this).closest(".treeview").addClass("is-expanded");
+                    $(this).closest("ul").show();
+                    $(this).closest("ul").parent().find("i").eq(1).addClass("three_item_rotate");
+                    $(this).addClass("active");
+                }
             }
         });
     }

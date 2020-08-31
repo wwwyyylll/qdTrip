@@ -77,14 +77,14 @@
                     <input type="text" name="num" placeholder="" value="<%= dataArr.num %>" class="form-control">
                 </div>
             </div>
-            <div class="col-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">抵扣能量</span>
-                    </div>
-                    <input type="text" name="deductionThinkingEnergy" placeholder="" value="<%= dataArr.deductionThinkingEnergy %>" class="form-control">
-                </div>
-            </div>
+            <!--<div class="col-3">-->
+                <!--<div class="input-group">-->
+                    <!--<div class="input-group-prepend">-->
+                        <!--<span class="input-group-text">抵扣能量</span>-->
+                    <!--</div>-->
+                    <!--<input type="text" name="deductionThinkingEnergy" placeholder="" value="<%= dataArr.deductionThinkingEnergy %>" class="form-control">-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="row" style="margin-bottom: 20px">
             <div style="width: 20%;padding: 0 15px">
@@ -109,17 +109,17 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 20%;padding: 0 15px">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">抵扣价</span>
-                    </div>
-                    <input type="text" name="deductionPrice" placeholder="" value="<%= dataArr.deductionPrice %>" class="form-control">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">元</span>
-                    </div>
-                </div>
-            </div>
+            <!--<div style="width: 20%;padding: 0 15px">-->
+                <!--<div class="input-group">-->
+                    <!--<div class="input-group-prepend">-->
+                        <!--<span class="input-group-text">抵扣价</span>-->
+                    <!--</div>-->
+                    <!--<input type="text" name="deductionPrice" placeholder="" value="<%= dataArr.deductionPrice %>" class="form-control">-->
+                    <!--<div class="input-group-prepend">-->
+                        <!--<span class="input-group-text">元</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -246,19 +246,19 @@
                     </div>
                 </div>
             </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">抵扣金额</span>
-                        </div>
-                        <input disabled type="text" value="<%= dataArr.deductionPrice %>" class="form-control">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">元</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="form-row" style="margin-bottom: 15px">-->
+                <!--<div class="col-12">-->
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-prepend">-->
+                            <!--<span class="input-group-text">抵扣金额</span>-->
+                        <!--</div>-->
+                        <!--<input disabled type="text" value="<%= dataArr.deductionPrice %>" class="form-control">-->
+                        <!--<div class="input-group-prepend">-->
+                            <!--<span class="input-group-text">元</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
@@ -404,14 +404,14 @@
             </div>
         </div>
         <div class="row" style="margin-bottom: 20px">
-            <div class="col-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">规格抵扣能量</span>
-                    </div>
-                    <input type="text" value="<%= dataArr.specsArr.deductionThinkingEnergy %>" class="form-control">
-                </div>
-            </div>
+            <!--<div class="col-3">-->
+                <!--<div class="input-group">-->
+                    <!--<div class="input-group-prepend">-->
+                        <!--<span class="input-group-text">规格抵扣能量</span>-->
+                    <!--</div>-->
+                    <!--<input type="text" value="<%= dataArr.specsArr.deductionThinkingEnergy %>" class="form-control">-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -563,7 +563,7 @@
             <td>
                 <div>退款金额&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.amount %>元</div>
                 <div>数量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.num %></div>
-                <div>返还能量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.returnThinkingEnergy %></div>
+                <!--<div>返还能量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.returnThinkingEnergy %></div>-->
                 <div style="color: red">退款原因&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.reason %></div>
             </td>
             <% }else if(dataArr.logArr[i].source == 7){ %>
@@ -578,7 +578,7 @@
             <td>
                 <div>退款金额&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.amount %>元</div>
                 <div>退款数量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.num %></div>
-                <div>返还能量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.returnThinkingEnergy %></div>
+                <!--<div>返还能量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.returnThinkingEnergy %></div>-->
                 <div style="color: red">退款原因&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.reason %></div>
             </td>
             <% }else{ %>
@@ -600,18 +600,18 @@
     <table class="table table-hover table-bordered" id="logisticsTable">
         <thead>
         <tr>
-            <th>标题</th>
+            <!--<th>标题</th>-->
+            <th>时间</th>
             <th>内容</th>
-            <th>创建时间</th>
         </tr>
         </thead>
         <tbody>
         <% if (dataArr.logisticsArr.length > 0) { %>
         <% for (var i = 0; i < dataArr.logisticsArr.length; i++) { %>
         <tr>
-            <td><%= dataArr.logisticsArr[i].title %></td>
-            <td><%= dataArr.logisticsArr[i].content %></td>
-            <td><%= dataArr.logisticsArr[i].createTime %></td>
+            <!--<td><%= dataArr.logisticsArr[i].title %></td>-->
+            <td><%= dataArr.logisticsArr[i].time %></td>
+            <td style="text-align: left"><%= dataArr.logisticsArr[i].context %></td>
         </tr>
         <% } %>
         <% } else { %>

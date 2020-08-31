@@ -104,7 +104,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var orderNo = $this.closest("tr").find("td").eq(1).find("div").eq(0).text();
             var amountText = $this.closest("tr").find("td").eq(6).text();
             var amount = amountText.substring(0,amountText.length-1);
-            var num = $this.closest("tr").find("td").eq(9).text();
+            var num = $this.closest("tr").find("td").eq(7).text();
             var initialData = {
                 dataArr:{
                     id:id,
@@ -145,6 +145,32 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     })
                 }
             }, 'md');
+            $(".expressCompanyId").on("input",function(){
+                var expressParam = {
+                    pageNo: 1,
+                    pageSize:50000,
+                    expName:$(".expressCompanyId").val(),
+                    status:1
+                };
+                utils.ajaxSubmit(apis.mallExpressCompany.getLists, expressParam, function (data) {
+                    if(data.dataArr.length!=0){
+                        var $economyAbilityItem = '';
+                        $.each(data.dataArr, function (i, v) {
+                            $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.expName +'</div>'
+                        });
+                        $('.ability-list').remove();
+                        var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
+                        $(".expressCompanyId").closest('.economy-wards').append($abilityList);
+
+                        $('.economy-ability-item').click(function(){
+                            $('.ability-list').remove();
+                            var $index = $(this).index();
+                            $(".expressCompanyId").val(data.dataArr[$index].expName);
+                            $("input[name=expressCompanyId]").val(data.dataArr[$index].id);
+                        });
+                    }
+                });
+            });
         },
         //接单
         submitSupplier:function($this){
@@ -179,10 +205,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             var totalAmount = $this.closest("tr").find("td").eq(5).find("span").eq(0).text();
             var actualTotalAmount = $this.closest("tr").find("td").eq(6).text();
-            var num = $this.closest("tr").find("td").eq(9).text();
+            var num = $this.closest("tr").find("td").eq(7).text();
             var goodsAmount = $this.closest("tr").find("td").eq(5).find("span").eq(1).text();
             var expressFee = $this.closest("tr").find("td").eq(5).find("span").eq(2).text();
-            var deductionPrice = $this.closest("tr").find("td").eq(7).text();
+            //var deductionPrice = $this.closest("tr").find("td").eq(7).text();
             var initialData = {
                 dataArr:{
                     id:id,
@@ -190,8 +216,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     actualTotalAmount:actualTotalAmount,
                     num:num,
                     goodsAmount:goodsAmount,
-                    expressFee:expressFee,
-                    deductionPrice:deductionPrice
+                    expressFee:expressFee
+                    //deductionPrice:deductionPrice
                 }
             };
             utils.renderModal('供应商接单', template('supplierModal', initialData), function(){

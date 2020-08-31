@@ -1,4 +1,4 @@
-<!-- 商品三大模块信息（基本信息 + 规格信息 + 轮播图信息）-->
+<!-- 基本信息 + 详情信息 -->
 <script id="goodsFormContent" type="text/html">
     <fieldset>
         <input type="hidden" name="id" value="<%= dataArr.id %>">
@@ -67,7 +67,7 @@
                     <% } else { %>
                     <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无封面图</span></h6>
                     <% } %>
-                    <h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>
+                    <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
                     <input type="hidden" name="coverImg" value="<%= dataArr.coverImg %>">
                 </div>
             </div>
@@ -109,14 +109,14 @@
                     <span data-operate="delSpec" style="float: right;cursor: pointer" ><i class="icon fa fa-close"></i></span>
                 </div>
             </div>
-            <input type="hidden" name="details[][id]" class="specItemId" value="<%= specsArr[i].id %>">
+            <input type="hidden" name="detail[][id]" class="specItemId" value="<%= specsArr[i].id %>">
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-4">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">商品信息ID</span>
                         </div>
-                        <input type="text" name="details[][itemId]" placeholder="请输入商品信息ID" value="<%= specsArr[i].title %>" class="form-control" required>
+                        <input type="text" name="detail[][itemId]" placeholder="请输入商品信息ID" value="<%= specsArr[i].itemId %>" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-3">
@@ -124,14 +124,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">排序</span>
                         </div>
-                        <input type="text" name="details[][sort]" placeholder="请输入排序" value="<%= specsArr[i].originalPrice %>" class="form-control" required>
+                        <input type="text" name="detail[][sort]" placeholder="请输入排序" value="<%= specsArr[i].sort %>" class="form-control" required>
                     </div>
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
-                    <div id="editor"></div>
-                    <input type="hidden" name="details[][content]" value="<%= dataArr.details %>">
+                    <div id="editor_<%= i+1 %>" class="editorDiv"></div>
+                    <input type="hidden" name="detail[][content]" value="<%= specsArr[i].content %>">
                 </div>
             </div>
         </div>
@@ -149,14 +149,14 @@
                 <span data-operate="delSpec" style="float: right;cursor: pointer" ><i class="icon fa fa-close"></i></span>
             </div>
         </div>
-        <input type="hidden" name="specsArr[][id]">
+        <input type="hidden" name="detail[][id]">
         <div class="form-row" style="margin-bottom: 15px">
             <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">商品信息ID</span>
                     </div>
-                    <input type="text" name="details[][itemId]" placeholder="请输入商品信息ID" value="" class="form-control" required>
+                    <input type="text" name="detail[][itemId]" placeholder="请输入商品信息ID" value="" class="form-control" required>
                 </div>
             </div>
             <div class="col-3">
@@ -164,14 +164,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">排序</span>
                     </div>
-                    <input type="text" name="details[][sort]" placeholder="请输入排序" value="" class="form-control" required>
+                    <input type="text" name="detail[][sort]" placeholder="请输入排序" value="" class="form-control" required>
                 </div>
             </div>
         </div>
         <div class="form-row" style="margin-bottom: 15px">
             <div class="col-12">
-                <div id="editor"></div>
-                <input type="hidden" name="details[][content]" value="<%= dataArr.details %>">
+                <div id="editor" class="editorDiv"></div>
+                <input type="hidden" name="detail[][content]" value="">
             </div>
         </div>
     </div>

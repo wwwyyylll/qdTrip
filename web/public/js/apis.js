@@ -760,6 +760,24 @@ define("apis", function() {
                 a:'offById'
             }
         },
+        mallExpressCompany:{
+            getLists:{
+                c:'mallExpressCompany',
+                a:'getLists'
+            },
+            getById:{
+                c:'mallExpressCompany',
+                a:'getById'
+            },
+            onById:{
+                c:'mallExpressCompany',
+                a:'onById'
+            },
+            offById:{
+                c:'mallExpressCompany',
+                a:'offById'
+            }
+        },
 
         role:{
             getLists:{

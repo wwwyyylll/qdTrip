@@ -1,7 +1,7 @@
 require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var initialData = {
         dataArr:{},
-        specsArr:[{}],
+        specsArr:[{}]
     };
     //上传图片文件
     function blobToDataURL(blob,cb) {
@@ -80,6 +80,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 specNumber.eq(i).text(i+1);
             }
             uploadFile();
+            var idNumberArr = $(".editorDiv").eq(specNumber.length-2).attr("id").split("_");
+            var idNumber = parseInt(idNumberArr[1]) + 1;
+            $(".editorDiv").eq(specNumber.length-1).attr("id","editor_" + idNumber);
+            var E = window.wangEditor;
+            var editor = new E('#editor_'+ idNumber);
+            editor.customConfig.showLinkImg = false;         // 隐藏“网络图片”tab
+            editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+            editor.create();
+            $(".w-e-text-container").css({"height":"200px"});
+            $(".w-e-text-container").css({"z-index":"100"});
+            $('#editor_'+ idNumber).find(".w-e-menu").css({"z-index":"101"});
         },
         delSpec:function($this){
             hound.confirm('确认删除吗?', '', function () {
@@ -92,6 +103,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
         },
         addGoods:function(){
+            utils.loading(true);
             var editerContent = $(".w-e-text");
             var editerImg = editerContent.find("img");
             //统计富文本编辑器中图片的数量
@@ -127,6 +139,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                     temp.attr("src",data.result);
                                     len = arry.length;
                                     if(len ==0){
+                                        //调保存的接口
+                                        for(var j=0;j<$(".w-e-text").length;j++){
+                                            $("input[name='detail[][content]']").eq(j).val($(".w-e-text").eq(j).html());
+                                        }
+                                        utils.reInputName($(".specItem"));
+                                        utils.reInputName($(".imgItem"));
+                                        utils.reInputName($(".delSpecSingle"));
+                                        utils.reInputName($(".delImgSingle"));
+                                        utils.ajaxSubmit(apis.subject.create,$("#goodsForm").serialize(),function(data){
+                                            utils.loading(false);
+                                            hound.success("添加成功","",'').then(function(){
+                                                window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
+                                            });
+                                        });
+                                        //测试结束位置
                                         return;
                                     }
                                     func_digui(arry,len);
@@ -136,56 +163,74 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     }
                 }
                 if(submitImgArr.length!=0){
-                    func_digui(submitImgArr,submitImgArr.length);
-                    setTimeout(function(){
-                        var canPost = true;
-                        for(var i=0;i<editerImg.length;i++){
-                            if(editerImg.eq(i).attr("src").length>500){
-                                canPost = false;
-                                break;
-                            }
-                        }
-                        if(canPost){
-                            if($("#goodsForm").valid()){
-                                $("input[name=details]").val($(".w-e-text").html());
-                                utils.reInputName($(".specItem"));
-                                utils.reInputName($(".imgItem"));
-                                utils.reInputName($(".delSpecSingle"));
-                                utils.reInputName($(".delImgSingle"));
-                                utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
-                                    hound.success("添加成功","",'').then(function(){
-                                        window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
-                                    });
-                                })
-                            }
-                        }
-                    },1500);
+                    if($("#goodsForm").valid()){
+                        func_digui(submitImgArr,submitImgArr.length);
+                    }else{
+                        utils.loading(false);
+                    }
+                    //setTimeout(function(){
+                    //    var canPost = true;
+                    //    for(var i=0;i<editerImg.length;i++){
+                    //        if(editerImg.eq(i).attr("src").length>500){
+                    //            canPost = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //    if(canPost){
+                    //        if($("#goodsForm").valid()){
+                    //            for(var i=0;i<$(".w-e-text").length;i++){
+                    //                $("input[name='detail[][content]']").eq(i).val($(".w-e-text").eq(i).html());
+                    //            }
+                    //            console.log($(".w-e-text").html());
+                    //            utils.reInputName($(".specItem"));
+                    //            utils.reInputName($(".imgItem"));
+                    //            utils.reInputName($(".delSpecSingle"));
+                    //            utils.reInputName($(".delImgSingle"));
+                    //            utils.ajaxSubmit(apis.subject.create,$("#goodsForm").serialize(),function(data){
+                    //                utils.loading(false);
+                    //                hound.success("添加成功","",'').then(function(){
+                    //                    window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
+                    //                });
+                    //            })
+                    //        }
+                    //    }
+                    //},1500);
                 }else{
                     if($("#goodsForm").valid()){
-                        $("input[name=details]").val($(".w-e-text").html());
+                        for(var i=0;i<$(".w-e-text").length;i++){
+                            $("input[name='detail[][content]']").eq(i).val($(".w-e-text").eq(i).html());
+                        }
                         utils.reInputName($(".specItem"));
                         utils.reInputName($(".imgItem"));
                         utils.reInputName($(".delSpecSingle"));
                         utils.reInputName($(".delImgSingle"));
-                        utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
+                        utils.ajaxSubmit(apis.subject.create,$("#goodsForm").serialize(),function(data){
+                            utils.loading(false);
                             hound.success("添加成功","",'').then(function(){
                                 window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
                             });
                         })
+                    }else{
+                        utils.loading(false);
                     }
                 }
             }else{
                 if($("#goodsForm").valid()){
-                    $("input[name=details]").val($(".w-e-text").html());
+                    for(var i=0;i<$(".w-e-text").length;i++){
+                        $("input[name='detail[][content]']").eq(i).val($(".w-e-text").eq(i).html());
+                    }
                     utils.reInputName($(".specItem"));
                     utils.reInputName($(".imgItem"));
                     utils.reInputName($(".delSpecSingle"));
                     utils.reInputName($(".delImgSingle"));
-                    utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
+                    utils.ajaxSubmit(apis.subject.create,$("#goodsForm").serialize(),function(data){
+                        utils.loading(false);
                         hound.success("添加成功","",'').then(function(){
                             window.location.href = "@@HOSTview/subject/edit.html?id=" + data.id;
                         });
                     })
+                }else{
+                    utils.loading(false);
                 }
             }
         }
@@ -200,12 +245,12 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#tabContent1").html(template('specList', initialData));
         uploadFile();
         var E = window.wangEditor;
-        var editor = new E('#editor');
+        var editor = new E('#editor_1');
         editor.customConfig.showLinkImg = false;         // 隐藏“网络图片”tab
         editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
         editor.create();
-        $(".w-e-text-container").css({"height":"500px"});
+        $(".w-e-text-container").css({"height":"200px"});
         $(".w-e-text-container").css({"z-index":"100"});
-        $("#editor").find(".w-e-menu").css({"z-index":"101"});
+        $("#editor_1").find(".w-e-menu").css({"z-index":"101"});
     },100);
 });
