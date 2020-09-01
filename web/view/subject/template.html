@@ -20,9 +20,9 @@
                 <div class="col-8">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">标题</span>
+                            <span class="input-group-text">专题名字</span>
                         </div>
-                        <input type="text" name="title" placeholder="请输入标题" value="<%= dataArr.title %>" class="form-control" required>
+                        <input type="text" name="title" placeholder="请输入专题名字" value="<%= dataArr.title %>" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-2">
@@ -31,6 +31,16 @@
                             <span class="input-group-text">排序</span>
                         </div>
                         <input type="text" name="sort" placeholder="请输入排序" value="<%= dataArr.sort %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-8">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">小标题</span>
+                        </div>
+                        <input type="text" name="subTitle" placeholder="请输入小标题" value="<%= dataArr.subTitle %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -67,8 +77,27 @@
                     <% } else { %>
                     <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无封面图</span></h6>
                     <% } %>
-                    <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
+                    <h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的封面图的尺寸为641×220）</h6>
                     <input type="hidden" name="coverImg" value="<%= dataArr.coverImg %>">
+                </div>
+            </div>
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
+                <div class="input-group">
+                    <span style="margin-top:6px;margin-right: 10px">上传分享小图</span>
+                    <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                    <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    <span class="temporaryFile" style="display: none"></span>
+                    <% if (dataArr.shareImg) { %>
+                    <h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">
+                        <a target='_blank' href='<%= dataArr.shareImg %>'>
+                            <img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.shareImg %>">
+                        </a>
+                    </h6>
+                    <% } else { %>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无分享小图</span></h6>
+                    <% } %>
+                    <h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的分享小图的尺寸为110×110）</h6>
+                    <input type="hidden" name="shareImg" value="<%= dataArr.shareImg %>">
                 </div>
             </div>
         </div>
@@ -100,7 +129,7 @@
             </div>
         </div>
         <% for (var i = 0; i < specsArr.length; i++) { %>
-        <div class="goodsItemSeparated specItem">
+        <div class="goodsItemSeparated specItem" style="background: #ffffff">
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-4">
                     <h6>主题详情<span class="specNumber"><%= i+1 %></span></h6>
@@ -114,9 +143,9 @@
                 <div class="col-4">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">商品信息ID</span>
+                            <span class="input-group-text">淘宝商品ID</span>
                         </div>
-                        <input type="text" name="detail[][itemId]" placeholder="请输入商品信息ID" value="<%= specsArr[i].itemId %>" class="form-control" required>
+                        <input type="text" name="detail[][itemId]" placeholder="请输入淘宝商品ID" value="<%= specsArr[i].itemId %>" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-3">
@@ -140,7 +169,7 @@
 </script>
 <!-- 主题详情信息item模板Modal-->
 <script id="specItem" type="text/html">
-    <div class="goodsItemSeparated specItem">
+    <div class="goodsItemSeparated specItem"  style="background: #ffffff">
         <div class="form-row" style="margin-bottom: 15px">
             <div class="col-4">
                 <h6>主题详情<span class="specNumber"></span></h6>
@@ -154,9 +183,9 @@
             <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">商品信息ID</span>
+                        <span class="input-group-text">淘宝商品ID</span>
                     </div>
-                    <input type="text" name="detail[][itemId]" placeholder="请输入商品信息ID" value="" class="form-control" required>
+                    <input type="text" name="detail[][itemId]" placeholder="请输入淘宝商品ID" value="" class="form-control" required>
                 </div>
             </div>
             <div class="col-3">

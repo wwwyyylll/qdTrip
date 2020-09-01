@@ -778,6 +778,18 @@ define("apis", function() {
                 a:'offById'
             }
         },
+        subjectDetailClickStat:{
+            getLists:{
+                c:'subjectDetailClickStat',
+                a:'getLists'
+            }
+        },
+        subjectClickStat:{
+            getLists:{
+                c:'subjectClickStat',
+                a:'getLists'
+            }
+        },
 
         role:{
             getLists:{
