@@ -758,6 +758,14 @@ define("apis", function() {
             offById:{
                 c:'subject',
                 a:'offById'
+            },
+            syncById:{
+                c:'subject',
+                a:'syncById'
+            },
+            recoveryDetailByDetailId:{
+                c:'subject',
+                a:'recoveryDetailByDetailId'
             }
         },
         mallExpressCompany:{

@@ -22,7 +22,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">专题名字</span>
                         </div>
-                        <input type="text" name="title" placeholder="请输入专题名字" value="<%= dataArr.title %>" class="form-control" required>
+                        <input type="text" name="name" placeholder="请输入专题名字" value="<%= dataArr.name %>" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-2">
@@ -35,12 +35,20 @@
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-8">
+                <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">小标题</span>
+                            <span class="input-group-text">文章标题</span>
                         </div>
-                        <input type="text" name="subTitle" placeholder="请输入小标题" value="<%= dataArr.subTitle %>" class="form-control" required>
+                        <input type="text" name="title" placeholder="请输入文章标题" value="<%= dataArr.title %>" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">副标题</span>
+                        </div>
+                        <input type="text" name="subTitle" placeholder="请输入副标题" value="<%= dataArr.subTitle %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -129,23 +137,31 @@
             </div>
         </div>
         <% for (var i = 0; i < specsArr.length; i++) { %>
-        <div class="goodsItemSeparated specItem" style="background: #ffffff">
+        <div class="goodsItemSeparated specItem" <% if(specsArr[i].status!=2){ %> style="background: #ffffff" <% }else{ %> style="background: lightgray" <% } %>>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-4">
-                    <h6>主题详情<span class="specNumber"><%= i+1 %></span></h6>
+                    <h6>主题详情<span class="specNumber"><%= i+1 %></span>
+                    <% if(specsArr[i].status==2){ %>
+                        <span style="color: red" class="delStatus">【已删除】</span>
+                    <% } %>
+                    </h6>
                 </div>
-                <div class="col-8">
+                <div class="col-8 iconDiv">
+                    <% if(specsArr[i].status!=2){ %>
                     <span data-operate="delSpec" style="float: right;cursor: pointer" ><i class="icon fa fa-close"></i></span>
+                    <% }else{ %>
+                    <span data-operate="recoverSpec" style="float: right;cursor: pointer;border: 2px solid gray;border-radius: 50%;width: 28px;height: 28px;text-align: center;line-height: 26px;background: #ffffff" ><i class="icon fa fa-reply"></i></span>
+                    <% } %>
                 </div>
             </div>
-            <input type="hidden" name="detail[][id]" class="specItemId" value="<%= specsArr[i].id %>">
+            <input type="hidden" name="detail[][id]" <% if(specsArr[i].status==2){ %> disabled <% } %> class="specItemId" value="<%= specsArr[i].id %>">
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-4">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">淘宝商品ID</span>
                         </div>
-                        <input type="text" name="detail[][itemId]" placeholder="请输入淘宝商品ID" value="<%= specsArr[i].itemId %>" class="form-control" required>
+                        <input type="text" <% if(specsArr[i].status==2){ %> disabled <% } %> name="detail[][itemId]" placeholder="请输入淘宝商品ID" value="<%= specsArr[i].itemId %>" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-3">
@@ -153,14 +169,21 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">排序</span>
                         </div>
-                        <input type="text" name="detail[][sort]" placeholder="请输入排序" value="<%= specsArr[i].sort %>" class="form-control" required>
+                        <input type="text" <% if(specsArr[i].status==2){ %> disabled <% } %> name="detail[][sort]" placeholder="请输入排序" value="<%= specsArr[i].sort %>" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group">
+                        <% if(specsArr[i].itemStatus){ %>
+                        <span style="color: red;margin-top: 7px">【<%= specsArr[i].itemStatus  %>】</span>
+                        <% } %>
                     </div>
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div id="editor_<%= i+1 %>" class="editorDiv"></div>
-                    <input type="hidden" name="detail[][content]" value="<%= specsArr[i].content %>">
+                    <input type="hidden" <% if(specsArr[i].status==2){ %> disabled <% } %> name="detail[][content]" value="<%= specsArr[i].content %>">
                 </div>
             </div>
         </div>

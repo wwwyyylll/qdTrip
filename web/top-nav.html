@@ -54,6 +54,11 @@
                         <i class="fa fa-envelope" style="font-size: 13px;color:#00635a"></i>
                         <a style="text-decoration: underline;word-wrap: break-word;word-break:break-all;margin-left: 4px" target="_blank" href="@@HOSTview/store/goods.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
                     </p>
+                    <% }else if(dataArr[i].type == 5){ %>
+                    <p class="app-notification__message">
+                        <i class="fa fa-envelope" style="font-size: 13px;color:#00635a"></i>
+                        <a style="text-decoration: underline;word-wrap: break-word;word-break:break-all;margin-left: 4px" target="_blank" href="@@HOSTview/subject/subject.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
+                    </p>
                     <% }else{ %>
                     <p class="app-notification__message" style="word-wrap: break-word;word-break:break-all"><i class="fa fa-envelope" style="font-size: 13px;color:#00635a;margin-right: 4px"></i><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>人】</span></p>
                     <% } %>

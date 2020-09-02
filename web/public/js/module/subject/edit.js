@@ -109,6 +109,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }
             });
         },
+        recoverSpec:function($this){
+            var id = $this.closest(".form-row").next("input").val();
+            hound.confirm('确认恢复吗?', '', function () {
+                utils.ajaxSubmit(apis.subject.recoveryDetailByDetailId, {id: id}, function (data) {
+                    $this.closest(".specItem").find("input").attr("disabled",false);
+                    //富文本编辑器可编辑使用
+                    $this.closest(".specItem").find(".w-e-text").attr("contenteditable",true);
+                    $this.closest(".specItem").find(".w-e-text").css({background:"#ffffff"});
+                    $this.closest(".specItem").css({background:"#ffffff"});
+                    $this.closest(".specItem").find(".delStatus").text("");
+                    $this.closest(".specItem").find(".iconDiv").html('<span data-operate="delSpec" style="float: right;cursor: pointer" ><i class="icon fa fa-close"></i></span>');
+
+                });
+            });
+        },
         addGoods:function(){
             utils.loading(true);
             var editerContent = $(".w-e-text");
@@ -283,6 +298,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 editor.create();
                 $(".w-e-text-container").css({"height":"200px"});
                 $(".w-e-text").eq(i).html(getByIdData.specsArr[i].content);
+                if(editorDiv.eq(i).next("input").attr("disabled")){
+                    editor.$textElem.attr('contenteditable', false);
+                    $('#'+idNumber).find(".w-e-text").css({background:"#eceaea"});
+                }
                 $(".w-e-text-container").css({"z-index":"100"});
                 $('#'+idNumber).find(".w-e-menu").css({"z-index":"101"});
             }

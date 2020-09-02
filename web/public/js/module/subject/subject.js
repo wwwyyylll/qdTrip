@@ -8,7 +8,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-primary" type="button" data-operate="edit">编辑</button>'+
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
-        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>';
+        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
+        syncButton = '<button class="btn btn-success" type="button" data-operate="sync">同步商品</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -48,21 +49,40 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     loadData();
                 });
             });
+        },
+        //同步商品
+        sync:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认同步商品吗?', '', function () {
+                utils.ajaxSubmit(apis.subject.syncById, {id: id}, function (data) {
+                    if(data==""){
+                        hound.success("同步成功","",'').then(function(){
+                            loadData();
+                        });
+                    }else{
+                        hound.error(data,"",'').then(function(){
+                            loadData();
+                        });
+                    }
+                });
+            });
         }
     };
 
     var param = {
         pageNo: 1,
         pageSize:10,
+        name:'',
         title:'',
-        status:''
+        status:'',
+        hasGoodsOff:''
     };
 
     function loadData() {
         utils.ajaxSubmit(apis.subject.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + syncButton: n.materialButtonGroup = comButtons + startBouutn + syncButton;
             })
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
@@ -71,6 +91,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        param.hasGoodsOff = 1;
+    }else{
+        param.hasGoodsOff = '';
+    }
+
     loadData();
     utils.bindList($(document), operates);
     var listDropDown = {
@@ -83,8 +114,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.title = $("#searchCont").val();
-        loadData();
+        var selectSearchLabel = $("#selectsearchlabel").text();
+        if(selectSearchLabel=="专题名字"){
+            param.name = $("#searchCont").val();
+            param.title = '';
+            loadData();
+        }else if(selectSearchLabel=="文章标题"){
+            param.name = '';
+            param.title = $("#searchCont").val();
+            loadData();
+        }
+
     });
     $('#searchCont').on('keypress',function(event){
         if (event.keyCode == 13) {

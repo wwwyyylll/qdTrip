@@ -41,6 +41,8 @@
                 <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/goods.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
                 <% }else if(dataArr[i].type == 4){ %>
                 <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/goods.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
+                <% }else if(dataArr[i].type == 5){ %>
+                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/subject/subject.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
                 <% }else{ %>
                 <%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>人】</span>
                 <% } %>
