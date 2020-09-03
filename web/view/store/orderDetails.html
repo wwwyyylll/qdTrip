@@ -649,30 +649,12 @@
             </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
-                    <div class="input-group">
+                    <div class="input-group economy-wards">
                         <div class="input-group-prepend">
                             <span class="input-group-text">快递公司</span>
                         </div>
-                        <select name="expressCompany" class="form-control" required>
-                            <option value="">请选择</option>
-                            <option value="德邦快递" <% if(dataArr.expressCompany=='德邦快递') { %> selected <% } %>>德邦快递</option>
-                            <option value="EMS"      <% if(dataArr.expressCompany=='EMS') { %> selected <% } %>>EMS</option>
-                            <option value="EMS经济快递" <% if(dataArr.expressCompany=='EMS经济快递') { %> selected <% } %>>EMS经济快递</option>
-                            <option value="快捷快递" <% if(dataArr.expressCompany=='快捷快递') { %> selected <% } %>>快捷快递</option>
-                            <option value="国通快递" <% if(dataArr.expressCompany=='国通快递') { %> selected <% } %>>国通快递</option>
-                            <option value="百世快递" <% if(dataArr.expressCompany=='百世快递') { %> selected <% } %>>百世快递</option>
-                            <option value="邮政快递包裹" <% if(dataArr.expressCompany=='邮政快递包裹') { %> selected <% } %>>邮政快递包裹</option>
-                            <option value="全峰快递" <% if(dataArr.expressCompany=='全峰快递') { %> selected <% } %>>全峰快递</option>
-                            <option value="顺丰速运" <% if(dataArr.expressCompany=='顺丰速运') { %> selected <% } %>>顺丰速运</option>
-                            <option value="申通快递" <% if(dataArr.expressCompany=='申通快递') { %> selected <% } %>>申通快递</option>
-                            <option value="天天快递" <% if(dataArr.expressCompany=='天天快递') { %> selected <% } %>>天天快递</option>
-                            <option value="优速物流" <% if(dataArr.expressCompany=='优速物流') { %> selected <% } %>>优速物流</option>
-                            <option value="圆通速递" <% if(dataArr.expressCompany=='圆通速递') { %> selected <% } %>>圆通速递</option>
-                            <option value="韵达快递" <% if(dataArr.expressCompany=='韵达快递') { %> selected <% } %>>韵达快递</option>
-                            <option value="宅急送"   <% if(dataArr.expressCompany=='宅急送') { %> selected <% } %>>宅急送</option>
-                            <option value="中通快递" <% if(dataArr.expressCompany=='中通快递') { %> selected <% } %>>中通快递</option>
-                            <option value="其它"     <% if(dataArr.expressCompany=='其它') { %> selected <% } %>>其它</option>
-                        </select>
+                        <input type="text" class="form-control expressCompanyId" placeholder="请输入快递公司关键字" required>
+                        <input type="hidden" name="expressCompanyId">
                     </div>
                 </div>
             </div>

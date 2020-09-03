@@ -145,7 +145,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     })
                 }
             }, 'md');
-            $(".expressCompanyId").on("input",function(){
+            $(".expressCompanyId").on("keyup",function(){
                 var expressParam = {
                     pageNo: 1,
                     pageSize:50000,

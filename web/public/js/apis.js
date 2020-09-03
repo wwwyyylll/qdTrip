@@ -798,6 +798,58 @@ define("apis", function() {
                 a:'getLists'
             }
         },
+        mallPopularizeCommission:{
+            getLists:{
+                c:'mallPopularizeCommission',
+                a:'getLists'
+            },
+            create:{
+                c:'mallPopularizeCommission',
+                a:'create'
+            },
+            getById:{
+                c:'mallPopularizeCommission',
+                a:'getById'
+            },
+            updateById:{
+                c:'mallPopularizeCommission',
+                a:'updateById'
+            },
+            onById:{
+                c:'mallPopularizeCommission',
+                a:'onById'
+            },
+            offById:{
+                c:'mallPopularizeCommission',
+                a:'offById'
+            }
+        },
+        mallSaleCommission:{
+            getLists:{
+                c:'mallSaleCommission',
+                a:'getLists'
+            },
+            create:{
+                c:'mallSaleCommission',
+                a:'create'
+            },
+            getById:{
+                c:'mallSaleCommission',
+                a:'getById'
+            },
+            updateById:{
+                c:'mallSaleCommission',
+                a:'updateById'
+            },
+            onById:{
+                c:'mallSaleCommission',
+                a:'onById'
+            },
+            offById:{
+                c:'mallSaleCommission',
+                a:'offById'
+            }
+        },
 
         role:{
             getLists:{

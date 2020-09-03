@@ -60,6 +60,32 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     })
                 }
             }, 'md');
+            $(".expressCompanyId").on("keyup",function(){
+                var expressParam = {
+                    pageNo: 1,
+                    pageSize:50000,
+                    expName:$(".expressCompanyId").val(),
+                    status:1
+                };
+                utils.ajaxSubmit(apis.mallExpressCompany.getLists, expressParam, function (data) {
+                    if(data.dataArr.length!=0){
+                        var $economyAbilityItem = '';
+                        $.each(data.dataArr, function (i, v) {
+                            $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.expName +'</div>'
+                        });
+                        $('.ability-list').remove();
+                        var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
+                        $(".expressCompanyId").closest('.economy-wards').append($abilityList);
+
+                        $('.economy-ability-item').click(function(){
+                            $('.ability-list').remove();
+                            var $index = $(this).index();
+                            $(".expressCompanyId").val(data.dataArr[$index].expName);
+                            $("input[name=expressCompanyId]").val(data.dataArr[$index].id);
+                        });
+                    }
+                });
+            });
         },
         //接单
         submitSupplier:function($this){

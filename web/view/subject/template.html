@@ -17,12 +17,20 @@
                     </div>
                 </div>
                 <% } %>
-                <div class="col-8">
+                <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">专题名字</span>
                         </div>
                         <input type="text" name="name" placeholder="请输入专题名字" value="<%= dataArr.name %>" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">购买量</span>
+                        </div>
+                        <input type="text" name="buyCnt" placeholder="请输入购买量" value="<%= dataArr.buyCnt %>" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-2">

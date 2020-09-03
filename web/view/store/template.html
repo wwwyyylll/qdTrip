@@ -231,6 +231,41 @@
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">销售佣金</span>
+                        </div>
+                        <input type="text" name="specsArr[][saleCommission]" placeholder="请输入销售佣金" value="<%= specsArr[i].saleCommission %>" class="form-control" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">元</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">一级推广佣金</span>
+                        </div>
+                        <input type="text" name="specsArr[][popularizeCommission_level1]" placeholder="请输入一级推广佣金" value="<%= specsArr[i].popularizeCommission_level1 %>" class="form-control" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">元</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">二级推广佣金</span>
+                        </div>
+                        <input type="text" name="specsArr[][popularizeCommission_level2]" placeholder="请输入二级推广佣金" value="<%= specsArr[i].popularizeCommission_level2 %>" class="form-control" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
                 <!--<div class="col-3" style="display: none">-->
                     <!--<div class="input-group">-->
                         <!--<div class="input-group-prepend">-->
@@ -460,6 +495,41 @@
                         <option value="2">否</option>
                         <option value="1">是</option>
                     </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row" style="margin-bottom: 15px">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">销售佣金</span>
+                    </div>
+                    <input type="text" name="specsArr[][saleCommission]" placeholder="请输入销售佣金" value="" class="form-control" required>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">一级推广佣金</span>
+                    </div>
+                    <input type="text" name="specsArr[][popularizeCommission_level1]" placeholder="请输入一级推广佣金" value="" class="form-control" required>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">二级推广佣金</span>
+                    </div>
+                    <input type="text" name="specsArr[][popularizeCommission_level2]" placeholder="请输入二级推广佣金" value="" class="form-control" required>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
                 </div>
             </div>
         </div>
