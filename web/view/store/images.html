@@ -1,15 +1,15 @@
-@@include('../../inc-header.html', {"title": "销售佣金管理"})
+@@include('../../inc-header.html', {"title": "推广海报管理"})
 @@include('../../top-nav.html')
 @@include('../../left-nav.html')
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> 销售佣金管理</h1>
+            <h1><i class="fa fa-th-list"></i> 推广海报管理</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active"><a href="#">销售佣金管理</a></li>
+            <li class="breadcrumb-item active"><a href="#">推广海报管理</a></li>
         </ul>
     </div>
     <div class="row">
@@ -19,11 +19,11 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="display: none">
                             <input type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
-                            <button class="btn btn-secondary" type="button" id="selectsearchlabel">账号</button>
+                            <button class="btn btn-secondary" type="button" id="selectsearchlabel">姓名</button>
                             <div class="btn-group" role="group">
                                 <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item searchlabel" href="#">账号</a>
+                                    <a class="dropdown-item searchlabel" href="#">姓名</a>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="tile-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="min-height: 300px">
                         <table class="table table-hover table-bordered" id="sampleTable"></table>
                         <div id="visaPagination" class="d-flex justify-content-end">
                         </div>
@@ -51,12 +51,9 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>名称</th>
-        <th>级别</th>
-        <th>佣金率</th>
-        <th>购买数</th>
-        <th>点击数</th>
-        <th style="width:15%;word-wrap: break-word;word-break:break-all;">副标题（钱包中使用）</th>
+        <th>海报</th>
+        <th style="width:20%;word-wrap: break-word;word-break:break-all;">内容</th>
+        <th>排序</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -69,6 +66,7 @@
                 </div>
             </div>
         </th>
+        <th>创建时间</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -77,13 +75,19 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
-        <td><%= dataArr[i].title %></td>
-        <td><%- dataArr[i].levelText %></td>
-        <td><%= dataArr[i].rate %></td>
-        <td><%= dataArr[i].buyCnt %></td>
-        <td><%= dataArr[i].clickCnt %></td>
-        <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].memo %></td>
+        <td>
+            <% if(dataArr[i].pic){ %>
+            <a target="_blank" href="<%= dataArr[i].pic %>">
+                <img src="<%= dataArr[i].pic %>" style="display: inline-block;width:100px;height: 50px">
+            </a>
+            <% }else{ %>
+            <span style="color: red">暂无海报</span>
+            <% } %>
+        </td>
+        <td style="width:20%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].content %></td>
+        <td><%= dataArr[i].sort %></td>
         <td><%- dataArr[i].statusText %></td>
+        <td><%= dataArr[i].createTime %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>
@@ -98,78 +102,54 @@
     <% } %>
     </tbody>
 </script>
-<!--Modal新增,编辑，查看-->
+<!--Modal新增,编辑，查看主播-->
 <script id="modalDiv" type="text/html">
     <form id="visaPassportForm" disabled="true">
         <fieldset>
             <input type="hidden" name="id" value="<%= dataArr.id %>">
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
+                <div class="col-5">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">名称</span>
-                        </div>
-                        <input type="text" name="title" placeholder="请输入名称" value="<%= dataArr.title %>" class="form-control" required>
+                        <span style="margin-top:6px;margin-right: 10px">上传海报</span>
+                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar1" class="uploadImg d-none">选择图片文件</label>
+                        <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="input-group">
+                        <% if (dataArr.pic) { %>
+                        <h6 class="imgUrl">
+                            <a target='_blank' href='<%= dataArr.pic %>'>
+                                <img src="<%= dataArr.pic %>" style="display: inline-block;width:100px;height: 33px;">
+                            </a>
+                        </h6>
+                        <% } else { %>
+                        <h6 style="margin-top: 9px" class="imgUrl"><span style="color:red">暂无海报</span></h6>
+                        <% } %>
+                        <input type="hidden" name="pic" value="<%= dataArr.pic %>">
                     </div>
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
+                <div class="col-8">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">级别</span>
+                            <span class="input-group-text">内容</span>
                         </div>
-                        <select name="level" class="form-control" required>
-                            <option value="">请选择</option>
-                            <option value="1" <% if(dataArr.level==1){ %> selected <% } %>>初级</option>
-                            <option value="2" <% if(dataArr.level==2){ %> selected <% } %>>中级</option>
-                            <option value="3" <% if(dataArr.level==3){ %> selected <% } %>>高级</option>
-                        </select>
+                        <input type="text" name="content" placeholder="请输入内容" value="<%= dataArr.content %>" class="form-control" required>
                     </div>
                 </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
+                <div class="col-4">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">佣金率</span>
+                            <span class="input-group-text">排序</span>
                         </div>
-                        <input type="text" name="rate" placeholder="请输入佣金率" value="<%= dataArr.rate %>" class="form-control" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">购买数</span>
-                        </div>
-                        <input type="text" name="buyCnt" placeholder="请输入购买数" value="<%= dataArr.buyCnt %>" class="form-control" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">点击数</span>
-                        </div>
-                        <input type="text" name="clickCnt" placeholder="请输入点击数" value="<%= dataArr.clickCnt %>" class="form-control" required>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">副标题（钱包中使用）</span>
-                        </div>
-                        <input type="text" name="memo" placeholder="请输入副标题（钱包中使用）" value="<%= dataArr.memo %>" class="form-control" required>
+                        <input type="text" name="sort" placeholder="请输入排序" value="<%= dataArr.sort %>" class="form-control" required>
                     </div>
                 </div>
             </div>
         </fieldset>
     </form>
 </script>
-<script data-main="/public/js/module/store/saleCommission"></script>
+<script data-main="/public/js/module/store/images"></script>
 @@include('../../inc-footer.html')

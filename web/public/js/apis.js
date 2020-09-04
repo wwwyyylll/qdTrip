@@ -824,6 +824,32 @@ define("apis", function() {
                 a:'offById'
             }
         },
+        mallPopularizeImages:{
+            getLists:{
+                c:'mallPopularizeImages',
+                a:'getLists'
+            },
+            create:{
+                c:'mallPopularizeImages',
+                a:'create'
+            },
+            getById:{
+                c:'mallPopularizeImages',
+                a:'getById'
+            },
+            updateById:{
+                c:'mallPopularizeImages',
+                a:'updateById'
+            },
+            onById:{
+                c:'mallPopularizeImages',
+                a:'onById'
+            },
+            offById:{
+                c:'mallPopularizeImages',
+                a:'offById'
+            }
+        },
         mallSaleCommission:{
             getLists:{
                 c:'mallSaleCommission',
@@ -850,6 +876,23 @@ define("apis", function() {
                 a:'offById'
             }
         },
+        userCertification:{
+            getLists:{
+                c:'userCertification',
+                a:'getLists'
+            }
+        },
+        userCashOutRequest:{
+            getLists:{
+                c:'userCashOutRequest',
+                a:'getLists'
+            },
+            completeById:{
+                c:'userCashOutRequest',
+                a:'completeById'
+            }
+        },
+
 
         role:{
             getLists:{

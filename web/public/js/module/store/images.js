@@ -16,15 +16,80 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#searchCont").attr("data-id",'');
     });
 
+    function blobToDataURL(blob,cb) {
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var base64 = evt.target.result
+            cb(base64)
+        };
+        reader.readAsDataURL(blob);
+    }
+
+    var picFile = "";
+    function uploadFile(){
+        //选择图片文件
+        $(".uploadImg").change(function(){
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                hound.alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            var file = this.files[0];
+            reader.onload = function(e) {
+                //获取图片dom
+                $(".imgUrl").html('<i class="fa fa-image mr-2"></i>' + file.name)
+                if(file.name!=""){
+                    $(".avatarUpload").removeAttr("disabled");
+                    $(".avatarUpload").removeClass("btn-default");
+                    $(".avatarUpload").addClass("btn-primary");
+                }
+            };
+            reader.readAsDataURL(file);
+
+            if(file){
+                var url = URL.createObjectURL(file);
+                var base64 = blobToDataURL(file,function(base64Url) {
+                    picFile = base64Url;
+                })
+            }
+        })
+        // 上传图片文件
+        $(".uploadFile").find('.avatarUpload').click(function () {
+            $.ajax({
+                type:'POST',
+                url: "@@API",
+                data: {
+                    c:"img",
+                    a:"uploadForBase64",
+                    linkUserName:consts.param.linkUserName,
+                    linkPassword:consts.param.linkPassword,
+                    signature:consts.param.signature,
+                    userToken: $.cookie('userToken'),
+                    content:picFile
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $(".imgUrl").html("");
+                    $(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 100px;height: 33px' src='"+ res.result +"'></a>");
+                    $(".imgUrl").css({marginTop:0});
+                    $("input[name=pic]").val(res.result);
+                }
+            }).fail(function (jqXHR, textStatus) {
+                hound.error('Request failed: ' + textStatus);
+            });
+        });
+    }
+
     //新增
     $addModal.on("click",function(){
         var initialData = {
             dataArr:{}
         };
-        utils.renderModal('新增级别', template('modalDiv',initialData), function(){
+        utils.renderModal('新增海报', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
                 utils.loading(true);
-                utils.ajaxSubmit(apis.mallSaleCommission.create,$("#visaPassportForm").serialize(),function(data){
+                utils.ajaxSubmit(apis.mallPopularizeImages.create,$("#visaPassportForm").serialize(),function(data){
                     utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
@@ -32,7 +97,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     loadData();
                 })
             }
-        }, 'md');
+        }, 'lg');
+        uploadFile();
     });
 
     //页面操作配置
@@ -40,31 +106,32 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.mallSaleCommission.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.mallPopularizeImages.getById, {id: id}, function (data) {
                 var getByIdData = {
                     dataArr:data
                 };
-                utils.renderModal('编辑级别', template('modalDiv', getByIdData), function(){
+                utils.renderModal('编辑海报', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
                         utils.loading(true);
-                        utils.ajaxSubmit(apis.mallSaleCommission.updateById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.ajaxSubmit(apis.mallPopularizeImages.updateById, $("#visaPassportForm").serialize(), function (data) {
                             utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
                         })
                     }
-                }, 'md');
+                }, 'lg');
+                uploadFile();
             });
         },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.mallSaleCommission.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.mallPopularizeImages.getById, {id: id}, function (data) {
                 var getByIdData = {
                     dataArr:data
                 };
-                utils.renderModal('查看级别', template('modalDiv', getByIdData),'', 'md');
+                utils.renderModal('查看海报', template('modalDiv', getByIdData),'', 'lg');
                 $("#visaPassportForm").append($("fieldset").prop('disabled', true));
             });
         },
@@ -72,7 +139,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认无效吗?', '', function () {
-                utils.ajaxSubmit(apis.mallSaleCommission.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.mallPopularizeImages.offById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -81,7 +148,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认有效吗?', '', function () {
-                utils.ajaxSubmit(apis.mallSaleCommission.onById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.mallPopularizeImages.onById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -95,11 +162,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     };
 
     function loadData() {
-        utils.ajaxSubmit(apis.mallSaleCommission.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.mallPopularizeImages.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                n.levelText = consts.status.level[n.level];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn ;
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
@@ -122,7 +188,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.userName = $("#searchCont").val();
+        param.name = $("#searchCont").val();
         loadData();
     });
     $('#searchCont').on('keypress',function(event){

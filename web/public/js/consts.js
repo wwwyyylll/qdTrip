@@ -123,6 +123,19 @@ define("consts", function() {
                 '3':'<span style="color:orange">【左二】</span>',
                 '2':'<span style="color:green">【右一】</span>',
                 '4':'<span style="color:blue">【右二】</span>'
+            },
+            level:{
+                '1':'<span style="color:orange">初级</span>',
+                '2':'<span style="color:#ea5664">中级</span>',
+                '3':'<span style="color:green">高级</span>'
+            },
+            accountType:{
+                '1':'<span style="color:green">微信</span>',
+                '2':'<span style="color:blue">支付宝</span>'
+            },
+            userStatus:{
+                '1':'<span style="color:orange">申请中</span>',
+                '2':'<span style="color:green">完成</span>'
             }
         }
     }

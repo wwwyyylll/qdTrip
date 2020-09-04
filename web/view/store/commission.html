@@ -51,10 +51,11 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th>名称</th>
         <th>级别</th>
-        <th>级别名称</th>
         <th>注册用户数</th>
         <th>佣金率</th>
+        <th style="width:15%;word-wrap: break-word;word-break:break-all;">副标题（钱包中使用）</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -75,10 +76,11 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
-        <td><%= dataArr[i].level %></td>
         <td><%= dataArr[i].title %></td>
+        <td><%- dataArr[i].levelText %></td>
         <td><%= dataArr[i].userCnt %></td>
         <td><%= dataArr[i].rate %></td>
+        <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].memo %></td>
         <td><%- dataArr[i].statusText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
@@ -89,7 +91,7 @@
     <% } %>
     <% } else { %>
     <tr>
-        <td colspan="7">没有符合条件的记录</td>
+        <td colspan="8">没有符合条件的记录</td>
     </tr>
     <% } %>
     </tbody>
@@ -103,6 +105,16 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">名称</span>
+                        </div>
+                        <input type="text" name="title" placeholder="请输入名称" value="<%= dataArr.title %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">级别</span>
                         </div>
                         <select name="level" class="form-control" required>
@@ -111,16 +123,6 @@
                             <option value="2" <% if(dataArr.level==2){ %> selected <% } %>>中级</option>
                             <option value="3" <% if(dataArr.level==3){ %> selected <% } %>>高级</option>
                         </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">级别名称</span>
-                        </div>
-                        <input type="text" name="title" placeholder="请输入级别名称" value="<%= dataArr.title %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -141,6 +143,16 @@
                             <span class="input-group-text">佣金率</span>
                         </div>
                         <input type="text" name="rate" placeholder="请输入佣金率" value="<%= dataArr.rate %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">副标题（钱包中使用）</span>
+                        </div>
+                        <input type="text" name="memo" placeholder="请输入副标题（钱包中使用）" value="<%= dataArr.memo %>" class="form-control" required>
                     </div>
                 </div>
             </div>
