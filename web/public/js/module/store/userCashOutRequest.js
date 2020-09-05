@@ -1,6 +1,7 @@
 require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //按钮组集合
-    var completeButton = '<button class="btn btn-primary" type="button" data-operate="complete">完成</button>';
+    var completeButton = '<button class="btn btn-primary" type="button" data-operate="complete">打款</button>'+
+                         '<button class="btn btn-danger" type="button" data-operate="reject">驳回</button>';
     var processedParam = {
         pageNo: 1,
         pageSize:10,
@@ -13,6 +14,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:1,
+        nickName:'',
+        realName:'',
+        mobile:''
+    };
+    var rejectParam = {
+        pageNo: 1,
+        pageSize:10,
+        status:3,
         nickName:'',
         realName:'',
         mobile:''
@@ -120,14 +129,74 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             });
         },
-        //完成
+        rejectList:function(){
+            var content = $("#searchCont2").val();
+            var contentType = $("#selectsearchlabel2").text();
+            utils.ajaxSubmit(apis.userCashOutRequest.getLists, rejectParam, function (data) {
+                var getByIdData = {
+                    dataArr:data.dataArr,
+                    content:content,
+                    contentType:contentType?contentType:"昵称"
+                };
+                $.each(data.dataArr,function(i,n){
+                    n.accountTypeText = consts.status.accountType[n.accountType];
+                    n.statusText = consts.status.userStatus[n.status];
+                });
+                $("#tabContent").html(template('rejectList', getByIdData));
+                utils.bindPagination($("#rejectPagination"), rejectParam, operates.rejectList);
+                $("#rejectPagination").html(utils.pagination(parseInt(data.cnt), rejectParam.pageNo));
+
+                $(".searchlabel2").on("click",function(){
+                    $("#selectsearchlabel2").text($(this).text());
+                    $("#searchCont2").val("");
+                    $("#searchCont2").attr("data-id",'');
+                });
+
+                $("#search2").on("click",function(){
+                    rejectParam.pageNo = 1;
+                    var selectSearchLabel2 = $("#selectsearchlabel2").text();
+                    if(selectSearchLabel2=="昵称"){
+                        rejectParam.nickName = $("#searchCont2").val();
+                        rejectParam.realName = '';
+                        rejectParam.mobile = '';
+                        operates.rejectList();
+                    }else if(selectSearchLabel2=="真实姓名"){
+                        rejectParam.realName = $("#searchCont2").val();
+                        rejectParam.nickName = '';
+                        rejectParam.mobile = '';
+                        operates.rejectList();
+                    }else if(selectSearchLabel2=="手机号"){
+                        rejectParam.mobile = $("#searchCont2").val();
+                        rejectParam.nickName = '';
+                        rejectParam.realName = '';
+                        operates.rejectList();
+                    }
+                });
+                $('#searchCont2').on('keypress',function(event){
+                    if (event.keyCode == 13) {
+                        $('#search2').click();
+                    }
+                });
+            });
+        },
+        //打款
         complete:function($this){
             var id = $this.closest("tr").attr("data-id");
-            hound.confirm('确认完成吗?', '', function () {
+            hound.confirm('确认打款吗?', '', function () {
                 utils.ajaxSubmit(apis.userCashOutRequest.completeById, {id: id}, function (data) {
+                    hound.success("操作成功", "", 1000);
                     operates.waitList();
                 });
             });
+        },
+        reject:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.reason('确认驳回吗?','请输入驳回原因',function(data){
+                utils.ajaxSubmit(apis.userCashOutRequest.rejectById, {id: id,reason:data}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    operates.waitList();
+                });
+            })
         }
     };
 
@@ -137,11 +206,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         operates.processed();
         $(this).css({color:"orange"});
         $("#headerTab2").css({color:"#555555"});
+        $("#headerTab3").css({color:"#555555"});
     });
     $("#headerTab2").on("click",function(){
         operates.waitList();
         $(this).css({color:"orange"});
         $("#headerTab1").css({color:"#555555"});
+        $("#headerTab3").css({color:"#555555"});
+    });
+    $("#headerTab3").on("click",function(){
+        operates.rejectList();
+        $(this).css({color:"orange"});
+        $("#headerTab1").css({color:"#555555"});
+        $("#headerTab2").css({color:"#555555"});
     });
     utils.bindList($(document), operates);
 });

@@ -850,29 +850,29 @@ define("apis", function() {
                 a:'offById'
             }
         },
-        mallSaleCommission:{
+        mallPopularizeGoodsCommission:{
             getLists:{
-                c:'mallSaleCommission',
+                c:'mallPopularizeGoodsCommission',
                 a:'getLists'
             },
             create:{
-                c:'mallSaleCommission',
+                c:'mallPopularizeGoodsCommission',
                 a:'create'
             },
             getById:{
-                c:'mallSaleCommission',
+                c:'mallPopularizeGoodsCommission',
                 a:'getById'
             },
             updateById:{
-                c:'mallSaleCommission',
+                c:'mallPopularizeGoodsCommission',
                 a:'updateById'
             },
             onById:{
-                c:'mallSaleCommission',
+                c:'mallPopularizeGoodsCommission',
                 a:'onById'
             },
             offById:{
-                c:'mallSaleCommission',
+                c:'mallPopularizeGoodsCommission',
                 a:'offById'
             }
         },
@@ -890,6 +890,10 @@ define("apis", function() {
             completeById:{
                 c:'userCashOutRequest',
                 a:'completeById'
+            },
+            rejectById:{
+                c:'userCashOutRequest',
+                a:'rejectById'
             }
         },
 

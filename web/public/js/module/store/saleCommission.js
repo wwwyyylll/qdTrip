@@ -24,7 +24,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.renderModal('新增级别', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
                 utils.loading(true);
-                utils.ajaxSubmit(apis.mallSaleCommission.create,$("#visaPassportForm").serialize(),function(data){
+                utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.create,$("#visaPassportForm").serialize(),function(data){
                     utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
@@ -40,14 +40,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.mallSaleCommission.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.getById, {id: id}, function (data) {
                 var getByIdData = {
                     dataArr:data
                 };
                 utils.renderModal('编辑级别', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
                         utils.loading(true);
-                        utils.ajaxSubmit(apis.mallSaleCommission.updateById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.updateById, $("#visaPassportForm").serialize(), function (data) {
                             utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
@@ -60,7 +60,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.mallSaleCommission.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.getById, {id: id}, function (data) {
                 var getByIdData = {
                     dataArr:data
                 };
@@ -72,7 +72,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认无效吗?', '', function () {
-                utils.ajaxSubmit(apis.mallSaleCommission.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.offById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -81,7 +81,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认有效吗?', '', function () {
-                utils.ajaxSubmit(apis.mallSaleCommission.onById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.onById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -95,7 +95,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     };
 
     function loadData() {
-        utils.ajaxSubmit(apis.mallSaleCommission.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.mallPopularizeGoodsCommission.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
                 n.levelText = consts.status.level[n.level];

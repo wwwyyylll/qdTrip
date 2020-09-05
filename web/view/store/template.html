@@ -97,9 +97,9 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">商品方案（推广用）</span>
+                            <span class="input-group-text">商品文案（分享用）</span>
                         </div>
-                        <input type="text" name="popularizeContent" placeholder="请输入商品方案（推广用）" value="<%= dataArr.popularizeContent %>" class="form-control" required>
+                        <input type="text" name="popularizeContent" placeholder="请输入商品文案（分享用）" value="<%= dataArr.popularizeContent %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -215,9 +215,21 @@
                 <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">淘宝参考价</span>
+                            <span class="input-group-text">来源</span>
                         </div>
-                        <input type="text" name="specsArr[][originalPrice]" placeholder="请输入淘宝参考价" value="<%= specsArr[i].originalPrice %>" class="form-control" required>
+                        <select name="specsArr[][source]" class="form-control" required>
+                            <option value="">请选择</option>
+                            <option value="1" <% if(specsArr[i].source==1){ %> selected <% } %>>淘宝</option>
+                            <option value="2" <% if(specsArr[i].source==2){ %> selected <% } %>>京东</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">原价</span>
+                        </div>
+                        <input type="text" name="specsArr[][originalPrice]" placeholder="请输入原价" value="<%= specsArr[i].originalPrice %>" class="form-control" required>
                         <div class="input-group-prepend">
                             <span class="input-group-text">元</span>
                         </div>
@@ -265,7 +277,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">销售佣金</span>
                         </div>
-                        <input type="text" name="specsArr[][saleCommission]" placeholder="请输入销售佣金" value="<%= specsArr[i].saleCommission %>" class="form-control" required>
+                        <input type="text" name="specsArr[][popularizeGoodsCommission]" placeholder="请输入销售佣金" value="<%= specsArr[i].popularizeGoodsCommission %>" class="form-control" required>
                         <div class="input-group-prepend">
                             <span class="input-group-text">元</span>
                         </div>
@@ -483,9 +495,21 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">淘宝参考价</span>
+                        <span class="input-group-text">来源</span>
                     </div>
-                    <input type="text" name="specsArr[][originalPrice]" placeholder="请输入淘宝参考价" value="" class="form-control" required>
+                    <select name="specsArr[][source]" class="form-control" required>
+                        <option value="">请选择</option>
+                        <option value="1">淘宝</option>
+                        <option value="2">京东</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">原价</span>
+                    </div>
+                    <input type="text" name="specsArr[][originalPrice]" placeholder="请输入原价" value="" class="form-control" required>
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>
@@ -533,7 +557,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">销售佣金</span>
                     </div>
-                    <input type="text" name="specsArr[][saleCommission]" placeholder="请输入销售佣金" value="" class="form-control" required>
+                    <input type="text" name="specsArr[][popularizeGoodsCommission]" placeholder="请输入销售佣金" value="" class="form-control" required>
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>

@@ -46,42 +46,12 @@
         </div>
     </div>
 </main>
-<!-- Dropdown 来源模板 -->
-<script id="dropdownSourceOption" type="text/html">
-    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-    <% for (var i = 0; i < sourceArr.length; i++) { %>
-    <a class="dropdown-item" href="javascript:" data-id="<%= sourceArr[i].val %>"><%= sourceArr[i].name %></a>
-    <% } %>
-</script>
-<!--Dropdown 账号类型模板-->
-<script id="dropdownTypeOption" type="text/html">
-    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-    <% for (var i = 0; i < accountTypeArr.length; i++) { %>
-    <a class="dropdown-item" href="javascript:" data-id="<%= accountTypeArr[i].val %>"><%= accountTypeArr[i].name %></a>
-    <% } %>
-</script>
 <!-- 列表模板 -->
 <script id="visaListItem" type="text/html">
     <thead>
     <tr>
         <th>ID</th>
         <th>名称</th>
-        <th>排序</th>
-        <th>图片</th>
-        <th>商品列表显示方式</th>
-        <th class="em-min-7">
-            <div class="dropdown">
-                <span class="dropdown-toggle" id="dropTop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <%= parentText %>
-                </span>
-                <div class="dropdown-menu" aria-labelledby="dropTop" id="dropTopOptions">
-                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <% for(var j=0;j < parentArr.length;j++){ %>
-                    <a class="dropdown-item" href="javascript:" data-id="<%= parentArr[j].id %>"><%= parentArr[j].name %></a>
-                    <% } %>
-                </div>
-            </div>
-        </th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -102,17 +72,7 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
-        <td><%= dataArr[i].name %></td>
-        <td><%= dataArr[i].sort %></td>
-        <td>
-            <% if (dataArr[i].pic) { %>
-            <a target="_blank" href="<%= dataArr[i].pic %>"><img src="<%= dataArr[i].pic %>" alt="" style="display: inline-block;width:50px;height: 50px"></a>
-            <% } else { %>
-            <span style="color:red">暂无图片</span>
-            <% } %>
-        </td>
-        <td><%= dataArr[i].goodsShowTypeText %></td>
-        <td><%= dataArr[i].parentArr.name %></td>
+        <td><%= dataArr[i].title %></td>
         <td><%- dataArr[i].statusText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
@@ -134,69 +94,12 @@
         <fieldset>
             <input type="hidden" name="id" value="<%= dataArr.id %>">
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">名称</span>
                         </div>
-                        <input type="text" name="name" placeholder="请输入名称" value="<%= dataArr.name %>" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">所属父级分类</span>
-                        </div>
-                        <select name="parentId" class="form-control" required>
-                            <option value="0">请选择</option>
-                            <% for (var i = 0; i < dataArr.parentArr.length; i++) { %>
-                            <option value="<%= dataArr.parentArr[i].id %>" <% if(dataArr.parentId==dataArr.parentArr[i].id) { %> selected <% } %>><%= dataArr.parentArr[i].name %></option>
-                            <% } %>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">排序</span>
-                        </div>
-                        <input type="text" name="sort" placeholder="请输入名称" value="<%= dataArr.sort %>" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">商品列表显示方式</span>
-                        </div>
-                        <select name="goodsShowType" class="form-control">
-                            <% for (var i = 0; i < dataArr.showTypeArr.length; i++) { %>
-                            <option value="<%= dataArr.showTypeArr[i].val %>" <% if(dataArr.goodsShowType==dataArr.showTypeArr[i].val) { %> selected <% } %>><%= dataArr.showTypeArr[i].name %></option>
-                            <% } %>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row uploadFile" style="margin-bottom: 15px">
-                <div class="col-5">
-                    <div class="input-group">
-                        <span style="margin-top:6px;margin-right: 10px">上传图片</span>
-                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
-                        <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
-                    </div>
-                </div>
-                <div class="col-7">
-                    <div class="input-group">
-                        <% if (dataArr.pic) { %>
-                        <h6 style="margin-top: 9px" class="imgUrl">
-                            <a target='_blank' href='<%= dataArr.pic %>'>图片预览</a>
-                        </h6>
-                        <% } else { %>
-                        <h6 style="margin-top: 9px" class="imgUrl"><span style="color:red">暂无图片</span></h6>
-                        <% } %>
-                        <h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的图片的尺寸为640×218）</h6>
-                        <input type="hidden" name="pic" value="<%= dataArr.pic %>">
+                        <input type="text" name="title" placeholder="请输入名称" value="<%= dataArr.title %>" class="form-control" required>
                     </div>
                 </div>
             </div>

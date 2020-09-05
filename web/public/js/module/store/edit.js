@@ -138,6 +138,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
         },
         addGoods:function(){
+            utils.loading(true);
             var editerContent = $(".w-e-text");
             var editerImg = editerContent.find("img");
             //统计富文本编辑器中图片的数量
@@ -173,6 +174,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                     temp.attr("src",data.result);
                                     len = arry.length;
                                     if(len ==0){
+                                        //调保存的接口
+                                        $("input[name=details]").val($(".w-e-text").html());
+                                        utils.reInputName($(".specItem"));
+                                        utils.reInputName($(".imgItem"));
+                                        utils.reInputName($(".delSpecSingle"));
+                                        utils.reInputName($(".delImgSingle"));
+                                        utils.ajaxSubmit(apis.mallGoods.updateById,$("#goodsForm").serialize(),function(data){
+                                            hound.success("编辑成功","",'').then(function(){
+                                                getGoodsData();
+                                            });
+                                        });
+                                        //测试结束位置
                                         return;
                                     }
                                     func_digui(arry,len);
@@ -182,30 +195,34 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     }
                 }
                 if(submitImgArr.length!=0){
-                    func_digui(submitImgArr,submitImgArr.length);
-                    setTimeout(function(){
-                        var canPost = true;
-                        for(var i=0;i<editerImg.length;i++){
-                            if(editerImg.eq(i).attr("src").length>500){
-                                canPost = false;
-                                break;
-                            }
-                        }
-                        if(canPost){
-                            if($("#goodsForm").valid()){
-                                $("input[name=details]").val($(".w-e-text").html());
-                                utils.reInputName($(".specItem"));
-                                utils.reInputName($(".imgItem"));
-                                utils.reInputName($(".delSpecSingle"));
-                                utils.reInputName($(".delImgSingle"));
-                                utils.ajaxSubmit(apis.mallGoods.updateById,$("#goodsForm").serialize(),function(data){
-                                    hound.success("编辑成功","",'').then(function(){
-                                        getGoodsData();
-                                    });
-                                })
-                            }
-                        }
-                    },1500);
+                    if($("#goodsForm").valid()){
+                        func_digui(submitImgArr,submitImgArr.length);
+                    }else{
+                        utils.loading(false);
+                    }
+                    //setTimeout(function(){
+                    //    var canPost = true;
+                    //    for(var i=0;i<editerImg.length;i++){
+                    //        if(editerImg.eq(i).attr("src").length>500){
+                    //            canPost = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //    if(canPost){
+                    //        if($("#goodsForm").valid()){
+                    //            $("input[name=details]").val($(".w-e-text").html());
+                    //            utils.reInputName($(".specItem"));
+                    //            utils.reInputName($(".imgItem"));
+                    //            utils.reInputName($(".delSpecSingle"));
+                    //            utils.reInputName($(".delImgSingle"));
+                    //            utils.ajaxSubmit(apis.mallGoods.updateById,$("#goodsForm").serialize(),function(data){
+                    //                hound.success("编辑成功","",'').then(function(){
+                    //                    getGoodsData();
+                    //                });
+                    //            })
+                    //        }
+                    //    }
+                    //},1500);
                 }else{
                     if($("#goodsForm").valid()){
                         $("input[name=details]").val($(".w-e-text").html());
@@ -218,6 +235,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                 getGoodsData();
                             });
                         })
+                    }else{
+                        utils.loading(false);
                     }
                 }
             }else{
@@ -232,6 +251,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                             getGoodsData();
                         });
                     })
+                }else{
+                    utils.loading(false);
                 }
             }
         }

@@ -134,8 +134,9 @@ define("consts", function() {
                 '2':'<span style="color:blue">支付宝</span>'
             },
             userStatus:{
-                '1':'<span style="color:orange">申请中</span>',
-                '2':'<span style="color:green">完成</span>'
+                '1':'<span style="color:orange">等待打款</span>',
+                '2':'<span style="color:green">已打款</span>',
+                '3':'<span style="color:red">已驳回</span>'
             }
         }
     }
