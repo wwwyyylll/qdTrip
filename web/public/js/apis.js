@@ -398,6 +398,14 @@ define("apis", function() {
             allowLoginById:{
                 c:'user',
                 a:'allowLoginById'
+            },
+            getCashOutRequestLists:{
+                c:'user',
+                a:'getCashOutRequestLists'
+            },
+            getCommissionLogByUserId:{
+                c:'user',
+                a:'getCommissionLogByUserId'
             }
         },
         distributors:{

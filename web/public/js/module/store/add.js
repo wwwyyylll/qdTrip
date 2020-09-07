@@ -169,6 +169,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                         utils.reInputName($(".delSpecSingle"));
                                         utils.reInputName($(".delImgSingle"));
                                         utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
+                                            utils.loading(false);
                                             hound.success("添加成功","",'').then(function(){
                                                 window.location.href = "@@HOSTview/store/edit.html?id=" + data.id;
                                             });
@@ -220,6 +221,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                         utils.reInputName($(".delSpecSingle"));
                         utils.reInputName($(".delImgSingle"));
                         utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
+                            utils.loading(false);
                             hound.success("添加成功","",'').then(function(){
                                 window.location.href = "@@HOSTview/store/edit.html?id=" + data.id;
                             });
@@ -236,6 +238,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     utils.reInputName($(".delSpecSingle"));
                     utils.reInputName($(".delImgSingle"));
                     utils.ajaxSubmit(apis.mallGoods.create,$("#goodsForm").serialize(),function(data){
+                        utils.loading(false);
                         hound.success("添加成功","",'').then(function(){
                             window.location.href = "@@HOSTview/store/edit.html?id=" + data.id;
                         });

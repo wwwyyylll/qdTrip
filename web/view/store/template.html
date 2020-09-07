@@ -122,7 +122,7 @@
                     <input type="hidden" name="coverImg" value="<%= dataArr.coverImg %>">
                 </div>
             </div>
-            <div class="form-row uploadFile">
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
                 <div class="input-group">
                     <span style="margin-top:6px;margin-right: 10px">上传商品海报（推广用）</span>
                     <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
@@ -139,6 +139,24 @@
                     <% } %>
                     <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
                     <input type="hidden" name="popularizePic" value="<%= dataArr.popularizePic %>">
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">二维码X坐标</span>
+                        </div>
+                        <input type="text" name="qrCode_x" placeholder="请输入二维码X坐标" value="<%= dataArr.qrCode_x %>" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">二维码Y坐标</span>
+                        </div>
+                        <input type="text" name="qrCode_y" placeholder="请输入二维码Y坐标" value="<%= dataArr.qrCode_y %>" class="form-control" required>
+                    </div>
                 </div>
             </div>
         </div>

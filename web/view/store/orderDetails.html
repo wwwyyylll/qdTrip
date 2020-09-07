@@ -364,7 +364,7 @@
             </div>
         </div>
         <div class="row" style="margin-bottom: 20px">
-            <div style="width: 15%;padding: 0 15px">
+            <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">规格ID</span>
@@ -372,7 +372,7 @@
                     <input type="text" value="<%= dataArr.specsArr.id %>" class="form-control">
                 </div>
             </div>
-            <div style="width: 17%;padding: 0 15px">
+            <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">规格名称</span>
@@ -380,7 +380,7 @@
                     <input type="text" value="<%= dataArr.specsArr.title %>" class="form-control">
                 </div>
             </div>
-            <div style="width: 17%;padding: 0 15px">
+            <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">规格来源</span>
@@ -392,7 +392,7 @@
                     </select>
                 </div>
             </div>
-            <div style="width: 17%;padding: 0 15px">
+            <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">规格原价</span>
@@ -403,7 +403,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 17%;padding: 0 15px">
+            <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">规格团购价</span>
@@ -414,12 +414,47 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 17%;padding: 0 15px">
+            <!--<div style="width: 17%;padding: 0 15px">-->
+                <!--<div class="input-group">-->
+                    <!--<div class="input-group-prepend">-->
+                        <!--<span class="input-group-text">奖励金</span>-->
+                    <!--</div>-->
+                    <!--<input type="text" value="<%= dataArr.specsArr.popularizeGoodsCommission %>" class="form-control">-->
+                    <!--<div class="input-group-prepend">-->
+                        <!--<span class="input-group-text">元</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">奖励金</span>
+                        <span class="input-group-text">销售佣金</span>
                     </div>
                     <input type="text" value="<%= dataArr.specsArr.popularizeGoodsCommission %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">一级推广佣金</span>
+                    </div>
+                    <input type="text" value="<%= dataArr.specsArr.popularizeCommission_level1 %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">二级推广佣金</span>
+                    </div>
+                    <input type="text" value="<%= dataArr.specsArr.popularizeCommission_level2 %>" class="form-control">
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>

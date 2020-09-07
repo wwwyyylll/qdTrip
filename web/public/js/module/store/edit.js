@@ -181,6 +181,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                         utils.reInputName($(".delSpecSingle"));
                                         utils.reInputName($(".delImgSingle"));
                                         utils.ajaxSubmit(apis.mallGoods.updateById,$("#goodsForm").serialize(),function(data){
+                                            utils.loading(false);
                                             hound.success("编辑成功","",'').then(function(){
                                                 getGoodsData();
                                             });
@@ -231,6 +232,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                         utils.reInputName($(".delSpecSingle"));
                         utils.reInputName($(".delImgSingle"));
                         utils.ajaxSubmit(apis.mallGoods.updateById,$("#goodsForm").serialize(),function(data){
+                            utils.loading(false);
                             hound.success("编辑成功","",'').then(function(){
                                 getGoodsData();
                             });
@@ -247,6 +249,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     utils.reInputName($(".delSpecSingle"));
                     utils.reInputName($(".delImgSingle"));
                     utils.ajaxSubmit(apis.mallGoods.updateById,$("#goodsForm").serialize(),function(data){
+                        utils.loading(false);
                         hound.success("编辑成功","",'').then(function(){
                             getGoodsData();
                         });

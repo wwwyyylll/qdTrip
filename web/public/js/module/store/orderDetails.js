@@ -204,7 +204,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     getConstsLists();
     setTimeout(function(){
         operates.look(param[0]);
-    },500)
+    },500);
     $("#headerTab1").on("click",function(){
         operates.look(param[0]);
         $(this).css({color:"orange"});

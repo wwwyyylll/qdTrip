@@ -133,10 +133,27 @@ define("consts", function() {
                 '1':'<span style="color:green">微信</span>',
                 '2':'<span style="color:blue">支付宝</span>'
             },
+            accountTypeShow:{
+                '1':'<span style="color:green">【微信账号】</span>',
+                '2':'<span style="color:blue">【支付宝账号】</span>'
+            },
             userStatus:{
                 '1':'<span style="color:orange">等待打款</span>',
                 '2':'<span style="color:green">已打款</span>',
                 '3':'<span style="color:red">已驳回</span>'
+            },
+            commissionType:{
+                '1':'<span style="color:green">自购商品</span>',
+                '2':'<span style="color:blue">推广佣金</span>',
+                '3':'<span style="color:orange">销售佣金</span>'
+            },
+            fansType:{
+                '1':'<span style="color:orange">专属粉丝</span>',
+                '2':'<span style="color:gray">普通粉丝</span>'
+            },
+            buyType:{
+                '1':'<span style="color:green">购买</span>',
+                '2':'<span style="color:red">退单</span>'
             }
         }
     }
