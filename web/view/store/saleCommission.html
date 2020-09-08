@@ -55,7 +55,7 @@
         <th>级别</th>
         <th>佣金率</th>
         <th>购买数</th>
-        <th>点击数</th>
+        <th>浏览UV数</th>
         <th style="width:15%;word-wrap: break-word;word-break:break-all;">副标题（钱包中使用）</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -80,8 +80,8 @@
         <td><%= dataArr[i].title %></td>
         <td><%- dataArr[i].levelText %></td>
         <td><%= dataArr[i].rate %></td>
-        <td><%= dataArr[i].buyCnt %></td>
-        <td><%= dataArr[i].clickCnt %></td>
+        <td><%= dataArr[i].orderCnt %></td>
+        <td><%= dataArr[i].UVCnt %></td>
         <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].memo %></td>
         <td><%- dataArr[i].statusText %></td>
         <td>
@@ -144,7 +144,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">购买数</span>
                         </div>
-                        <input type="text" name="buyCnt" placeholder="请输入购买数" value="<%= dataArr.buyCnt %>" class="form-control" required>
+                        <input type="text" name="orderCnt" placeholder="请输入购买数" value="<%= dataArr.orderCnt %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -152,9 +152,9 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">点击数</span>
+                            <span class="input-group-text">浏览UV数</span>
                         </div>
-                        <input type="text" name="clickCnt" placeholder="请输入点击数" value="<%= dataArr.clickCnt %>" class="form-control" required>
+                        <input type="text" name="UVCnt" placeholder="请输入浏览UV数" value="<%= dataArr.UVCnt %>" class="form-control" required>
                     </div>
                 </div>
             </div>

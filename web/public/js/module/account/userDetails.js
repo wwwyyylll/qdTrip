@@ -17,8 +17,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         commissionLog:function(){
             utils.ajaxSubmit(apis.user.getCommissionLogByUserId, commissionParam, function (data) {
                 $.each(data.dataArr,function(i,n){
+                    n.typeText = consts.status.commissionType[n.type];
                     n.contentArr.fansTypeText = consts.status.fansType[n.contentArr.fansType];
-                    n.contentArr.typeText = consts.status.buyType[n.type];
+                    n.contentArr.typeText = consts.status.buyType[n.contentArr.type];
+                    n.contentArr.typeText1 = consts.status.buyType1[n.contentArr.type];
                 });
                 $("#tabContent").html(template('commissionLogList', data));
                 utils.bindPagination($("#visaPagination"), commissionParam, operates.commissionLog);

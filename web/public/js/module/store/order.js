@@ -269,6 +269,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
+        popularizeGoodsCommissionStatus:'',
         userId:'',
         goodsTitle:'',
         orderNo:'',
@@ -287,7 +288,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             param.searchType = '';
             loadData();
         }
-    })
+    });
 
     var showTypeArr;
     var parentArr;
@@ -310,12 +311,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 //    }
                 //}
                 n.statusText = consts.status.orderStatus[n.status];
+                n.popularizeGoodsCommissionStatusText = consts.status.isBind[n.popularizeGoodsCommissionStatus];
                 (n.canComplete=="1")? n.materialButtonGroup = lookButton + completeBouutn : n.materialButtonGroup = lookButton;
                 (n.canDeliver=="1")? n.materialButtonGroup = n.materialButtonGroup + deliverButton : n.materialButtonGroup = n.materialButtonGroup;
                 (n.canSubmitSupplier=="1")? n.materialButtonGroup = n.materialButtonGroup + supplierButton : n.materialButtonGroup = n.materialButtonGroup;
                 (n.canRefund=="1")? n.materialButtonGroup = n.materialButtonGroup + refundButton : n.materialButtonGroup = n.materialButtonGroup;
             });
             data.statusText = listDropDown.statusText;
+            data.commissionStatusText = listDropDown.commissionStatusText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -329,11 +332,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //},100);
     utils.bindList($(document), operates);
     var listDropDown = {
-        statusText:'订单状态'
+        statusText:'订单状态',
+        commissionStatusText:'佣金结算'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "订单状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropCommissionStatusOptions a[data-id]', function () {
+        param.popularizeGoodsCommissionStatus = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.commissionStatusText = "佣金结算" : listDropDown.commissionStatusText = $(this).text();
+        param.pageNo = 1;
         loadData();
     });
     $("#searchCont").on("input",function(){

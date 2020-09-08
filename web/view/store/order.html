@@ -457,6 +457,18 @@
                 </div>
             </div>
         </th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropCommissionStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= commissionStatusText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropdownVisaStatus" id="dropCommissionStatusOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">是</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">否</a>
+                </div>
+            </div>
+        </th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">操作</th>
     </tr>
     </thead>
@@ -494,6 +506,7 @@
             <div style="color: red">（<%= dataArr[i].requestMemo %>）</div>
             <% } %>
         </td>
+        <td><%- dataArr[i].popularizeGoodsCommissionStatusText %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;">
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>

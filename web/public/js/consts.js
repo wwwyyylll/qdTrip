@@ -143,9 +143,9 @@ define("consts", function() {
                 '3':'<span style="color:red">已驳回</span>'
             },
             commissionType:{
-                '1':'<span style="color:green">自购商品</span>',
-                '2':'<span style="color:blue">推广佣金</span>',
-                '3':'<span style="color:orange">销售佣金</span>'
+                '1':'奖励佣金',
+                '2':'推广佣金',
+                '3':'销售佣金'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',
@@ -154,6 +154,10 @@ define("consts", function() {
             buyType:{
                 '1':'<span style="color:green">购买</span>',
                 '2':'<span style="color:red">退单</span>'
+            },
+            buyType1:{
+                '1':'<span style="color:green"> -购买</span>',
+                '2':'<span style="color:red"> -退单</span>'
             }
         }
     }

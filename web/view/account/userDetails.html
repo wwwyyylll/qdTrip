@@ -120,13 +120,13 @@
         <% for (var i = 0; i < dataArr.length; i++) { %>
         <tr>
             <td>
-                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
+                <div style="margin-bottom: 5px"><%- dataArr[i].typeText %></div>
                 <div style="color: red"><%= dataArr[i].money %></div>
             </td>
             <td style="text-align: left;padding-left: 10%">
                 <% if(dataArr[i].type==1){ %>
                 <!--自购-->
-                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
+                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==2){ %>
@@ -135,7 +135,7 @@
                 <div><%- dataArr[i].contentArr.typeText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==3){ %>
                 <!--销售佣金-->
-                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
+                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
                 <% } %>
@@ -229,9 +229,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">冻结金额</span>
+                        <span class="input-group-text">可提现金额</span>
                     </div>
-                    <input type="text" value="<%= walletArr.frozenMoney %>" class="form-control">
+                    <input type="text" value="<%= walletArr.waitMoney %>" class="form-control">
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>
@@ -262,9 +262,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">可提现金额</span>
+                        <span class="input-group-text">冻结金额</span>
                     </div>
-                    <input type="text" value="<%= walletArr.waitMoney %>" class="form-control">
+                    <input type="text" value="<%= walletArr.frozenMoney %>" class="form-control">
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>
