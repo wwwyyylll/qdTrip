@@ -36,6 +36,9 @@
                                 <li class="active" style="height: 28px">
                                     <a href="#qh5" id="headerTab5" data-toggle="tab" style="outline:none;cursor: pointer">账户信息</a>
                                 </li>
+                                <li class="active" style="height: 28px">
+                                    <a href="#qh6" id="headerTab6" data-toggle="tab" style="outline:none;cursor: pointer">等级变化日志</a>
+                                </li>
                             </ul>
                             <div class="tab-content" id="tabContent"></div>
                         </div>
@@ -113,6 +116,7 @@
         <tr>
             <th>奖励金</th>
             <th>奖励行为</th>
+            <th>结算状态</th>
         </tr>
         </thead>
         <tbody>
@@ -139,6 +143,10 @@
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
                 <% } %>
+            </td>
+            <td>
+                <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
+                <div><%= dataArr[i].settlementTime %></div>
             </td>
         </tr>
         <% } %>
@@ -197,6 +205,29 @@
     </table>
     <div id="visaPagination1" class="d-flex justify-content-end" style="width: 50%"></div>
 </script>
+<!--账户操作日志查看-->
+<script id="userLogLists" type="text/html">
+    <table class="table table-hover table-bordered" id="userLogListsTable">
+        <thead>
+        <tr>
+            <th>账户操作日志</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (dataArr.length > 0) { %>
+        <% for (var i = 0; i < dataArr.length; i++) { %>
+        <tr>
+            <td><%= dataArr[i] %></td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="10">没有符合条件的记录</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</script>
 <!--账户信息-->
 <script id="accountList" type="text/html">
     <table class="table table-hover table-bordered" id="accountTable" style="width: 50%">
@@ -204,6 +235,7 @@
         <tr>
             <th>账户类型</th>
             <th>账户名称</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -212,6 +244,12 @@
         <tr>
             <td><%- accountArr[i].accountTypeText %></td>
             <td><%= accountArr[i].account %></td>
+            <td>
+                <% for (var j = 0; j < accountArr[i].logArr.length; j++) { %>
+                <div style="display: none"><%= accountArr[i].logArr[j] %></div>
+                <% } %>
+                <button class="btn btn-info" type="button" data-operate="userLogLook">查看操作日志</button>
+            </td>
         </tr>
         <% } %>
         <% } else { %>
@@ -271,6 +309,19 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">累计金额</span>
+                    </div>
+                    <input type="text" value="<%= walletArr.totalAmount %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </script>
 <!-- 认证信息 -->
@@ -303,6 +354,34 @@
             </div>
         </div>
     </div>
+</script>
+<!--等级变化日志-->
+<script id="userLevelLogList" type="text/html">
+    <table class="table table-hover table-bordered" id="userLevelLogTable" style="width: 50%">
+        <thead>
+        <tr>
+            <th>等级名称</th>
+            <th>等级</th>
+            <th>变更时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (dataArr.length > 0) { %>
+        <% for (var i = 0; i < dataArr.length; i++) { %>
+        <tr>
+            <td><%= dataArr[i].title %></td>
+            <td><%= dataArr[i].level %></td>
+            <td><%= dataArr[i].createTime %></td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="10">没有符合条件的记录</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <div id="visaPagination2" class="d-flex justify-content-end" style="width: 50%"></div>
 </script>
 <script data-main="/public/js/module/account/userDetails"></script>
 @@include('../../inc-footer.html')

@@ -406,6 +406,10 @@ define("apis", function() {
             getCommissionLogByUserId:{
                 c:'user',
                 a:'getCommissionLogByUserId'
+            },
+            getUserLevelLogListsByUserId:{
+                c:'user',
+                a:'getUserLevelLogListsByUserId'
             }
         },
         distributors:{

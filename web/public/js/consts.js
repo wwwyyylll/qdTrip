@@ -158,6 +158,10 @@ define("consts", function() {
             buyType1:{
                 '1':'<span style="color:green"> -购买</span>',
                 '2':'<span style="color:red"> -退单</span>'
+            },
+            settlementStatus:{
+                '1':'<span style="color:green"> 已结算</span>',
+                '2':'<span style="color:red"> 未结算</span>'
             }
         }
     }

@@ -18,6 +18,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             utils.ajaxSubmit(apis.user.getCommissionLogByUserId, commissionParam, function (data) {
                 $.each(data.dataArr,function(i,n){
                     n.typeText = consts.status.commissionType[n.type];
+                    n.settlementStatusText = consts.status.settlementStatus[n.isSettlement];
                     n.contentArr.fansTypeText = consts.status.fansType[n.contentArr.fansType];
                     n.contentArr.typeText = consts.status.buyType[n.contentArr.type];
                     n.contentArr.typeText1 = consts.status.buyType1[n.contentArr.type];
@@ -45,12 +46,31 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         accountLists:function(){
             $.each(getByIdData.dataArr.accountArr,function(i,n){
                 n.accountTypeText = consts.status.accountType[n.accountType];
+                n.logArr = n.log.split("|");
             });
             $("#tabContent").html(template('accountList', getByIdData.dataArr));
+        },
+        userLogLook:function($this){
+            var logArrContent = [];
+            var divArr = $this.closest("td").find("div");
+            for(var i=0;i<divArr.length;i++){
+                logArrContent.push(divArr.eq(i).text())
+            }
+            var userLogLookData = {
+                dataArr:logArrContent
+            };
+            utils.renderModal('查看操作日志', template('userLogLists', userLogLookData),'', 'md');
         },
         certificationMessage:function(){
             $("#tabContent").html(template('certificationMessage', getByIdData.dataArr));
             $("#tabContent").find("input").prop('disabled', true);
+        },
+        userLevelLogLists:function(){
+            utils.ajaxSubmit(apis.user.getUserLevelLogListsByUserId, userLevelLogParam, function (data) {
+                $("#tabContent").html(template('userLevelLogList', data));
+                utils.bindPagination($("#visaPagination2"), userLevelLogParam, operates.userLevelLogLists);
+                $("#visaPagination2").html(utils.pagination(parseInt(data.cnt), userLevelLogParam.pageNo));
+            });
         },
         //允许登录
         allow:function($this){
@@ -90,6 +110,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         userId:param[0]
     };
+    var userLevelLogParam = {
+        pageNo: 1,
+        pageSize:10,
+        userId:param[0]
+    };
     operates.look(param[0]);
     $("#headerTab1").on("click",function(){
         operates.commissionLog();
@@ -113,6 +138,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     });
     $("#headerTab5").on("click",function(){
         operates.accountLists();
+        $(this).css({color:"orange"});
+        $(this).closest("li").siblings().find("a").css({color:"#555555"});
+    });
+    $("#headerTab6").on("click",function(){
+        operates.userLevelLogLists();
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
