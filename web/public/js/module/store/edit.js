@@ -6,7 +6,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         deliveryTimeArr:{},
         isExpressFeeSuperpositionArr: {},
         tagArr:{},
-        exoressArr:{}
+        exoressArr:{},
+        categoryArr:{}
     };
     //上传图片文件
     function blobToDataURL(blob,cb) {
@@ -85,7 +86,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 isExpressFeeSuperpositionArr:initialData.isExpressFeeSuperpositionArr,
                 tagArr:initialData.tagArr,
                 exoressArr:initialData.exoressArr,
-                specsArr:{},
+                specsArr:{
+                    source:1,
+                    deliveryTime:"付款后72小时内"
+                }
             };
             $(".specDiv").append(template('specItem', data));
             var specNumber = $(".specNumber");
@@ -284,6 +288,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.ajaxSubmit(apis.mallExpressFee.getLists, labelParam, function (data) {
             initialData.exoressArr = data.dataArr;
         });
+        var categoryParam = {
+            pageNo: 1,
+            pageSize:10,
+            title:'',
+            status:'',
+            orderBy:''
+        };
+        utils.ajaxSubmit(apis.mallCategory.getLists, categoryParam, function (data) {
+            initialData.categoryArr = data.dataArr;
+        });
     }
     utils.bindList($(document), operates);
 
@@ -311,6 +325,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         var urlParam = id.split("=");
         utils.ajaxSubmit(apis.mallGoods.getById, {id:urlParam[0]}, function (data) {
             var getByIdData = {
+                categoryArr:initialData.categoryArr,
                 exoressArr:initialData.exoressArr,
                 tagArr:initialData.tagArr,
                 deliveryTimeArr:initialData.deliveryTimeArr,

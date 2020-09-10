@@ -3,7 +3,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         deliveryTimeArr:{},
         isExpressFeeSuperpositionArr: {},
         tagArr:{},
-        exoressArr:{}
+        exoressArr:{},
+        categoryArr:{}
     };
     //页面操作配置
     var operates = {
@@ -63,6 +64,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.ajaxSubmit(apis.mallExpressFee.getLists, labelParam, function (data) {
             initialData.exoressArr = data.dataArr;
         });
+        var categoryParam = {
+            pageNo: 1,
+            pageSize:10,
+            title:'',
+            status:'',
+            orderBy:''
+        };
+        utils.ajaxSubmit(apis.mallCategory.getLists, categoryParam, function (data) {
+            initialData.categoryArr = data.dataArr;
+        });
     }
     utils.bindList($(document), operates);
     // 页面首次加载列表数据
@@ -86,6 +97,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         var urlParam = id.split("=");
         utils.ajaxSubmit(apis.mallGoods.getById, {id:urlParam[0]}, function (data) {
             var getByIdData = {
+                categoryArr:initialData.categoryArr,
                 exoressArr:initialData.exoressArr,
                 tagArr:initialData.tagArr,
                 deliveryTimeArr:initialData.deliveryTimeArr,

@@ -168,9 +168,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var supplierArr;
     var tagArr;
     function getDownLists(){
-        //utils.ajaxSubmit(apis.mallCategory.getCategoryLists, '', function (data) {
-        //    categoryArr = data;
-        //});
+        var categoryParam = {
+            pageNo: 1,
+            pageSize:10,
+            title:'',
+            status:'',
+            orderBy:''
+        };
+        utils.ajaxSubmit(apis.mallCategory.getLists, categoryParam, function (data) {
+            categoryArr = data.dataArr;
+        });
         var supplierParam = {
             pageNo: 1,
             pageSize:50,
@@ -200,7 +207,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 (n.canDel=="1")? n.materialButtonGroup = n.materialButtonGroup + delButton : n.materialButtonGroup = n.materialButtonGroup;
                 (n.status=="3")? n.materialButtonGroup = '<button class="btn btn-info" type="button" data-operate="look">查看</button>' : n.materialButtonGroup = n.materialButtonGroup;
             })
-            //data.categoryArr = categoryArr;
+            data.categoryArr = categoryArr;
             data.supplierArr = supplierArr;
             data.tagArr = tagArr;
             data.categoryText = listDropDown.categoryText;

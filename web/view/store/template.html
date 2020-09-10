@@ -49,6 +49,19 @@
                     </div>
                 </div>
                 <div class="col-3">
+                    <div class="input-group economy-wards">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">分类</span>
+                        </div>
+                        <select name="categoryId" class="form-control" required>
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < categoryArr.length; i++) { %>
+                            <option value="<%= categoryArr[i].id %>" <% if(dataArr.categoryId==categoryArr[i].id) { %> selected <% } %>><%= categoryArr[i].title %></option>
+                            <% }%>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">标签1</span>
@@ -139,24 +152,6 @@
                     <% } %>
                     <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
                     <input type="hidden" name="popularizePic" value="<%= dataArr.popularizePic %>">
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">二维码X坐标</span>
-                        </div>
-                        <input type="text" name="qrCode_x" placeholder="请输入二维码X坐标" value="<%= dataArr.qrCode_x %>" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">二维码Y坐标</span>
-                        </div>
-                        <input type="text" name="qrCode_y" placeholder="请输入二维码Y坐标" value="<%= dataArr.qrCode_y %>" class="form-control" required>
-                    </div>
                 </div>
             </div>
         </div>
@@ -517,7 +512,7 @@
                     </div>
                     <select name="specsArr[][source]" class="form-control" required>
                         <option value="">请选择</option>
-                        <option value="1">淘宝</option>
+                        <option value="1" selected>淘宝</option>
                         <option value="2">京东</option>
                     </select>
                 </div>
@@ -636,7 +631,7 @@
                     </div>
                     <select name="specsArr[][deliveryTime]" class="form-control">
                         <% for (var i = 0; i < deliveryTimeArr.length; i++) { %>
-                        <option value="<%= deliveryTimeArr[i].val %>"><%= deliveryTimeArr[i].name %></option>
+                        <option value="<%= deliveryTimeArr[i].val %>"  <% if(deliveryTimeArr[i].val==specsArr.deliveryTime) { %> selected <% } %>><%= deliveryTimeArr[i].name %></option>
                         <% }%>
                     </select>
                 </div>

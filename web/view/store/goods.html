@@ -66,7 +66,6 @@
     <tr>
         <th>ID</th>
         <th style="width:20%;word-wrap: break-word;word-break:break-all;">标题</th>
-
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropSupplier" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -76,6 +75,19 @@
                     <a class="dropdown-item" href="javascript:" data-id="">所有</a>
                     <% for(var k=0;k < supplierArr.length;k++){ %>
                     <a class="dropdown-item" href="javascript:" data-id="<%= supplierArr[k].id %>"><%= supplierArr[k].name %></a>
+                    <% } %>
+                </div>
+            </div>
+        </th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= categoryText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropCategory" id="dropCategoryOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <% for(var j=0;j < categoryArr.length;j++){ %>
+                    <a class="dropdown-item" href="javascript:" data-id="<%= categoryArr[j].id %>"><%= categoryArr[j].title %></a>
                     <% } %>
                 </div>
             </div>
@@ -125,6 +137,7 @@
         </td>
 
         <td><%= dataArr[i].supplierName %></td>
+        <td><%= dataArr[i].categoryTitle %></td>
         <td>
             <div><%= dataArr[i].tag1Name %></div>
             <div><%= dataArr[i].tag2Name %></div>
