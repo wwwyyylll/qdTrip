@@ -235,7 +235,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var labelParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             name:'',
             status:'',
         };
@@ -244,7 +244,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var expressParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };

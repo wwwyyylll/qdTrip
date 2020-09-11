@@ -77,7 +77,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var categoryParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };

@@ -6,7 +6,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         imagesArr:[{}],
         specsArr:[{
             source:1,
-            deliveryTime:"付款后72小时内"
+            deliveryTime:"付款后72小时内",
+            expressFeeId:2,
+            originalStock:2000
         }],
         deliveryTimeArr:{},
         isExpressFeeSuperpositionArr: {},
@@ -91,7 +93,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 exoressArr:initialData.exoressArr,
                 specsArr:{
                     source:1,
-                    deliveryTime:"付款后72小时内"
+                    deliveryTime:"付款后72小时内",
+                    expressFeeId:2,
+                    originalStock:2000
                 }
             };
             $(".specDiv").append(template('specItem', data));
@@ -267,16 +271,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var labelParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             name:'',
-            status:'',
+            status:''
         };
         utils.ajaxSubmit(apis.mallTag.getLists, labelParam, function (data) {
             initialData.tagArr = data.dataArr;
         });
         var expressParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };
@@ -285,7 +289,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var categoryParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:'',
             orderBy:''

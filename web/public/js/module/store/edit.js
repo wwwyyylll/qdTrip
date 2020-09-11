@@ -88,7 +88,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 exoressArr:initialData.exoressArr,
                 specsArr:{
                     source:1,
-                    deliveryTime:"付款后72小时内"
+                    deliveryTime:"付款后72小时内",
+                    expressFeeId:2,
+                    originalStock:2000
                 }
             };
             $(".specDiv").append(template('specItem', data));
@@ -272,25 +274,25 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var labelParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             name:'',
-            status:'',
+            status:''
         };
         utils.ajaxSubmit(apis.mallTag.getLists, labelParam, function (data) {
             initialData.tagArr = data.dataArr;
         });
         var exoressPaream = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };
-        utils.ajaxSubmit(apis.mallExpressFee.getLists, labelParam, function (data) {
+        utils.ajaxSubmit(apis.mallExpressFee.getLists, exoressPaream, function (data) {
             initialData.exoressArr = data.dataArr;
         });
         var categoryParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:'',
             orderBy:''

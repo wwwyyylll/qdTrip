@@ -47,20 +47,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var labelParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             name:'',
-            status:'',
+            status:''
         };
         utils.ajaxSubmit(apis.mallTag.getLists, labelParam, function (data) {
             initialData.tagArr = data.dataArr;
         });
         var exoressPaream = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };
-        utils.ajaxSubmit(apis.mallExpressFee.getLists, labelParam, function (data) {
+        utils.ajaxSubmit(apis.mallExpressFee.getLists, exoressPaream, function (data) {
             initialData.exoressArr = data.dataArr;
         });
     }

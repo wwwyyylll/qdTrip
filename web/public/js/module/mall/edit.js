@@ -244,7 +244,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var labelParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             name:'',
             status:'',
         };
@@ -253,11 +253,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var exoressPaream = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };
-        utils.ajaxSubmit(apis.mallExpressFee.getLists, labelParam, function (data) {
+        utils.ajaxSubmit(apis.mallExpressFee.getLists, exoressPaream, function (data) {
             initialData.exoressArr = data.dataArr;
         });
     }

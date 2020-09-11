@@ -112,8 +112,17 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">商品文案（分享用）</span>
                         </div>
-                        <input type="text" name="popularizeContent" placeholder="请输入商品文案（分享用）" value="<%= dataArr.popularizeContent %>" class="form-control" required>
+                        <!--<input type="text" name="popularizeContent" placeholder="请输入商品文案（分享用）" value="<%= dataArr.popularizeContent %>" class="form-control" required>-->
+                        <textarea style="resize:vertical;min-height: 70px" class="form-control" name="popularizeContent" required><%= dataArr.popularizeContent %></textarea>
                     </div>
+                </div>
+            </div>
+            <div style="padding: 10px 15px;border: 3px solid orange;margin-bottom: 10px;width: 350px;border-radius: 5px">
+                <div class="form-row" style="margin-bottom: 8px">
+                    <div>团购价：xx元  淘宝价：xx元</div>
+                </div>
+                <div class="form-row">
+                    <div>了解详情请扫描海报二维码，喜欢就快快下单吧！</div>
                 </div>
             </div>
             <div class="form-row uploadFile" style="margin-bottom: 15px">
@@ -137,7 +146,7 @@
             </div>
             <div class="form-row uploadFile" style="margin-bottom: 15px">
                 <div class="input-group">
-                    <span style="margin-top:6px;margin-right: 10px">上传商品海报（推广用）</span>
+                    <span style="margin-top:6px;margin-right: 10px">上传商品海报（分享用）</span>
                     <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
                     <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
                     <span class="temporaryFile" style="display: none"></span>
@@ -148,7 +157,7 @@
                         </a>
                     </h6>
                     <% } else { %>
-                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无商品海报（推广用）</span></h6>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无商品海报（分享用）</span></h6>
                     <% } %>
                     <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的商品封面图的尺寸为315×214或者787×399）</h6>-->
                     <input type="hidden" name="popularizePic" value="<%= dataArr.popularizePic %>">
@@ -547,7 +556,7 @@
                     <select name="specsArr[][expressFeeId]" class="form-control">
                         <option value="0">请选择</option>
                         <% for (var m = 0; m < exoressArr.length; m++) { %>
-                        <option value="<%= exoressArr[m].id %>"><%= exoressArr[m].title %></option>
+                        <option value="<%= exoressArr[m].id %>" <% if(exoressArr[m].id==specsArr.expressFeeId) { %> selected <% } %>><%= exoressArr[m].title %></option>
                         <% }%>
                     </select>
                 </div>
@@ -613,7 +622,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">库存</span>
                     </div>
-                    <input type="text" name="specsArr[][originalStock]" placeholder="请输入库存" value="" class="form-control" required>
+                    <input type="text" name="specsArr[][originalStock]" placeholder="请输入库存" value="2000" class="form-control" required>
                 </div>
             </div>
             <div class="col-3">

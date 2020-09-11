@@ -167,7 +167,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function getConstsLists(){
         var expressParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:''
         };

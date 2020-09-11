@@ -170,7 +170,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function getDownLists(){
         var categoryParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             title:'',
             status:'',
             orderBy:''
@@ -180,7 +180,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var supplierParam = {
             pageNo: 1,
-            pageSize:50,
+            pageSize:50000,
             name:'',
             status:'',
             source:'',
@@ -191,11 +191,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
         var labelParam = {
             pageNo: 1,
-            pageSize:10,
+            pageSize:10000,
             name:'',
-            status:'',
+            status:''
         };
-        utils.ajaxSubmit(apis.mallTag.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.mallTag.getLists, labelParam, function (data) {
             tagArr = data.dataArr;
         });
     }
