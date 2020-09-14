@@ -56,7 +56,7 @@
                         <select name="categoryId" class="form-control" required>
                             <option value="">请选择</option>
                             <% for (var i = 0; i < categoryArr.length; i++) { %>
-                            <option value="<%= categoryArr[i].id %>" <% if(dataArr.categoryId==categoryArr[i].id) { %> selected <% } %>><%= categoryArr[i].title %></option>
+                            <option value="<%= categoryArr[i].id %>" <% if(dataArr.categoryId==categoryArr[i].id) { %> selected <% } %>><%= categoryArr[i].title %><%= categoryArr[i].statusText %></option>
                             <% }%>
                         </select>
                     </div>
@@ -69,7 +69,7 @@
                         <select name="tag1" class="form-control">
                             <option value="0">不显示</option>
                             <% for (var i = 0; i < tagArr.length; i++) { %>
-                            <option value="<%= tagArr[i].id %>" <% if(dataArr.tag1==tagArr[i].id) { %> selected <% } %>><%= tagArr[i].name %></option>
+                            <option value="<%= tagArr[i].id %>" <% if(dataArr.tag1==tagArr[i].id) { %> selected <% } %>><%= tagArr[i].name %><%= tagArr[i].statusText %></option>
                             <% }%>
                         </select>
                     </div>
@@ -82,7 +82,7 @@
                         <select name="tag2" class="form-control">
                             <option value="0">不显示</option>
                             <% for (var i = 0; i < tagArr.length; i++) { %>
-                            <option value="<%= tagArr[i].id %>" <% if(dataArr.tag2==tagArr[i].id) { %> selected <% } %>><%= tagArr[i].name %></option>
+                            <option value="<%= tagArr[i].id %>" <% if(dataArr.tag2==tagArr[i].id) { %> selected <% } %>><%= tagArr[i].name %><%= tagArr[i].statusText %></option>
                             <% }%>
                         </select>
                     </div>
@@ -276,7 +276,7 @@
                         <select name="specsArr[][expressFeeId]" class="form-control">
                             <option value="0">请选择</option>
                             <% for (var m = 0; m < exoressArr.length; m++) { %>
-                            <option value="<%= exoressArr[m].id %>" <% if(specsArr[i].expressFeeId==exoressArr[m].id) { %> selected <% } %>><%= exoressArr[m].title %></option>
+                            <option value="<%= exoressArr[m].id %>" <% if(specsArr[i].expressFeeId==exoressArr[m].id) { %> selected <% } %>><%= exoressArr[m].title %><%= exoressArr[m].statusText %></option>
                             <% }%>
                         </select>
                     </div>
@@ -556,7 +556,7 @@
                     <select name="specsArr[][expressFeeId]" class="form-control">
                         <option value="0">请选择</option>
                         <% for (var m = 0; m < exoressArr.length; m++) { %>
-                        <option value="<%= exoressArr[m].id %>" <% if(exoressArr[m].id==specsArr.expressFeeId) { %> selected <% } %>><%= exoressArr[m].title %></option>
+                        <option value="<%= exoressArr[m].id %>" <% if(exoressArr[m].id==specsArr.expressFeeId) { %> selected <% } %>><%= exoressArr[m].title %><%= exoressArr[m].statusText %></option>
                         <% }%>
                     </select>
                 </div>

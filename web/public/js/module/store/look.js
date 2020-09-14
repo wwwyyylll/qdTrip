@@ -53,6 +53,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             status:''
         };
         utils.ajaxSubmit(apis.mallTag.getLists, labelParam, function (data) {
+            $.each(data.dataArr,function(i,n){
+                n.statusText = consts.status.ordinary1[n.status];
+            });
             initialData.tagArr = data.dataArr;
         });
         var exoressPaream = {
@@ -62,6 +65,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             status:''
         };
         utils.ajaxSubmit(apis.mallExpressFee.getLists, exoressPaream, function (data) {
+            $.each(data.dataArr,function(i,n){
+                n.statusText = consts.status.ordinary1[n.status];
+            });
             initialData.exoressArr = data.dataArr;
         });
         var categoryParam = {
@@ -72,6 +78,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             orderBy:''
         };
         utils.ajaxSubmit(apis.mallCategory.getLists, categoryParam, function (data) {
+            $.each(data.dataArr,function(i,n){
+                n.statusText = consts.status.ordinary1[n.status];
+            });
             initialData.categoryArr = data.dataArr;
         });
     }
