@@ -162,6 +162,11 @@ define("consts", function() {
             settlementStatus:{
                 '1':'<span style="color:green"> 已结算</span>',
                 '2':'<span style="color:red"> 未结算</span>'
+            },
+            robotRoleStatus:{
+                '1':'<span style="color:orange"> 未启动</span>',
+                '2':'<span style="color:green"> 已启动</span>',
+                '3':'<span style="color:red"> 已删除</span>'
             }
         }
     }

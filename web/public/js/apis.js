@@ -908,6 +908,36 @@ define("apis", function() {
                 a:'rejectById'
             }
         },
+        robotRule:{
+            getLists:{
+                c:'robotRule',
+                a:'getLists'
+            },
+            create:{
+                c:'robotRule',
+                a:'create'
+            },
+            getById:{
+                c:'robotRule',
+                a:'getById'
+            },
+            updateById:{
+                c:'robotRule',
+                a:'updateById'
+            },
+            getLogListById:{
+                c:'robotRule',
+                a:'getLogListById'
+            },
+            onById:{
+                c:'robotRule',
+                a:'onById'
+            },
+            delById:{
+                c:'robotRule',
+                a:'delById'
+            }
+        },
 
 
         role:{
