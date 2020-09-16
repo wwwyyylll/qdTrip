@@ -213,6 +213,8 @@
     <form id="refundForm" disabled="true">
         <fieldset>
             <input type="hidden" name="orderId" value="<%= dataArr.id %>">
+            <input type="hidden" name="amount" value="<%= dataArr.amount %>">
+            <input type="hidden" name="num" value="<%= dataArr.num %>">
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
@@ -252,7 +254,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">退款金额</span>
                         </div>
-                        <input type="text" name="amount" placeholder="请输入退款金额" value="<%= dataArr.amount %>" class="form-control" required>
+                        <input type="text" disabled value="<%= dataArr.amount %>" class="form-control">
                         <div class="input-group-prepend">
                             <span class="input-group-text">元</span>
                         </div>
@@ -265,7 +267,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">退款数量</span>
                         </div>
-                        <input type="text" name="num" placeholder="请输入退款数量" value="<%= dataArr.num %>" class="form-control" required>
+                        <input type="text" disabled value="<%= dataArr.num %>" class="form-control">
                     </div>
                 </div>
             </div>

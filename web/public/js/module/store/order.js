@@ -102,9 +102,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         refund:function($this){
             var id = $this.closest("tr").attr("data-id");
             var orderNo = $this.closest("tr").find("td").eq(1).find("div").eq(0).text();
-            var amountText = $this.closest("tr").find("td").eq(6).text();
+            var amountText = $this.closest("tr").find("td").eq(7).text();
             var amount = amountText.substring(0,amountText.length-1);
-            var num = $this.closest("tr").find("td").eq(7).text();
+            var num = $this.closest("tr").find("td").eq(8).text();
             var initialData = {
                 dataArr:{
                     id:id,
@@ -203,11 +203,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         supplier:function($this){
             var id = $this.closest("tr").attr("data-id");
-            var totalAmount = $this.closest("tr").find("td").eq(5).find("span").eq(0).text();
-            var actualTotalAmount = $this.closest("tr").find("td").eq(6).text();
-            var num = $this.closest("tr").find("td").eq(7).text();
-            var goodsAmount = $this.closest("tr").find("td").eq(5).find("span").eq(1).text();
-            var expressFee = $this.closest("tr").find("td").eq(5).find("span").eq(2).text();
+            var totalAmount = $this.closest("tr").find("td").eq(6).find("span").eq(0).text();
+            var actualTotalAmount = $this.closest("tr").find("td").eq(7).text();
+            var num = $this.closest("tr").find("td").eq(8).text();
+            var goodsAmount = $this.closest("tr").find("td").eq(6).find("span").eq(1).text();
+            var expressFee = $this.closest("tr").find("td").eq(6).find("span").eq(2).text();
             //var deductionPrice = $this.closest("tr").find("td").eq(7).text();
             var initialData = {
                 dataArr:{

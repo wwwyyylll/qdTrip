@@ -120,12 +120,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
             <div style="width: 20%;padding: 0 15px">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">订单总价</span>
                     </div>
                     <input type="text" name="totalAmount" placeholder="" value="<%= dataArr.totalAmount %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 20%;padding: 0 15px">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">钱包抵扣</span>
+                    </div>
+                    <input type="text" name="deductionWalletPrice" placeholder="" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>

@@ -145,7 +145,9 @@ define("consts", function() {
             commissionType:{
                 '1':'奖励佣金',
                 '2':'推广佣金',
-                '3':'销售佣金'
+                '3':'销售佣金',
+                '4':'商品抵扣',
+                '5':'订单取消'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',
