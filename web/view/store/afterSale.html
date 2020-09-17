@@ -125,6 +125,18 @@
         <th>订单号</th>
         <th>用户昵称</th>
         <th>用户未读消息数</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= statusText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropdownVisaStatus" id="dropStatusOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">未读</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">已读</a>
+                </div>
+            </div>
+        </th>
         <th>客服未读消息数</th>
         <th>最后回复时间</th>
         <th>创建时间</th>
@@ -144,6 +156,7 @@
             <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].createrArr.id %>"><%= dataArr[i].createrArr.nickName %></a>
         </td>
         <td><%= dataArr[i].createrUnreadMessageCount %></td>
+        <td><%- dataArr[i].isJoinerUnreadMessageText %></td>
         <td><%= dataArr[i].joinerUnreadMessageCount %></td>
         <td><%= dataArr[i].lastUpdateTime %></td>
         <td>

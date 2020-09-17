@@ -239,6 +239,26 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">总价</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.totalAmount %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">钱包抵扣</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">实付款</span>
                         </div>
                         <input disabled type="text" value="<%= dataArr.amount %>" class="form-control">
@@ -258,6 +278,16 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">元</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">退回钱包</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
                     </div>
                 </div>
             </div>
@@ -348,16 +378,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="form-row" style="margin-bottom: 15px;display: none">-->
-                <!--<div class="col-12">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-prepend">-->
-                            <!--<span class="input-group-text">抵扣金额</span>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<input disabled type="text" value="<%= dataArr.deductionPrice %>" class="form-control">&ndash;&gt;-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
@@ -365,6 +385,16 @@
                             <span class="input-group-text">总价</span>
                         </div>
                         <input disabled type="text" value="<%= dataArr.totalAmount %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">钱包抵扣</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
                     </div>
                 </div>
             </div>
@@ -497,6 +527,7 @@
             <span><%= dataArr[i].totalAmount %>元</span>
             <span style="display: none"><%= dataArr[i].goodsAmount %>元</span>
             <span style="display: none"><%= dataArr[i].expressFee %>元</span>
+            <span style="display: none"><%= dataArr[i].deductionWalletPrice %>元</span>
         </td>
         <td><%= dataArr[i].actualTotalAmount %>元</td>
         <!--<td><%= dataArr[i].deductionPrice %>元</td>-->

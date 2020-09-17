@@ -219,14 +219,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     })
                 }
             }, 'md');
-        },
-    }
+        }
+    };
 
     var param = {
         pageNo: 1,
         pageSize:10,
         orderNo:'',
-        userId:''
+        userId:'',
+        isJoinerUnreadMessage:''
+    };
+    var listDropDown = {
+        statusText:'状态'
     };
 
     function loadData() {
@@ -237,23 +241,40 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }else{
                     n.materialButtonGroup = lookButtons + refundButton ;
                 }
-            })
+                if(n.joinerUnreadMessageCount!=0){
+                    n.isJoinerUnreadMessageText = "<span style='color:red'>未读</span>"
+                }else if(n.joinerUnreadMessageCount==0){
+                    n.isJoinerUnreadMessageText = "<span style='color:green'>已读</span>"
+                }
+            });
+            data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        param.isJoinerUnreadMessage = 1;
+        listDropDown.statusText = "未读";
+    }else{
+        param.isJoinerUnreadMessage = '';
+        listDropDown.statusText = "状态";
+    }
+
+
     loadData();
     utils.bindList($(document), operates);
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
-        param.status = $(this).data('id');
+        param.isJoinerUnreadMessage = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
         loadData();
-        var titleText = "";
-        ($(this).text()=="所有") ? titleText = "状态" : titleText = $(this).text();
-        setTimeout(function(){
-            $("#dropStatus").text(titleText);
-        },300)
     });
     $("#searchCont").on("input",function(){
         var selectSearchLabel = $("#selectsearchlabel").text();

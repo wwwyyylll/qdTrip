@@ -259,19 +259,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="form-row" style="margin-bottom: 15px">-->
-                <!--<div class="col-12">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-prepend">-->
-                            <!--<span class="input-group-text">抵扣金额</span>-->
-                        <!--</div>-->
-                        <!--<input disabled type="text" value="<%= dataArr.deductionPrice %>" class="form-control">-->
-                        <!--<div class="input-group-prepend">-->
-                            <!--<span class="input-group-text">元</span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
@@ -279,6 +266,19 @@
                             <span class="input-group-text">总价</span>
                         </div>
                         <input disabled type="text" value="<%= dataArr.totalAmount %>" class="form-control">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">钱包抵扣</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
                         <div class="input-group-prepend">
                             <span class="input-group-text">元</span>
                         </div>
@@ -656,6 +656,7 @@
             <% }else if(dataArr.logArr[i].source == 8){ %>
             <td>
                 <div>退款金额&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.amount %>元</div>
+                <div>退回钱包&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.returnWalletPrice %>元</div>
                 <div>退款数量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.num %></div>
                 <!--<div>返还能量&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.returnThinkingEnergy %></div>-->
                 <div style="color: red">退款原因&nbsp;:&nbsp;<%= dataArr.logArr[i].contentArr.reason %></div>
@@ -755,6 +756,8 @@
     <form id="refundForm" disabled="true">
         <fieldset>
             <input type="hidden" name="orderId" value="<%= dataArr.id %>">
+            <input type="hidden" name="amount" value="<%= dataArr.amount %>">
+            <input type="hidden" name="num" value="<%= dataArr.num %>">
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group">
@@ -779,6 +782,26 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">总价</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.totalAmount %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">钱包抵扣</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">实付款</span>
                         </div>
                         <input disabled type="text" value="<%= dataArr.amount %>" class="form-control">
@@ -794,7 +817,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">退款金额</span>
                         </div>
-                        <input type="text" name="amount" placeholder="请输入退款金额" value="<%= dataArr.amount %>" class="form-control" required>
+                        <input type="text" disabled value="<%= dataArr.amount %>" class="form-control">
                         <div class="input-group-prepend">
                             <span class="input-group-text">元</span>
                         </div>
@@ -805,9 +828,19 @@
                 <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">退回钱包</span>
+                        </div>
+                        <input disabled type="text" value="<%= dataArr.deductionWalletPrice %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">退款数量</span>
                         </div>
-                        <input type="text" name="num" placeholder="请输入退款数量" value="<%= dataArr.num %>" class="form-control" required>
+                        <input type="text" disabled value="<%= dataArr.num %>" class="form-control">
                     </div>
                 </div>
             </div>

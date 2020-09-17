@@ -102,16 +102,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         refund:function($this){
             var id = $this.closest("tr").attr("data-id");
             var orderNo = $this.closest("tr").find("td").eq(1).find("div").eq(0).text();
+            var totalAmount = $this.closest("tr").find("td").eq(6).find("span").eq(0).text();
             var amountText = $this.closest("tr").find("td").eq(7).text();
             var amount = amountText.substring(0,amountText.length-1);
             var num = $this.closest("tr").find("td").eq(8).text();
+            var deductionWalletPrice = $this.closest("tr").find("td").eq(6).find("span").eq(3).text();
             var initialData = {
                 dataArr:{
                     id:id,
+                    totalAmount:totalAmount,
                     orderNo:orderNo,
                     amount:amount,
                     reason:'',
-                    num:num
+                    num:num,
+                    deductionWalletPrice:deductionWalletPrice
                 }
             };
             utils.renderModal('申请退款', template('refundModal', initialData), function(){
@@ -208,7 +212,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var num = $this.closest("tr").find("td").eq(8).text();
             var goodsAmount = $this.closest("tr").find("td").eq(6).find("span").eq(1).text();
             var expressFee = $this.closest("tr").find("td").eq(6).find("span").eq(2).text();
-            //var deductionPrice = $this.closest("tr").find("td").eq(7).text();
+            var deductionWalletPrice = $this.closest("tr").find("td").eq(6).find("span").eq(3).text();
             var initialData = {
                 dataArr:{
                     id:id,
@@ -216,8 +220,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     actualTotalAmount:actualTotalAmount,
                     num:num,
                     goodsAmount:goodsAmount,
-                    expressFee:expressFee
-                    //deductionPrice:deductionPrice
+                    expressFee:expressFee,
+                    deductionWalletPrice:deductionWalletPrice
                 }
             };
             utils.renderModal('供应商接单', template('supplierModal', initialData), function(){
@@ -247,23 +251,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }
             })
         }
-    }
-    var loc = location.href;
-    var n1 = loc.length;//地址的总长度
-    var n2 = loc.indexOf("=");//取得=号的位置
-    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
-    var urlParam = id.split("=");
-    var warnValue = '';
-    if(urlParam[0]==2){
-        warnValue = 1;
-        $("input[name=warnParam][value='1']").attr("checked","checked");
-    }else if(urlParam[0]==3){
-        warnValue = 2;
-        $("input[name=warnParam][value='2']").attr("checked","checked");
-    }else{
-        warnValue = '';
-        $("input[name=warnParam][value='0']").attr("checked","checked");
-    }
+    };
 
     var param = {
         pageNo: 1,
@@ -275,7 +263,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         orderNo:'',
         time:'',
         supplierId:'',
-        searchType:warnValue
+        searchType:''
+    };
+    var listDropDown = {
+        statusText:'订单状态',
+        commissionStatusText:'佣金结算'
     };
 
     $("input[name=warnParam]").on("click",function(){
@@ -325,16 +317,24 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     // 页面首次加载列表数据
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        param.status = 2;
+        listDropDown.statusText = "已支付";
+    }else{
+        param.status = '';
+        listDropDown.statusText = "状态";
+    }
     //getConstsLists();
     //getParentLists();
     //setTimeout(function(){
         loadData();
     //},100);
     utils.bindList($(document), operates);
-    var listDropDown = {
-        statusText:'订单状态',
-        commissionStatusText:'佣金结算'
-    };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "订单状态" : listDropDown.statusText = $(this).text();

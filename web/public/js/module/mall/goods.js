@@ -195,7 +195,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                $("input[name=sort]").val(data);
             })
         })
-    })
+    });
     function blobToDataURL(blob,cb) {
         var reader = new FileReader();
         reader.onload = function (evt) {
@@ -312,6 +312,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 uploadFile();
                 getDateArr();
                 closeWindow();
+                $("select[name=dateId]").on("change",function(){
+                    var anchorId = $("select[name=anchorId]").val();
+                    var dateId = $(this).val();
+                    //$.cookie('dateId',dateId);
+                    utils.ajaxSubmit(apis.goods.getMaxSortByDateId,{anchorId:anchorId,dateId:dateId},function(data){
+                        $("input[name=sort]").val(data);
+                    })
+                })
             });
         },
         sameCancel:function($this){

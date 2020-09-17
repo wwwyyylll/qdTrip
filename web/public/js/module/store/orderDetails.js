@@ -18,15 +18,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         refund:function($this){
             var id = $("#orderId").val();
             var orderNo = $("input[name=orderNo]").val();
+            var totalAmount = $("input[name=totalAmount]").val();
             var amount = $("input[name=actualTotalAmount]").val();
             var num = $("input[name=num]").val();
+            var deductionWalletPrice = $("input[name=deductionWalletPrice]").val();
             var initialData = {
                 dataArr:{
                     id:id,
+                    totalAmount:totalAmount,
                     orderNo:orderNo,
                     amount:amount,
                     reason:'',
-                    num:num
+                    num:num,
+                    deductionWalletPrice:deductionWalletPrice
                 }
             };
             utils.renderModal('申请退款', template('refundModal', initialData), function(){
@@ -113,7 +117,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var num = $("input[name=num]").val();
             var goodsAmount = $("input[name=goodsAmount]").val();
             var expressFee = $("input[name=expressFee]").val();
-            var deductionPrice = $("input[name=deductionPrice]").val();
+            var deductionWalletPrice = $("input[name=deductionWalletPrice]").val();
             var initialData = {
                 dataArr:{
                     id:id,
@@ -122,7 +126,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     num:num,
                     goodsAmount:goodsAmount,
                     expressFee:expressFee,
-                    deductionPrice:deductionPrice
+                    deductionWalletPrice:deductionWalletPrice
                 }
             };
             utils.renderModal('供应商接单', template('supplierModal', initialData), function(){

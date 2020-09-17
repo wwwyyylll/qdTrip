@@ -60,6 +60,8 @@
             <div>结束时间</div>
             <input type="text" autocomplete="off" class="em-9 py-0 px-1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="请选择结束时间..." id="endTime">
         </th>
+        <th>最小商品ID</th>
+        <th>最大商品ID</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -83,6 +85,8 @@
         <td><%= dataArr[i].robotCnt %></td>
         <td><%= dataArr[i].startTime %></td>
         <td><%= dataArr[i].endTime %></td>
+        <td><%= dataArr[i].minGoodsId %></td>
+        <td><%= dataArr[i].maxGoodsId %></td>
         <td><%- dataArr[i].statusText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
@@ -170,6 +174,26 @@
                             <span class="input-group-text">结束时间</span>
                         </div>
                         <input type="text" autocomplete="off" name="endTime" value="<%= dataArr.endTime %>"  onclick="laydate({istime: false, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="请选择结束时间..." class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最小商品ID</span>
+                        </div>
+                        <input type="text" name="minGoodsId" placeholder="请输入最小商品ID" value="<%= dataArr.minGoodsId %>" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最大商品ID</span>
+                        </div>
+                        <input type="text" name="maxGoodsId" placeholder="请输入最大商品ID" value="<%= dataArr.maxGoodsId %>" class="form-control">
                     </div>
                 </div>
             </div>

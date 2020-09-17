@@ -131,20 +131,40 @@
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-8">
+                <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">内容</span>
+                            <span class="input-group-text">二维码X坐标</span>
                         </div>
-                        <input type="text" name="content" placeholder="请输入内容" value="<%= dataArr.content %>" class="form-control" required>
+                        <input type="text" name="qrCode_x" placeholder="请输入二维码X坐标" value="<%= dataArr.qrCode_x %>" class="form-control" required>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">二维码Y坐标</span>
+                        </div>
+                        <input type="text" name="qrCode_y" placeholder="请输入二维码Y坐标" value="<%= dataArr.qrCode_y %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">排序</span>
                         </div>
                         <input type="text" name="sort" placeholder="请输入排序" value="<%= dataArr.sort %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">内容</span>
+                        </div>
+                        <textarea style="resize:vertical;min-height: 70px" class="form-control" name="content" required><%= dataArr.content %></textarea>
                     </div>
                 </div>
             </div>

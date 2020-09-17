@@ -30,7 +30,11 @@
     <table class="table">
         <tbody>
         <% if (dataArr.length > 0) { %>
+        <tr>
+            <td><h5 style="text-align: left;margin-bottom: 0">带货笔记</h5></td>
+        </tr>
         <% for (var i = 0; i < dataArr.length; i++) { %>
+        <% if (dataArr[i].type == 1 || dataArr[i].type == 2 || dataArr[i].type == 3 || dataArr[i].type == 5) { %>
         <tr data-id="<%= dataArr[i].id %>">
             <td class="text-left">
                 <% if (dataArr[i].type == 1) { %>
@@ -39,15 +43,32 @@
                 <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/categoryRelation.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
                 <% }else if(dataArr[i].type == 3){ %>
                 <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/goods.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
-                <% }else if(dataArr[i].type == 4){ %>
-                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/goods.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
                 <% }else if(dataArr[i].type == 5){ %>
                 <a style="text-decoration: underline" target="_blank" href="@@HOSTview/subject/subject.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
-                <% }else{ %>
-                <%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>人】</span>
                 <% } %>
             </td>
         </tr>
+        <% } %>
+        <% } %>
+        <tr>
+            <td><h5 style="text-align: left;margin-bottom: 0">带货团</h5></td>
+        </tr>
+        <% for (var i = 0; i < dataArr.length; i++) { %>
+        <% if (dataArr[i].type == 4 || dataArr[i].type == 6 || dataArr[i].type == 7 || dataArr[i].type == 8) { %>
+        <tr data-id="<%= dataArr[i].id %>">
+            <td class="text-left">
+                <% if (dataArr[i].type == 4) { %>
+                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/goods.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
+                <% }else if(dataArr[i].type == 6){ %>
+                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/afterSale.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
+                <% }else if(dataArr[i].type == 7){ %>
+                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/userCashOutRequest.html"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>条】</span></a>
+                <% }else if(dataArr[i].type == 8){ %>
+                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/order.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
+                <% } %>
+            </td>
+        </tr>
+        <% } %>
         <% } %>
         <% } else { %>
         <tr>

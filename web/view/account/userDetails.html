@@ -144,19 +144,24 @@
                 <div><%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==4){ %>
                 <!--商品抵扣-->
-                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
+                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==5){ %>
                 <!--订单取消-->
-                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
+                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
                 <% } %>
             </td>
             <td>
+                <% if(dataArr[i].isSettlement==1 || dataArr[i].isSettlement==2){ %>
                 <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
                 <div><%= dataArr[i].settlementTime %></div>
+                <% }else if(dataArr[i].isSettlement==4){ %>
+                <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
+                <div><%= dataArr[i].updateTime %></div>
+                <% } %>
             </td>
         </tr>
         <% } %>
