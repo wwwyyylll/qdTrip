@@ -147,7 +147,8 @@ define("consts", function() {
                 '2':'推广佣金',
                 '3':'销售佣金',
                 '4':'商品抵扣',
-                '5':'订单取消'
+                '5':'订单取消',
+                '6':'现金券'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',
@@ -170,6 +171,12 @@ define("consts", function() {
                 '1':'<span style="color:orange"> 未启动</span>',
                 '2':'<span style="color:green"> 已启动</span>',
                 '3':'<span style="color:red"> 已删除</span>'
+            },
+            cashCouponStatus:{
+                '1':'<span style="color:orange"> 未启用</span>',
+                '2':'<span style="color:green"> 启用</span>',
+                '3':'<span style="color:red"> 停止</span>',
+                '4':'<span style="color:red"> 删除</span>'
             }
         }
     }

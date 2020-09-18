@@ -152,15 +152,21 @@
                 <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
+                <% }else if(dataArr[i].type==6){ %>
+                <!--现金券-->
+                <div style="margin-bottom: 5px"><span style="color: green">现金券领取</span></div>
+                <div><%= dataArr[i].createTime %></div>
                 <% } %>
             </td>
             <td>
-                <% if(dataArr[i].isSettlement==1 || dataArr[i].isSettlement==2){ %>
-                <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
-                <div><%= dataArr[i].settlementTime %></div>
-                <% }else if(dataArr[i].isSettlement==4){ %>
-                <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
-                <div><%= dataArr[i].updateTime %></div>
+                <% if(dataArr[i].type!=6){ %>
+                    <% if(dataArr[i].isSettlement==1 || dataArr[i].isSettlement==2){ %>
+                    <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
+                    <div><%= dataArr[i].settlementTime %></div>
+                    <% }else if(dataArr[i].isSettlement==4){ %>
+                    <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
+                    <div><%= dataArr[i].updateTime %></div>
+                    <% } %>
                 <% } %>
             </td>
         </tr>
@@ -282,6 +288,17 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
+                        <span class="input-group-text">现金券金额</span>
+                    </div>
+                    <input type="text" value="<%= walletArr.cashCouponMoney %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
                         <span class="input-group-text">可提现金额</span>
                     </div>
                     <input type="text" value="<%= walletArr.waitMoney %>" class="form-control">
@@ -312,6 +329,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -323,8 +342,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">

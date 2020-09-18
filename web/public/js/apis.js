@@ -938,6 +938,44 @@ define("apis", function() {
                 a:'delById'
             }
         },
+        mallCashCoupon:{
+            getLists:{
+                c:'mallCashCoupon',
+                a:'getLists'
+            },
+            create:{
+                c:'mallCashCoupon',
+                a:'create'
+            },
+            getById:{
+                c:'mallCashCoupon',
+                a:'getById'
+            },
+            updateById:{
+                c:'mallCashCoupon',
+                a:'updateById'
+            },
+            onById:{
+                c:'mallCashCoupon',
+                a:'onById'
+            },
+            offById:{
+                c:'mallCashCoupon',
+                a:'offById'
+            },
+            delById:{
+                c:'mallCashCoupon',
+                a:'delById'
+            },
+            downloadById:{
+                c:'mallCashCoupon',
+                a:'downloadById'
+            },
+            userListsById:{
+                c:'mallCashCoupon',
+                a:'userListsById'
+            }
+        },
 
 
         role:{

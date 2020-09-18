@@ -239,7 +239,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 if(n.requestMemo!=''){
                     n.materialButtonGroup = lookButtons ;
                 }else{
-                    n.materialButtonGroup = lookButtons + refundButton ;
+                    n.materialButtonGroup = lookButtons ;
                 }
                 if(n.joinerUnreadMessageCount!=0){
                     n.isJoinerUnreadMessageText = "<span style='color:red'>未读</span>"
