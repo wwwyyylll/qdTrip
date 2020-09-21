@@ -8,7 +8,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-primary" type="button" data-operate="edit">编辑</button>'+
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
-        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>';
+        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
+        roleButton = '<button class="btn btn-primary" type="button" data-operate="assign">分配权限</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -19,21 +20,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //新增
     $addModal.on("click",function(){
         var initialData = {
-            dataArr:{},
-            roleArr:roleArr
+            dataArr:{}
         };
-        utils.renderModal('新增管理员', template('modalDiv',initialData), function(){
+        utils.renderModal('新增角色', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
-                utils.loading(true);
-                utils.ajaxSubmit(apis.admin.create,$("#visaPassportForm").serialize(),function(data){
-                    utils.loading(false);
+                utils.ajaxSubmit(apis.role.create,$("#visaPassportForm").serialize(),function(data){
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
                     loadData();
                 })
             }
-        }, 'lg');
+        }, 'md');
     })
 
     //页面操作配置
@@ -41,33 +39,29 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.admin.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.role.getById, {id: id}, function (data) {
                 var getByIdData = {
-                    dataArr:data,
-                    roleArr:roleArr
+                    dataArr:data
                 };
-                utils.renderModal('编辑管理员', template('modalDiv', getByIdData), function(){
+                utils.renderModal('编辑角色', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
-                        utils.loading(true);
-                        utils.ajaxSubmit(apis.admin.updateById, $("#visaPassportForm").serialize(), function (data) {
-                            utils.loading(false);
+                        utils.ajaxSubmit(apis.role.updateById, $("#visaPassportForm").serialize(), function (data) {
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
                         })
                     }
-                }, 'lg');
+                }, 'md');
             });
         },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.admin.getById, {id: id}, function (data) {
+            utils.ajaxSubmit(apis.role.getById, {id: id}, function (data) {
                 var getByIdData = {
-                    dataArr:data,
-                    roleArr:roleArr
+                    dataArr:data
                 };
-                utils.renderModal('查看管理员', template('modalDiv', getByIdData),'', 'lg');
+                utils.renderModal('查看角色', template('modalDiv', getByIdData),'', 'md');
                 $("#visaPassportForm").append($("fieldset").prop('disabled', true));
             });
         },
@@ -75,7 +69,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认无效吗?', '', function () {
-                utils.ajaxSubmit(apis.admin.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.role.offById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -84,10 +78,38 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认有效吗?', '', function () {
-                utils.ajaxSubmit(apis.admin.onById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.role.onById, {id: id}, function (data) {
                     loadData();
                 });
             });
+        },
+        assign:function($this){
+            var roleId = $this.closest("tr").attr("data-id");
+            var roleName = $this.closest("tr").find("td").eq(1).text();
+            utils.ajaxSubmit(apis.roleModule.getLists, {roleId:roleId}, function (data) {
+                var getData = {
+                    dataArr:data
+                };
+                getData.dataArr.roleId = roleId;
+                getData.dataArr.roleName = roleName;
+                utils.renderModal('分配权限', template('roleModuleDiv', getData),function(){
+                    if($("#roleModuleForm").valid()) {
+                        utils.ajaxSubmit(apis.roleModule.create, $("#roleModuleForm").serialize(), function (data) {
+                            hound.success("分配权限成功", "", 1000);
+                            utils.modal.modal('hide');
+                            loadData();
+                        })
+                    }
+                }, 'lg');
+            });
+        },
+        oneLevel:function($this){
+            var oneLevelDiv = $this.closest(".oneLevelDiv");
+            oneLevelDiv.find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+        },
+        twoLevel:function($this){
+            var twoLevelDiv = $this.closest(".twoLevelDiv");
+            twoLevelDiv.find("input[type=checkbox]").prop("checked", $this.prop("checked"));
         }
     };
 
@@ -95,60 +117,38 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
-        userName:'',
-        roleId:''
+        title:''
     };
-    var roleArr;
-    function getRoleArr(){
-        var roleParam = {
-            pageNo: 1,
-            pageSize:10,
-            status:'',
-            title:''
-        };
-        utils.ajaxSubmit(apis.role.getLists, roleParam, function (data) {
-            roleArr = data.dataArr;
-        });
-    }
-    getRoleArr();
+
     function loadData() {
-        utils.ajaxSubmit(apis.admin.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.role.getLists, param, function (data) {
+            //根据状态值显示对应的状态文字 + 显示对应的按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                n.materialButtonGroup =  n.materialButtonGroup + roleButton;
             });
-            data.roleArr = roleArr;
             data.statusText = listDropDown.statusText;
-            data.roleText = listDropDown.roleText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
         });
     }
     // 页面首次加载列表数据
-    setTimeout(function(){
-        loadData();
-    },100);
+    loadData();
     utils.bindList($(document), operates);
     //列表筛选事件绑定
     var listDropDown = {
-        statusText:'状态',
-        roleText:'角色'
+        statusText:'状态'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
-        param.pageNo = 1;
-        loadData();
-    }).on('click', '#dropRoleOptions a[data-id]', function () {
-        param.roleId = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.roleText = "角色" : listDropDown.roleText = $(this).text();
-        param.pageNo = 1;
         loadData();
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.userName = $("#searchCont").val();
+        param.title = $("#searchCont").val();
         loadData();
     });
     $('#searchCont').on('keypress',function(event){

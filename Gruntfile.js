@@ -1,6 +1,13 @@
 var path = require('path');
 var includeRegExp = new RegExp('@@include\\(\\s*["\'](.*?)["\'](,\\s*({[\\s\\S]*?})){0,1}\\s*\\)');
 
+//2020.9.21 wang
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
 module.exports = function(grunt) {
     var serveStatic = require('serve-static');
 
@@ -233,6 +240,15 @@ module.exports = function(grunt) {
                 livereload: 35729,
                 hostname: '*'
             },
+            proxies: [
+                {
+                    context: '/website',
+                    host: 'http://wx.dhbiji.com',
+                    port: 80,
+                    https: false,
+                    changeOrigin: true
+                }
+            ],
             livereload: {
                 options: {
                     base: '<%= config.web %>',
@@ -325,7 +341,14 @@ module.exports = function(grunt) {
                                 }
 
                                 return res.end(body);
-                            }
+                            },
+
+                            //2020.9.21 wang
+                            lrSnippet,
+                            mountFolder(connect, '.tmp'),
+                            //connect().use('/bower_components', connect.static('./bower_components')),
+                            mountFolder(connect, config.app),
+                            proxySnippet
                         ];
                     }
                 }
@@ -348,6 +371,7 @@ module.exports = function(grunt) {
     //server
     grunt.registerTask('server', [
         'postcss',
+        'configureProxies',
         'connect:livereload',
         'watch'
     ]);

@@ -976,8 +976,6 @@ define("apis", function() {
                 a:'userListsById'
             }
         },
-
-
         role:{
             getLists:{
                 c:'role',
@@ -1050,6 +1048,12 @@ define("apis", function() {
             create:{
                 c:'roleModule',
                 a:'create'
+            }
+        },
+        gather:{
+            getMenuLists:{
+                c:'gather',
+                a:'getMenuLists'
             }
         }
     }

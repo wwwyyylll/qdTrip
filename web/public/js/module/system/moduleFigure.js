@@ -13,64 +13,38 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#selectsearchlabel").text($(this).text());
         $("#searchCont").val("");
         $("#searchCont").attr("data-id",'');
-    })
-
-    function oneChange(){
-        $("#oneElement").on("change",function(){
-            var id = $(this).val();
-            utils.ajaxSubmit(apis.module.getCaListsByControllerId,{id:id}, function (data) {
-                $("#twoElement").html("");
-                var getData = {
-                    caListsArr:data
-                };
-                $("#twoElement").html(template('twoOptionItem',getData));
-            });
-        });
-        $("select[name=type]").on("change",function(){
-            if($(this).val()=='opt'){
-                $(".positionDiv").show();
-                $(".buttonCodeDiv").show();
-                $(".iconDiv").hide();
-            }else{
-                $(".positionDiv").hide();
-                $(".buttonCodeDiv").hide();
-                $(".iconDiv").show();
-            }
-        })
-    }
+    });
 
     //页面操作配置
     var operates = {
         add:function($this){
+            var id = '';
+            var title = '';
             var parentId;
-            var span = $this.parent().find("span");
-            if(span.length!=0){
-                parentId = span.attr("data-value");
-            }else{
+            var parentName;
+            if($this.attr("data-id")=="oneLevel"){
                 parentId = 0;
+                parentName = "此模块为一级分类，无父级分类";
+            }else if($this.attr("data-id")=="twoLevel"){
+                parentId = $this.parent().find("span").eq(0).attr("data-id");
+                parentName = $this.parent().find("span").eq(0).text();
+            }else if($this.attr("data-id")=="threeLevel"){
+                parentId = $this.parent().find("span").eq(0).attr("data-id");
+                parentName = $this.parent().find("span").eq(0).text();
             }
+            var idx = '';
+            var url = '';
             var initialData = {
                 dataArr:{
+                    id:id,
+                    title:title,
                     parentId:parentId,
-                    parentName:$this.attr("data-value"),
-                    type:$this.attr("data-id"),
-                    position:2
-                },
-                typeArr:typeArr,
-                positionArr:positionArr,
-                controllerLists:controllerLists,
-                caListsArr:caListsArr
+                    parentName:parentName,
+                    idx:idx,
+                    url:url
+                }
             };
             utils.renderModal('新增', template('moduleItem',initialData), function(){
-                var caId = $("#twoElement").val();
-                var options = $("#twoElement").find("option");
-                var aId;
-                for(var i=0;i<options.length;i++){
-                    if(options.eq(i).val()==caId){
-                        aId = options.eq(i).attr("data-id");
-                    }
-                }
-                $("input[name=aId]").val(aId);
                 if($("#moduleForm").valid()){
                     utils.ajaxSubmit(apis.module.create,$("#moduleForm").serialize(),function(data){
                         hound.success("添加成功","",1000);
@@ -79,95 +53,75 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     })
                 }
             }, 'lg');
-            oneChange();
         },
         //编辑
         edit:function($this){
-            var id = $this.parent().find("span").attr("data-id");
-            utils.ajaxSubmit(apis.module.getById, {id: id}, function (data) {
-                var getByIdData = {
-                    dataArr:data,
-                    typeArr:typeArr,
-                    positionArr:positionArr,
-                    controllerLists:controllerLists,
-                    caListsArr:{}
-                };
-                getByIdData.dataArr.parentName = $this.attr("data-value");
-                if(getByIdData.dataArr.controllerId!='' && getByIdData.dataArr.controllerId!=null){
-                    utils.ajaxSubmit(apis.module.getCaListsByControllerId,{id:getByIdData.dataArr.controllerId}, function (data) {
-                        getByIdData.caListsArr = data;
-                        utils.renderModal('编辑', template('moduleItem', getByIdData), function(){
-                            var caId = $("#twoElement").val();
-                            var options = $("#twoElement").find("option");
-                            var aId;
-                            for(var i=0;i<options.length;i++){
-                                if(options.eq(i).val()==caId){
-                                    aId = options.eq(i).attr("data-id");
-                                }
-                            }
-                            $("input[name=aId]").val(aId);
-                            if($("#moduleForm").valid()) {
-                                utils.ajaxSubmit(apis.module.updateById, $("#moduleForm").serialize(), function (data) {
-                                    hound.success("编辑成功", "", 1000);
-                                    utils.modal.modal('hide');
-                                    loadData(1);
-                                })
-                            }
-                        }, 'lg');
-                        oneChange();
-                    });
-                }else{
-                    getByIdData.caListsArr = caListsArr;
-                    utils.renderModal('编辑', template('moduleItem', getByIdData), function(){
-                        var caId = $("#twoElement").val();
-                        var options = $("#twoElement").find("option");
-                        var aId;
-                        for(var i=0;i<options.length;i++){
-                            if(options.eq(i).val()==caId){
-                                aId = options.eq(i).attr("data-id");
-                            }
-                        }
-                        $("input[name=aId]").val(aId);
-                        if($("#moduleForm").valid()) {
-                            utils.ajaxSubmit(apis.module.updateById, $("#moduleForm").serialize(), function (data) {
-                                hound.success("编辑成功", "", 1000);
-                                utils.modal.modal('hide');
-                                loadData(1);
-                            })
-                        }
-                    }, 'lg');
-                    oneChange();
+            var id = $this.parent().find("span").eq(0).attr("data-id");
+            var title = $this.parent().find("span").eq(0).text();
+            var parentId = $this.attr("data-value");
+            var parentName;
+            if($this.attr("data-id")=="oneLevel"){
+                parentName = "此模块为一级分类，无父级分类";
+            }else if($this.attr("data-id")=="twoLevel"){
+                parentName = $this.closest(".oneLevelDiv").find("div").eq(0).find("h5").find("span").eq(0).text();
+            }else if($this.attr("data-id")=="threeLevel"){
+                parentName = $this.closest(".twoLevelDiv").find("div").eq(0).find("h6").find("span").eq(0).text();
+            }
+            var idx = $this.parent().find("span").eq(1).text();
+            var url = $this.parent().find("span").eq(2).text();
+
+            var getByIdData = {
+                dataArr:{
+                    id:id,
+                    title:title,
+                    parentId:parentId,
+                    parentName:parentName,
+                    idx:idx,
+                    url:url
                 }
-            });
+            };
+            utils.renderModal('编辑', template('moduleItem', getByIdData), function(){
+                if($("#moduleForm").valid()) {
+                    utils.ajaxSubmit(apis.module.updateById, $("#moduleForm").serialize(), function (data) {
+                        hound.success("编辑成功", "", 1000);
+                        utils.modal.modal('hide');
+                        loadData(1);
+                    })
+                }
+            }, 'lg');
         },
         //查看
         look:function($this){
-            var id = $this.parent().find("span").attr("data-id");
-            utils.ajaxSubmit(apis.module.getById, {id: id}, function (data) {
-                var getByIdData = {
-                    dataArr:data,
-                    typeArr:typeArr,
-                    positionArr:positionArr,
-                    controllerLists:controllerLists,
-                    caListsArr:{}
-                };
-                getByIdData.dataArr.parentName = $this.attr("data-value");
-                if(getByIdData.dataArr.controllerId!='' && getByIdData.dataArr.controllerId!=null){
-                    utils.ajaxSubmit(apis.module.getCaListsByControllerId,{id:getByIdData.dataArr.controllerId}, function (data) {
-                        getByIdData.caListsArr = data;
-                        utils.renderModal('查看', template('moduleItem', getByIdData),'', 'lg');
-                        $("#moduleForm").append($("fieldset").prop('disabled', true));
-                    });
-                }else{
-                    getByIdData.caListsArr = caListsArr;
-                    utils.renderModal('查看', template('moduleItem', getByIdData),'', 'lg');
-                    $("#moduleForm").append($("fieldset").prop('disabled', true));
+            var id = $this.parent().find("span").eq(0).attr("data-id");
+            var title = $this.parent().find("span").eq(0).text();
+            var parentId = $this.attr("data-value");
+            var parentName;
+            if($this.attr("data-id")=="oneLevel"){
+                parentName = "此模块为一级分类，无父级分类";
+            }else if($this.attr("data-id")=="twoLevel"){
+                parentName = $this.closest(".oneLevelDiv").find("div").eq(0).find("h5").find("span").eq(0).text();
+            }else if($this.attr("data-id")=="threeLevel"){
+                parentName = $this.closest(".twoLevelDiv").find("div").eq(0).find("h6").find("span").eq(0).text();
+            }
+            var idx = $this.parent().find("span").eq(1).text();
+            var url = $this.parent().find("span").eq(2).text();
+
+            var getByIdData = {
+                dataArr:{
+                    id:id,
+                    title:title,
+                    parentId:parentId,
+                    parentName:parentName,
+                    idx:idx,
+                    url:url
                 }
-            });
+            };
+            utils.renderModal('查看', template('moduleItem', getByIdData),'', 'lg');
+            $("#moduleForm").append($("fieldset").prop('disabled', true));
         },
         //无效
         setOff:function($this){
-            var id = $this.parent().find("span").attr("data-id");
+            var id = $this.parent().find("span").eq(0).attr("data-id");
             hound.confirm('确认无效吗?', '', function () {
                 utils.ajaxSubmit(apis.module.offById, {id: id}, function (data) {
                     loadData(1);
@@ -176,7 +130,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         //有效
         setOn:function($this){
-            var id = $this.parent().find("span").attr("data-id");
+            var id = $this.parent().find("span").eq(0).attr("data-id");
             hound.confirm('确认有效吗?', '', function () {
                 utils.ajaxSubmit(apis.module.onById, {id: id}, function (data) {
                     loadData(1);
@@ -244,7 +198,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             positionArr = data.positionArr;
         });
     }
-    getControllerLists();
+    //getControllerLists();
 
     function loadData(isShow) {
         utils.ajaxSubmit(apis.module.getLists, '', function (data) {

@@ -49,6 +49,11 @@
 <script id="downloadItem" type="text/html">
     <a href="<%= dataArr.url %>" download="">点击下载</a>
 </script>
+<script id="downloadItemTest" type="text/html">
+    <a href="<%= dataArr.url %>" target="_blank">
+        <img src="<%= dataArr.url %>">
+    </a>
+</script>
 <!-- 列表模板 -->
 <script id="visaListItem" type="text/html">
     <thead>
@@ -59,8 +64,7 @@
         <th>banner图</th>
         <th>开始时间</th>
         <th>结束时间</th>
-        <th>数量</th>
-        <th>剩余张数</th>
+        <th>剩余数/总数</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -84,7 +88,11 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
-        <td><%= dataArr[i].money %></td>
+        <td>
+            <% if(dataArr[i].money){ %>
+            <%= dataArr[i].money %>元
+            <% } %>
+        </td>
         <td>
             <% if(dataArr[i].picUrl){ %>
             <a href="<%= dataArr[i].picUrl %>" target="_blank">
@@ -94,8 +102,8 @@
         </td>
         <td><%= dataArr[i].startTime %></td>
         <td><%= dataArr[i].endTime %></td>
-        <td><%= dataArr[i].num %></td>
-        <td><%= dataArr[i].usedNum %> / <%= dataArr[i].num %></td>
+        <!--<td><%= dataArr[i].num %></td>-->
+        <td><%= dataArr[i].remainNumber %> / <%= dataArr[i].num %></td>
         <td><%- dataArr[i].statusText %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
@@ -130,7 +138,11 @@
                 <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].userId %>"><%= dataArr[i].nickName %></a>
             </td>
             <td style="width:25%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].couponTitle %></td>
-            <td><%= dataArr[i].money %></td>
+            <td>
+                <% if(dataArr[i].money){ %>
+                <%= dataArr[i].money %>元
+                <% } %>
+            </td>
             <td><%= dataArr[i].createTime %></td>
         </tr>
         <% } %>
@@ -165,6 +177,9 @@
                             <span class="input-group-text">面值</span>
                         </div>
                         <input type="text" name="money" placeholder="请输入面值" value="<%= dataArr.money %>" class="form-control" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">元</span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-6">

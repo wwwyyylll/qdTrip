@@ -31,7 +31,7 @@
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
                         <div class="btn-group" style="float:left">
-                            <button data-id="module" data-value="无" class="btn btn-primary" data-operate="add" style="outline:none;margin-left: 3px">新增</button>
+                            <button data-value="0" data-id="oneLevel" class="btn btn-primary" data-operate="add" style="outline:none;margin-left: 3px">新增</button>
                         </div>
                     </div>
                 </div>
@@ -52,10 +52,12 @@
         <div style="margin-bottom: 10px">
             <h5>
                 <i data-operate="showTwoLevel" class="fa fa-folder" style="margin-right: 10px;cursor: pointer"></i>
-                <span data-operate="showTwoLevel" style="cursor: pointer" data-id="<%= dataArr[i].id %>" data-value="<%= dataArr[i].id %>"><%= dataArr[i].name %></span>
-                <i data-id="list" data-value="<%= dataArr[i].name %>" class="fa fa-plus-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="add"></i>
-                <i data-value="无" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
-                <i data-value="无" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer;font-size: 16px"  data-operate="look"></i>
+                <span data-operate="showTwoLevel" style="cursor: pointer" data-id="<%= dataArr[i].id %>"><%= dataArr[i].title %></span>
+                <i data-value="<%= dataArr[i].parentId %>" data-id="twoLevel" class="fa fa-plus-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="add"></i>
+                <i data-value="<%= dataArr[i].parentId %>" data-id="oneLevel" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
+                <i data-value="<%= dataArr[i].parentId %>" data-id="oneLevel" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer;font-size: 16px"  data-operate="look"></i>
+                <span style="display: none"><%= dataArr[i].idx %></span>
+                <span style="display: none"><%= dataArr[i].url %></span>
                 <% if(dataArr[i].status==1){ %>
                 <i class="fa fa-eye" style="margin-left: 5px;cursor: pointer;color: green" data-operate="setOff"></i>
                 <% }else{ %>
@@ -72,10 +74,12 @@
                         <div style="width: 30px;height: 25px;margin-top: 15px;margin-right: 10px;float: left;border-left: 1px solid gray;border-bottom: 1px solid gray;position: absolute;left: 7px;top:-20px"></div>
                         <div>
                             <i data-operate="showThreeLevel" class="fa fa-folder" style="margin-right: 5px;margin-left: 40px;cursor: pointer"></i>
-                            <span data-operate="showThreeLevel" data-id="<%= dataArr[i].child[j].id %>" data-value="<%= dataArr[i].child[j].id %>" style="cursor: pointer"><%= dataArr[i].child[j].name %></span>
-                            <i data-id="opt" data-value="<%= dataArr[i].child[j].name %>" class="fa fa-plus-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="add"></i>
-                            <i data-value="<%= dataArr[i].name %>" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
-                            <i data-value="<%= dataArr[i].name %>" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer"  data-operate="look"></i>
+                            <span data-operate="showThreeLevel" data-id="<%= dataArr[i].child[j].id %>" style="cursor: pointer"><%= dataArr[i].child[j].title %></span>
+                            <i data-value="<%= dataArr[i].child[j].parentId %>" data-id="threeLevel" class="fa fa-plus-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="add"></i>
+                            <i data-value="<%= dataArr[i].child[j].parentId %>" data-id="twoLevel" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
+                            <i data-value="<%= dataArr[i].child[j].parentId %>" data-id="twoLevel" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer"  data-operate="look"></i>
+                            <span style="display: none"><%= dataArr[i].child[j].idx %></span>
+                            <span style="display: none"><%= dataArr[i].child[j].url %></span>
                             <% if(dataArr[i].child[j].status==1){ %>
                             <i class="fa fa-eye" style="margin-left: 5px;cursor: pointer;color: green" data-operate="setOff"></i>
                             <% }else{ %>
@@ -93,9 +97,11 @@
                     <div style="width: 30px;height: 22px;float: left;border-left: 1px solid gray;border-bottom: 1px solid gray;position: absolute;left: 47px;top:5px"></div>
                     <div style="position: absolute;left:5px;top:17px">
                         <i class="fa fa-leaf" style="margin-right: 5px;margin-left: 80px"></i>
-                        <span data-id="<%= dataArr[i].child[j].child[k].id %>" data-value="<%= dataArr[i].child[j].child[k].id %>"> <%= dataArr[i].child[j].child[k].name %></span>
-                        <i data-value="<%= dataArr[i].child[j].name %>" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
-                        <i data-value="<%= dataArr[i].child[j].name %>" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer"  data-operate="look"></i>
+                        <span data-id="<%= dataArr[i].child[j].child[k].id %>"> <%= dataArr[i].child[j].child[k].title %></span>
+                        <i data-value="<%= dataArr[i].child[j].child[k].parentId %>" data-id="threeLevel" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
+                        <i data-value="<%= dataArr[i].child[j].child[k].parentId %>" data-id="threeLevel" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer"  data-operate="look"></i>
+                        <span style="display: none"><%= dataArr[i].child[j].child[k].idx %></span>
+                        <span style="display: none"><%= dataArr[i].child[j].child[k].url %></span>
                         <% if(dataArr[i].child[j].child[k].status==1){ %>
                         <i class="fa fa-eye" style="margin-left: 5px;cursor: pointer;color: green" data-operate="setOff"></i>
                         <% }else{ %>
@@ -136,24 +142,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">名称</span>
                         </div>
-                        <input type="text" name="name" class="form-control" placeholder="请输入名称" value="<%= dataArr.name %>" required>
+                        <input type="text" name="title" class="form-control" placeholder="请输入名称" value="<%= dataArr.title %>" required>
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">类型</span>
-                        </div>
-                        <select name="type" class="form-control">
-                            <% for (var i = 0; i < typeArr.length; i++) { %>
-                            <option value="<%= typeArr[i].val %>" <% if(dataArr.type==typeArr[i].val) { %> selected <% } %>><%= typeArr[i].name %></option>
-                            <% }%>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-4">
                     <div class="input-group economy-wards">
                         <div class="input-group-prepend">
                             <span class="input-group-text">排序</span>
@@ -161,72 +153,14 @@
                         <input type="text" name="idx" class="form-control" placeholder="请输入排序" value="<%= dataArr.idx %>">
                     </div>
                 </div>
-                <div class="col-4 iconDiv" <% if(dataArr.type=='opt'){ %> style="display:none" <% }else{ %> style="display:block" <% } %>>
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">ICON</span>
-                        </div>
-                        <input type="text" name="icon" class="form-control" placeholder="请输入icon名称" value="<%= dataArr.icon %>">
-                    </div>
-                </div>
-                <div class="col-4 positionDiv" <% if(dataArr.type=='opt'){ %> style="display:block" <% }else{ %> style="display:none" <% } %>>
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">位置</span>
-                        </div>
-                        <select name="position" class="form-control">
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < positionArr.length; i++) { %>
-                            <option value="<%= positionArr[i].val %>" <% if(dataArr.position==positionArr[i].val) { %> selected <% } %>><%= positionArr[i].name %></option>
-                            <% }%>
-                        </select>
-                    </div>
-                </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="input-group economy-wards">
                         <div class="input-group-prepend">
                             <span class="input-group-text">url</span>
                         </div>
                         <input type="text" name="url" class="form-control" placeholder="请输入跳转链接" value="<%= dataArr.url %>">
-                    </div>
-                </div>
-                <div class="col-4 buttonCodeDiv" <% if(dataArr.type=='opt'){ %> style="display:block" <% }else{ %> style="display:none" <% } %>>
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">buttonCode</span>
-                        </div>
-                        <input type="text" name="buttonCode" class="form-control" placeholder="请输入按钮方法" value="<%= dataArr.buttonCode %>">
-                    </div>
-                </div>
-            </div>
-            <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-4">
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">模块</span>
-                        </div>
-                        <select id="oneElement" name="cId" class="form-control">
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < controllerLists.length; i++) { %>
-                            <option value="<%= controllerLists[i].id %>" <% if(dataArr.controllerId==controllerLists[i].id) { %> selected <% } %>><%= controllerLists[i].name %></option>
-                            <% }%>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">操作</span>
-                        </div>
-                        <select id="twoElement" name="caId" class="form-control">
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < caListsArr.length; i++) { %>
-                            <option data-id="<%= caListsArr[i].actionId %>" value="<%= caListsArr[i].id %>" <% if(dataArr.controllerActionId==caListsArr[i].id) { %> selected <% } %>><%= caListsArr[i].name %></option>
-                            <% }%>
-                        </select>
-                        <input type="hidden" name="aId" class="form-control" value="<%= dataArr.actionId %>">
                     </div>
                 </div>
             </div>

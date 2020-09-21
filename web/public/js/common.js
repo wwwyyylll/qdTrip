@@ -108,4 +108,62 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
             $(this).find("i").eq(1).removeClass("three_item_rotate1");
         }
     });
+    //2020.09.21
+    function getMenuLists(){
+        utils.ajaxSubmit(apis.gather.getMenuLists,'',function(data){
+            var oneLevelArr = [];
+            var twoLevelArr = [];
+            var threeLevelArr = [];
+            $.each(data,function(i,n){
+                oneLevelArr.push(n.title);
+                $.each(n.child,function(j,m){
+                    twoLevelArr.push(m.title);
+                    $.each(m.child,function(k,v){
+                        threeLevelArr.push(v.title);
+                    })
+                })
+            });
+
+            var menu1 = $(".app-menu>li>a");
+            for(var i=0;i<menu1.length;i++){
+                var menuText = menu1.eq(i).find("span").text();
+                if(oneLevelArr.indexOf(menuText)!="-1"){
+                    menu1.eq(i).parent().show();
+                }else{
+                    menu1.eq(i).parent().hide();
+                }
+            }
+
+            var menu3 = $(".app-menu>li>ul>li>.common-item");
+            for(var i=0;i<menu3.length;i++){
+                var menuText3 = menu3.eq(i).text();
+                if(twoLevelArr.indexOf(menuText3)!="-1"){
+                    menu3.eq(i).parent().show();
+                }else{
+                    menu3.eq(i).parent().hide();
+                }
+            }
+
+            var menu2 = $(".app-menu>li>ul>li>.app-menu__item");
+            for(var i=0;i<menu2.length;i++){
+                var menuText2 = menu2.eq(i).find("span").text();
+                if(twoLevelArr.indexOf(menuText2)!="-1"){
+                    menu2.eq(i).parent().show();
+                }else{
+                    menu2.eq(i).parent().hide();
+                }
+            }
+
+            var menu4 = $(".app-menu>li>ul>li>.three_list>li");
+            for(var i=0;i<menu4.length;i++){
+                var menuText4 = menu4.eq(i).find("a").text();
+                if(threeLevelArr.indexOf(menuText4)!="-1"){
+                    menu4.eq(i).show();
+                }else{
+                    menu4.eq(i).hide();
+                }
+            }
+        })
+    }
+    getMenuLists();
 });

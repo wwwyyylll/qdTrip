@@ -164,8 +164,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //下载
         downloadCashCoupon:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.mallCashCoupon.downloadById, {id: id}, function (data) {
-                var downloadUrl = data.url;
+            //utils.ajaxSubmit(apis.mallCashCoupon.downloadById, {id: id}, function (data) {
+                //var downloadUrl = data.url;
 
                 // 创建隐藏的可下载链接
                 // let  blob = 'http://pic.c-ctrip.com/VacationH5Pic/mice/wechat/ewm01.png';
@@ -179,39 +179,70 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 // document.body.removeChild(a);
                 //canvans下载
 
-                function ddd(){
-                    var src = "http://wx.dhbiji.com/file/qrCode/20200910/1_goods_1.png";
-                    var canvas = document.createElement('canvas');
-                    var img = document.createElement('img');
-                    img.onload = function(e) {
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        var context = canvas.getContext('2d');
-                        context.drawImage(img, 0, 0, img.width, img.height);
-                        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-                        //canvas.toBlob(blob => {
-                        //    let link = document.createElement('a');
-                        //    link.href = window.URL.createObjectURL(blob);
-                        //    link.download = 'aaa';
-                        //    link.click();
-                        //}, "image/jpeg/png")
-                        function aaa(){
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = 'aaa';
-                            link.click();
-                        }
-                        canvas.toBlob(function(blob){
-                            return aaa();
-                        })
-                    };
-                    img.setAttribute("crossOrigin",'Anonymous');
-                    img.src = src;
-                }
-                ddd();
+                //function ddd(){
+                //    var src = "http://wx.dhbiji.com/file/qrCode/20200910/1_goods_1.png";
+                //    var canvas = document.createElement('canvas');
+                //    var img = document.createElement('img');
+                //    img.onload = function(e) {
+                //        canvas.width = img.width;
+                //        canvas.height = img.height;
+                //        var context = canvas.getContext('2d');
+                //        context.drawImage(img, 0, 0, img.width, img.height);
+                //        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+                //        canvas.toBlob(function(blob){
+                //            let link = document.createElement('a');
+                //            link.href = window.URL.createObjectURL(blob);
+                //            link.download = 'aaa';
+                //            link.click();
+                //        }, "image/jpeg/png");
+                //        //function aaa(){
+                //        //    var link = document.createElement('a');
+                //        //    link.href = window.URL.createObjectURL(blob);
+                //        //    link.download = 'aaa';
+                //        //    link.click();
+                //        //}
+                //        //canvas.toBlob(function(blob){
+                //        //    return aaa();
+                //        //})
+                //    };
+                //    img.setAttribute("crossOrigin",'Anonymous');
+                //    img.src = src;
+                //}
+                //ddd();
+
+            function imageDownload(src){
+                var canvas = document.createElement('canvas');
+                var img = document.createElement('img');
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    let context = canvas.getContext('2d');
+                    context.drawImage(img, 0, 0, img.width, img.height);
+                    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+                    canvas.toBlob(blob => {
+                        let link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = 'download'; // resource name
+                        link.click()
+                    }, "image/jpeg/png", "0.95")
+                };
+                img.setAttribute("crossOrigin", 'Anonymous');
+                img.src = src
+            }
+            imageDownload('http://wx.dhbiji.com/file/qrCode/20200910/1_goods_1.png');
 
 
-            });
+
+            //});
+        },
+        downloadCashCouponTest:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            utils.ajaxSubmit(apis.mallCashCoupon.downloadById, {id: id}, function (data) {
+                var getByIdData = {
+                    dataArr:data
+                };
+                utils.renderModal('查看现金券', template('downloadItemTest', getByIdData),'', 'lg');
+            })
         },
         //会员领取日志
         userGetLog:function($this){
@@ -236,6 +267,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function loadData() {
         utils.ajaxSubmit(apis.mallCashCoupon.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
+                n.remainNumber = parseInt(n.num)-parseInt(n.usedNum);
                 n.statusText = consts.status.cashCouponStatus[n.status];
                 if(n.status=="1"){
                     //未启用
