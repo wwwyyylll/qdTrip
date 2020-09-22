@@ -20,7 +20,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            window.location.href = "@@HOSTview/account/userDetails.html?id=" + id;
+            window.location.href = "@@HOSTview/account/userDetailsLook.html?id=" + id;
         },
         //允许登录
         allow:function($this){

@@ -88,7 +88,7 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td>
-            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].id %>"><%= dataArr[i].nickName %></a>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].id %>"><%= dataArr[i].nickName %></a>
         </td>
         <td>
             <% if(dataArr[i].avatar){ %>
@@ -103,7 +103,7 @@
         <td><%= dataArr[i].createTime %></td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
-                <a target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].id %>" class="btn btn-info">查看详情</a>
+                <a target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].id %>" class="btn btn-info">查看详情</a>
                 <%- dataArr[i].materialButtonGroup %>
             </div>
         </td>

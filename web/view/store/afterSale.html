@@ -148,12 +148,12 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td>
-            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/orderDetails.html?orderNo=<%= dataArr[i].orderNo %>"><%= dataArr[i].orderNo %></a>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/orderDetailsLook.html?orderNo=<%= dataArr[i].orderNo %>"><%= dataArr[i].orderNo %></a>
             <span class="orderId" style="display: none"><%= dataArr[i].orderId %></span>
             <div style="color: red"><%= dataArr[i].requestMemo %></div>
         </td>
         <td>
-            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].createrArr.id %>"><%= dataArr[i].createrArr.nickName %></a>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].createrArr.id %>"><%= dataArr[i].createrArr.nickName %></a>
         </td>
         <td><%= dataArr[i].createrUnreadMessageCount %></td>
         <td><%- dataArr[i].isJoinerUnreadMessageText %></td>
@@ -202,7 +202,7 @@
         <div style="margin-top: 10px;width: 100%;">
             <div style="float: left;width:100px">订单编号</div>
             <div class="orderNo" style="float: right;width:75%;text-align: right">
-                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/orderDetails.html?orderNo=<%= orderArr.orderNo %>"><%= orderArr.orderNo %></a>
+                <a style="text-decoration: underline" target="_blank" href="@@HOSTview/store/orderDetailsLook.html?orderNo=<%= orderArr.orderNo %>"><%= orderArr.orderNo %></a>
                 <% if(orderArr.requestMemo!=''){ %>
                 <span style="color: red">（<%= orderArr.requestMemo %>）</span>
                 <% } %>

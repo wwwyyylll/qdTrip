@@ -105,11 +105,66 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         oneLevel:function($this){
             var oneLevelDiv = $this.closest(".oneLevelDiv");
-            oneLevelDiv.find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+            if(!$this.prop("checked")) {
+                oneLevelDiv.find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+            }
         },
         twoLevel:function($this){
+            if(!$this.prop("checked")){
+                $this.closest(".twoLevelDiv").find(".threeLevelDiv").find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+            }else{
+                //二级分类-------父级元素
+                var oneLevelDiv = $this.closest(".oneLevelDiv");
+                //所有的二级分类的同级元素
+                var twoLevelDiv = $this.closest(".twoLevelDiv").siblings(".twoLevelDiv");
+                var countNumber = [];
+                for(var i=0;i<twoLevelDiv.length;i++){
+                    if(twoLevelDiv.eq(i).find("div").eq(0).find("h6").find("input[type=checkbox]").prop("checked")){
+                        countNumber.push(1);
+                    }else{
+                        countNumber.push(2);
+                    }
+                }
+                //判断同级元素是否有选中的   有：不做改变 / 无：根据当前元素改变
+                if(countNumber.indexOf(1)=="-1"){
+                    oneLevelDiv.find("div").eq(0).find("h5").find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+                }
+            }
+        },
+        threeLevel:function($this){
+            //三级分类 --- 二级父类元素
             var twoLevelDiv = $this.closest(".twoLevelDiv");
-            twoLevelDiv.find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+            //所有的三级分类的同级元素
+            var threeLevelDiv = $this.closest(".threeLevelDiv").siblings(".threeLevelDiv");
+            var countNumber1 = [];
+            for(var i=0;i<threeLevelDiv.length;i++){
+                if(threeLevelDiv.eq(i).find("h6").find("input[type=checkbox]").prop("checked")){
+                    countNumber1.push(1);
+                }else{
+                    countNumber1.push(2);
+                }
+            }
+            //判断同级元素是否有选中的   有：不做改变 / 无：根据当前元素改变
+            if(countNumber1.indexOf(1)=="-1"){
+                twoLevelDiv.find("div").eq(0).find("h6").find("input[type=checkbox]").prop("checked", $this.prop("checked"));
+            }
+
+            //三级分类 --- 一级父类元素
+            var oneLevelDiv = $this.closest(".oneLevelDiv");
+            //所有的二级分类的同级元素
+            var twoLevelDivArr = twoLevelDiv.siblings(".twoLevelDiv");
+            var countNumber2 = [];
+            for(var i=0;i<twoLevelDivArr.length;i++){
+                if(twoLevelDivArr.eq(i).find("div").eq(0).find("h6").find("input[type=checkbox]").prop("checked")){
+                    countNumber2.push(1);
+                }else{
+                    countNumber2.push(2);
+                }
+            }
+            //判断同级元素是否有选中的   有：不做改变 / 无：根据当前元素改变
+            if(countNumber2.indexOf(1)=="-1"){
+                oneLevelDiv.find("div").eq(0).find("h5").find("input[type=checkbox]").prop("checked", twoLevelDiv.find("div").eq(0).find("h6").find("input[type=checkbox]").prop("checked"));
+            }
         }
     };
 

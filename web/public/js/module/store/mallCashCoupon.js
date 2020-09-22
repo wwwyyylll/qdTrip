@@ -11,7 +11,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">启用</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">停止</button>',
         delButton = '<button class="btn btn-danger" type="button" data-operate="del">删除</button>',
-        downloadButton = '<button class="btn btn-success" type="button" data-operate="downloadCashCoupon">下载</button>',
+        downloadButton = '<button class="btn btn-success" type="button" data-operate="downloadCashCouponTest">下载</button>',
         userGetLogButton = '<button class="btn btn-warning" type="button" data-operate="userGetLog">会员领取日志</button>';
 
     searchlabel.on("click",function(){
@@ -210,26 +210,26 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 //}
                 //ddd();
 
-            function imageDownload(src){
-                var canvas = document.createElement('canvas');
-                var img = document.createElement('img');
-                img.onload = () => {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    let context = canvas.getContext('2d');
-                    context.drawImage(img, 0, 0, img.width, img.height);
-                    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-                    canvas.toBlob(blob => {
-                        let link = document.createElement('a');
-                        link.href = window.URL.createObjectURL(blob);
-                        link.download = 'download'; // resource name
-                        link.click()
-                    }, "image/jpeg/png", "0.95")
-                };
-                img.setAttribute("crossOrigin", 'Anonymous');
-                img.src = src
-            }
-            imageDownload('http://wx.dhbiji.com/file/qrCode/20200910/1_goods_1.png');
+            //function imageDownload(src){
+            //    var canvas = document.createElement('canvas');
+            //    var img = document.createElement('img');
+            //    img.onload = () => {
+            //        canvas.width = img.width;
+            //        canvas.height = img.height;
+            //        let context = canvas.getContext('2d');
+            //        context.drawImage(img, 0, 0, img.width, img.height);
+            //        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+            //        canvas.toBlob(blob => {
+            //            let link = document.createElement('a');
+            //            link.href = window.URL.createObjectURL(blob);
+            //            link.download = 'download'; // resource name
+            //            link.click()
+            //        }, "image/jpeg/png", "0.95")
+            //    };
+            //    img.setAttribute("crossOrigin", 'Anonymous');
+            //    img.src = src
+            //}
+            //imageDownload('http://wx.dhbiji.com/file/qrCode/20200910/1_goods_1.png');
 
 
 

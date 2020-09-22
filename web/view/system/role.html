@@ -163,13 +163,13 @@
                     <% if(dataArr[i].child[j].child){ %>
                     <div style="margin-bottom: 20px">
                         <% for(var k=0;k < dataArr[i].child[j].child.length;k++){ %>
-                        <div style="position: relative;height: 22px">
+                        <div style="position: relative;height: 22px" class="threeLevelDiv">
                             <h6>
                                 <div style="width: 30px;height: 22px;float: left;border-left: 1px solid gray;border-bottom: 1px solid gray;position: absolute;left: 47px;top:5px"></div>
                                 <div style="position: absolute;left:80px;top:15px">
                                     <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" id="outDistrict<%= i %>_<%= j %><%= k %>" name="moduleId[]" class="custom-control-input" value="<%= dataArr[i].child[j].child[k].id %>"  <% if(dataArr[i].child[j].child[k].isChecked==1){ %> checked <% } %>>
-                                        <label class="custom-control-label" for="outDistrict<%= i %>_<%= j %><%= k %>"><%= dataArr[i].child[j].child[k].title %></label>
+                                        <input data-operate="threeLevel" type="checkbox" id="outDistrict<%= i %>_<%= j %>_<%= k %>" name="moduleId[]" class="custom-control-input" value="<%= dataArr[i].child[j].child[k].id %>"  <% if(dataArr[i].child[j].child[k].isChecked==1){ %> checked <% } %>>
+                                        <label class="custom-control-label" for="outDistrict<%= i %>_<%= j %>_<%= k %>"><%= dataArr[i].child[j].child[k].title %></label>
                                     </div>
                                 </div>
                             </h6>
