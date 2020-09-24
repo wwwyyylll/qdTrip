@@ -20,7 +20,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //新增分类
     $addModal.on("click",function(){
         var initialData = {
-            dataArr:{}
+            dataArr:{},
+            parentCategoryArr:parentCategoryArr
         };
         utils.renderModal('新增分类', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
@@ -40,7 +41,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             utils.ajaxSubmit(apis.mallCategory.getById, {id: id}, function (data) {
                 var getByIdData = {
-                    dataArr:data
+                    dataArr:data,
+                    parentCategoryArr:parentCategoryArr
                 };
                 utils.renderModal('编辑分类', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
@@ -58,7 +60,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             utils.ajaxSubmit(apis.mallCategory.getById, {id: id}, function (data) {
                 var getByIdData = {
-                    dataArr:data
+                    dataArr:data,
+                    parentCategoryArr:parentCategoryArr
                 };
                 utils.renderModal('查看分类', template('modalDiv', getByIdData),'', 'md');
                 $("#visaPassportForm").append($("fieldset").prop('disabled', true));
@@ -86,21 +89,28 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     var param = {
         pageNo: 1,
-        pageSize:10,
+        pageSize:20,
         title:'',
-        status:''
+        status:'',
+        parentId:''
     };
 
+    var parentCategoryArr;
     function loadData() {
-        utils.ajaxSubmit(apis.mallCategory.getLists, param, function (data) {
-            $.each(data.dataArr,function(i,n){
-                n.statusText = consts.status.ordinary[n.status];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+        utils.ajaxSubmit(apis.mallCategory.getParentCategoryLists, '', function (data) {
+            parentCategoryArr = data;
+            utils.ajaxSubmit(apis.mallCategory.getLists, param, function (data) {
+                $.each(data.dataArr,function(i,n){
+                    n.statusText = consts.status.ordinary[n.status];
+                    (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                });
+                data.parentCategoryArr = parentCategoryArr;
+                data.statusText = listDropDown.statusText;
+                data.parentText = listDropDown.parentText;
+                $sampleTable.html(template('visaListItem', data));
+                utils.bindPagination($visaPagination, param, loadData);
+                $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo,20));
             });
-            data.statusText = listDropDown.statusText;
-            $sampleTable.html(template('visaListItem', data));
-            utils.bindPagination($visaPagination, param, loadData);
-            $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
         });
     }
     // 页面首次加载列表数据
@@ -108,11 +118,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     utils.bindList($(document), operates);
     var listDropDown = {
         statusText:'状态',
-        parentText:'所属父级分类'
+        parentText:'父级分类'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropParentOptions a[data-id]', function () {
+        param.parentId = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.parentText = "父级分类" : listDropDown.parentText = $(this).text();
+        param.pageNo = 1;
         loadData();
     });
     $("#search").on("click",function(){

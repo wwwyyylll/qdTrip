@@ -86,8 +86,13 @@
                 </span>
                 <div class="dropdown-menu" aria-labelledby="dropCategory" id="dropCategoryOptions">
                     <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <% for(var j=0;j < categoryArr.length;j++){ %>
-                    <a class="dropdown-item" href="javascript:" data-id="<%= categoryArr[j].id %>"><%= categoryArr[j].title %></a>
+                    <% for(var j=0;j < parentCategoryArr.length;j++){ %>
+                    <a class="dropdown-item" href="javascript:" data-id="<%= parentCategoryArr[j].id %>" style="font-weight: bold">* <%= parentCategoryArr[j].title %></a>
+                    <% for(var i=0;i < categoryArr.length;i++){ %>
+                    <% if(categoryArr[i].parentId==parentCategoryArr[j].id){ %>
+                    <a class="dropdown-item" href="javascript:" data-value="<%= categoryArr[i].id %>" style="padding-left: 35px">** <%= categoryArr[i].title %></a>
+                    <% } %>
+                    <% } %>
                     <% } %>
                 </div>
             </div>
@@ -137,7 +142,10 @@
         </td>
 
         <td><%= dataArr[i].supplierName %></td>
-        <td><%= dataArr[i].categoryTitle %></td>
+        <td>
+            <div style="margin-bottom: 5px"><%= dataArr[i].parentCategoryTitle %></div>
+            <div><%= dataArr[i].categoryTitle %></div>
+        </td>
         <td>
             <div><%= dataArr[i].tag1Name %></div>
             <div><%= dataArr[i].tag2Name %></div>
@@ -157,7 +165,10 @@
             <div style="margin-bottom: 5px"><%= dataArr[i].startTime %></div>
             <div><%= dataArr[i].endTime %></div>
         </td>
-        <td><%- dataArr[i].statusText %></td>
+        <td>
+            <%- dataArr[i].statusText %>
+            <div style="margin-top: 5px"><%= dataArr[i].operatorName %></div>
+        </td>
         <td>
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>

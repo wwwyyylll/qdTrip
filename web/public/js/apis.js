@@ -637,6 +637,10 @@ define("apis", function() {
                 c:'mallCategory',
                 a:'getParentLists'
             },
+            getParentCategoryLists:{
+                c:'mallCategory',
+                a:'getParentCategoryLists'
+            },
             getCategoryLists:{
                 c:'mallCategory',
                 a:'getCategoryLists'
@@ -1054,6 +1058,58 @@ define("apis", function() {
             getMenuLists:{
                 c:'gather',
                 a:'getMenuLists'
+            }
+        },
+        mallBanner:{
+            getLists:{
+                c:'mallBanner',
+                a:'getLists'
+            },
+            create:{
+                c:'mallBanner',
+                a:'create'
+            },
+            getById:{
+                c:'mallBanner',
+                a:'getById'
+            },
+            updateById:{
+                c:'mallBanner',
+                a:'updateById'
+            },
+            onById:{
+                c:'mallBanner',
+                a:'onById'
+            },
+            offById:{
+                c:'mallBanner',
+                a:'offById'
+            }
+        },
+        mallBrand:{
+            getLists:{
+                c:'mallBrand',
+                a:'getLists'
+            },
+            create:{
+                c:'mallBrand',
+                a:'create'
+            },
+            getById:{
+                c:'mallBrand',
+                a:'getById'
+            },
+            updateById:{
+                c:'mallBrand',
+                a:'updateById'
+            },
+            onById:{
+                c:'mallBrand',
+                a:'onById'
+            },
+            offById:{
+                c:'mallBrand',
+                a:'offById'
             }
         }
     }

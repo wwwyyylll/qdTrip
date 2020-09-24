@@ -7,7 +7,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         isExpressFeeSuperpositionArr: {},
         tagArr:{},
         exoressArr:{},
-        categoryArr:{}
+        categoryArr:{},
+        parentCategoryArr:{},
+        brandArr:{}
     };
     //上传图片文件
     function blobToDataURL(blob,cb) {
@@ -301,13 +303,34 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             pageSize:10000,
             title:'',
             status:'',
-            orderBy:''
+            orderBy:'',
+            parentId:''
         };
         utils.ajaxSubmit(apis.mallCategory.getLists, categoryParam, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary1[n.status];
             });
             initialData.categoryArr = data.dataArr;
+        });
+
+        utils.ajaxSubmit(apis.mallCategory.getParentCategoryLists, '', function (data) {
+            $.each(data,function(i,n){
+                n.statusText = consts.status.ordinary1[n.status];
+            });
+            initialData.parentCategoryArr = data;
+        });
+
+        var brandParam = {
+            pageNo: 1,
+            pageSize:10000,
+            status:'',
+            title:''
+        };
+        utils.ajaxSubmit(apis.mallBrand.getLists, brandParam, function (data) {
+            $.each(data.dataArr,function(i,n){
+                n.statusText = consts.status.ordinary1[n.status];
+            });
+            initialData.brandArr = data.dataArr;
         });
     }
     utils.bindList($(document), operates);
@@ -326,7 +349,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             hound.error("商品地址复制失败", "", 1000);
         });
     }
-    getConstsLists();
+    //getConstsLists();
     function getGoodsData(){
         //getById获取数据
         var loc = location.href;
@@ -337,6 +360,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.ajaxSubmit(apis.mallGoods.getById, {id:urlParam[0]}, function (data) {
             var getByIdData = {
                 categoryArr:initialData.categoryArr,
+                parentCategoryArr:initialData.parentCategoryArr,
+                brandArr:initialData.brandArr,
                 exoressArr:initialData.exoressArr,
                 tagArr:initialData.tagArr,
                 deliveryTimeArr:initialData.deliveryTimeArr,
@@ -429,10 +454,35 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     }
                 });
             });
+            $("select[name=parentCategoryId]").on("change",function(){
+                var parentCategoryId = $(this).val();
+                $("select[name=categoryId]").val('');
+                if(parentCategoryId==''){
+                    $("select[name=categoryId]").find("option").show();
+                }else{
+                    var categoryOptionArr = $("select[name=categoryId]").find("option");
+                    for(var i=0;i<categoryOptionArr.length;i++){
+                        if(categoryOptionArr.eq(i).attr("data-id")==parentCategoryId){
+                            categoryOptionArr.eq(i).show();
+                        }else{
+                            categoryOptionArr.eq(i).hide();
+                        }
+                    }
+                }
+                $("select[name=categoryId]").find("option").eq(0).show();
+            });
             copyText();
         });
     }
-    setTimeout(function(){
-        getGoodsData();
-    },100);
+    //setTimeout(function(){
+    //    getGoodsData();
+    //},100);
+
+    $.when(
+        getConstsLists()
+    ).done(function(){
+            getGoodsData();
+        }).fail(function(){
+            hound.error("ERROR", "", 1000);
+        });
 });

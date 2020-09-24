@@ -112,17 +112,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //页面操作配置
     var operates = {
         add:function(){
-            window.location.href = "@@HOSTview/store/add.html";
+            //window.location.href = "@@HOSTview/store/add.html";
+            window.open("@@HOSTview/store/add.html");
         },
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            window.location.href = "@@HOSTview/store/edit.html?id=" + id;
+            //window.location.href = "@@HOSTview/store/edit.html?id=" + id;
+            window.open("@@HOSTview/store/edit.html?id=" + id);
         },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            window.location.href = "@@HOSTview/store/look.html?id=" + id;
+            //window.location.href = "@@HOSTview/store/look.html?id=" + id;
+            window.open("@@HOSTview/store/look.html?id=" + id);
         },
         //无效
         setOff:function($this){
@@ -151,7 +154,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             });
         }
-    }
+    };
 
     var param = {
         pageNo: 1,
@@ -160,14 +163,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         status:'',
         supplierId:'',
         categoryId:'',
+        parentCategoryId:'',
         tagId:'',
         willExpire:''
     };
 
+    var parentCategoryArr;
     var categoryArr;
     var supplierArr;
     var tagArr;
     function getDownLists(){
+        utils.ajaxSubmit(apis.mallCategory.getParentCategoryLists, '', function (data) {
+            parentCategoryArr = data;
+        });
         var categoryParam = {
             pageNo: 1,
             pageSize:10000,
@@ -206,7 +214,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 (n.status=="1")? n.materialButtonGroup = comButtons + '<button data-clipboard-text="'+ n.previewUrl +'" class="btn btn-info copyBtn" type="button">预览</button>' + stopButton : n.materialButtonGroup = comButtons +  '<button data-clipboard-text="'+ n.previewUrl +'" class="btn btn-info copyBtn" type="button">预览</button>' + startBouutn;
                 (n.canDel=="1")? n.materialButtonGroup = n.materialButtonGroup + delButton : n.materialButtonGroup = n.materialButtonGroup;
                 (n.status=="3")? n.materialButtonGroup = '<button class="btn btn-info" type="button" data-operate="look">查看</button>' : n.materialButtonGroup = n.materialButtonGroup;
-            })
+            });
+            data.parentCategoryArr = parentCategoryArr;
             data.categoryArr = categoryArr;
             data.supplierArr = supplierArr;
             data.tagArr = tagArr;
@@ -232,10 +241,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         param.willExpire = '';
     }
 
-    getDownLists();
-    setTimeout(function(){
+    //getDownLists();
+    //setTimeout(function(){
+    //    loadData();
+    //},100);
+
+    //2020.09.24 ajax按序执行
+    $.when(
+        getDownLists()
+    ).done(function(){
         loadData();
-    },100);
+    }).fail(function(){
+        hound.error("ERROR", "", 1000);
+    });
+
     utils.bindList($(document), operates);
     var listDropDown = {
         categoryText:'分类',
@@ -246,18 +265,29 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
         loadData();
     }).on('click', '#dropCategoryOptions a[data-id]', function () {
-        param.categoryId = $(this).data('id');
+        param.parentCategoryId = $(this).data('id');
+        param.categoryId = '';
         ($(this).text()=="所有") ? listDropDown.categoryText = "分类" : listDropDown.categoryText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropCategoryOptions a[data-value]', function () {
+        param.categoryId = $(this).data('value');
+        param.parentCategoryId = '';
+        ($(this).text()=="所有") ? listDropDown.categoryText = "分类" : listDropDown.categoryText = $(this).text();
+        param.pageNo = 1;
         loadData();
     }).on('click', '#dropSupplierOptions a[data-id]', function () {
         param.supplierId = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.supplierText = "供应商" : listDropDown.supplierText = $(this).text();
+        param.pageNo = 1;
         loadData();
     }).on('click', '#dropTagOptions a[data-id]', function () {
         param.tagId = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.labelText = "标签" : listDropDown.labelText = $(this).text();
+        param.pageNo = 1;
         loadData();
     });
     $("#search").on("click",function(){

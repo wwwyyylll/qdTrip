@@ -49,19 +49,6 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <div class="input-group economy-wards">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">分类</span>
-                        </div>
-                        <select name="categoryId" class="form-control" required>
-                            <option value="">请选择</option>
-                            <% for (var i = 0; i < categoryArr.length; i++) { %>
-                            <option value="<%= categoryArr[i].id %>" <% if(dataArr.categoryId==categoryArr[i].id) { %> selected <% } %>><%= categoryArr[i].title %><%= categoryArr[i].statusText %></option>
-                            <% }%>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">标签1</span>
@@ -83,6 +70,47 @@
                             <option value="0">不显示</option>
                             <% for (var i = 0; i < tagArr.length; i++) { %>
                             <option value="<%= tagArr[i].id %>" <% if(dataArr.tag2==tagArr[i].id) { %> selected <% } %>><%= tagArr[i].name %><%= tagArr[i].statusText %></option>
+                            <% }%>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-3">
+                    <div class="input-group economy-wards">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">父级分类</span>
+                        </div>
+                        <select name="parentCategoryId" class="form-control">
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < parentCategoryArr.length; i++) { %>
+                            <option value="<%= parentCategoryArr[i].id %>" <% if(dataArr.parentCategoryId==parentCategoryArr[i].id) { %> selected <% } %>><%= parentCategoryArr[i].title %><%= parentCategoryArr[i].statusText %></option>
+                            <% }%>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group economy-wards">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">分类</span>
+                        </div>
+                        <select name="categoryId" class="form-control">
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < categoryArr.length; i++) { %>
+                            <option <% if(categoryArr[i].parentId!=dataArr.parentCategoryId){ %> style="display:none" <% } %> data-id="<%= categoryArr[i].parentId %>" value="<%= categoryArr[i].id %>" <% if(dataArr.categoryId==categoryArr[i].id) { %> selected <% } %>><%= categoryArr[i].title %><%= categoryArr[i].statusText %></option>
+                            <% }%>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group economy-wards">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">品牌</span>
+                        </div>
+                        <select name="brandId" class="form-control">
+                            <option value="">请选择</option>
+                            <% for (var i = 0; i < brandArr.length; i++) { %>
+                            <option value="<%= brandArr[i].id %>" <% if(dataArr.brandId==brandArr[i].id) { %> selected <% } %>><%= brandArr[i].title %><%= brandArr[i].statusText %></option>
                             <% }%>
                         </select>
                     </div>
