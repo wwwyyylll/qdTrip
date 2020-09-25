@@ -341,111 +341,128 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             title:''
         };
         utils.ajaxSubmit(apis.mallBrand.getLists, brandParam, function (data) {
-            $("#goodsForm").html(template('goodsFormContent', initialData));
-            $("#tabContent1").html(template('specList', initialData));
-            $("#tabContent2").html(template('imgList', initialData));
             $(document).ready(function () {
                 $(".sortable-list").sortable({
                     connectWith: ".connectList"
                 }).disableSelection();
-            });
-            $("#headerTab1").on("click",function(){
-                $("#tabContent1").show();
-                $("#tabContent2").hide();
-                $("#tabContent3").hide();
-                $(this).css({color:"orange"});
-                $("#headerTab2").css({color:"#555555"});
-                $("#headerTab3").css({color:"#555555"});
-            });
-            $("#headerTab2").on("click",function(){
-                $("#tabContent2").show();
-                $("#tabContent1").hide();
-                $("#tabContent3").hide();
-                $(this).css({color:"orange"});
-                $("#headerTab1").css({color:"#555555"});
-                $("#headerTab3").css({color:"#555555"});
-                $(document).mouseup(function(){
-                    var sort = $(".agile-list li").find(".sort");
-                    setTimeout(function(){
-                        var sort=$(".agile-list li").find(".sort");
-                        for(var j=0;j<sort.length;j++){
-                            sort.eq(j).val(j+1)
-                        }
-                    },50)
+
+                $("#goodsForm").html(template('goodsFormContent', initialData));
+                $("#tabContent1").html(template('specList', initialData));
+                $("#tabContent2").html(template('imgList', initialData));
+                $("#headerTab1").on("click",function(){
+                    $("#tabContent1").show();
+                    $("#tabContent2").hide();
+                    $("#tabContent3").hide();
+                    $(this).css({color:"orange"});
+                    $("#headerTab2").css({color:"#555555"});
+                    $("#headerTab3").css({color:"#555555"});
                 });
-            });
-            $("#headerTab3").on("click",function(){
-                $("#tabContent3").show();
-                $("#tabContent1").hide();
-                $("#tabContent2").hide();
-                $(this).css({color:"orange"});
-                $("#headerTab1").css({color:"#555555"});
-                $("#headerTab2").css({color:"#555555"});
-            });
-            uploadFile();
-            var E = window.wangEditor;
-            var editor = new E('#editor');
-            editor.customConfig.showLinkImg = false;         // 隐藏“网络图片”tab
-            editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
-            editor.create();
-            $(".w-e-text-container").css({"height":"500px"});
-            $(".w-e-text-container").css({"z-index":"100"});
-            $("#editor").find(".w-e-menu").css({"z-index":"101"});
+                $("#headerTab2").on("click",function(){
+                    $("#tabContent2").show();
+                    $("#tabContent1").hide();
+                    $("#tabContent3").hide();
+                    $(this).css({color:"orange"});
+                    $("#headerTab1").css({color:"#555555"});
+                    $("#headerTab3").css({color:"#555555"});
+                    $(document).mouseup(function(){
+                        var sort = $(".agile-list li").find(".sort");
+                        setTimeout(function(){
+                            var sort=$(".agile-list li").find(".sort");
+                            for(var j=0;j<sort.length;j++){
+                                sort.eq(j).val(j+1)
+                            }
+                        },50)
+                    });
+                });
+                $("#headerTab3").on("click",function(){
+                    $("#tabContent3").show();
+                    $("#tabContent1").hide();
+                    $("#tabContent2").hide();
+                    $(this).css({color:"orange"});
+                    $("#headerTab1").css({color:"#555555"});
+                    $("#headerTab2").css({color:"#555555"});
+                });
+                uploadFile();
+                var E = window.wangEditor;
+                var editor = new E('#editor');
+                editor.customConfig.showLinkImg = false;         // 隐藏“网络图片”tab
+                editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+                editor.create();
+                $(".w-e-text-container").css({"height":"500px"});
+                $(".w-e-text-container").css({"z-index":"100"});
+                $("#editor").find(".w-e-menu").css({"z-index":"101"});
 
-            $(".supplierName").on("input",function(){
-                var param = {
-                    pageNo: 1,
-                    pageSize:50,
-                    name:$(".supplierName").val(),
-                    status:'',
-                    source:'',
-                    accountType:''
-                };
-                utils.ajaxSubmit(apis.mallSupplier.getLists, param, function (data) {
-                    if(data.dataArr.length!=0){
-                        var $economyAbilityItem = '';
-                        $.each(data.dataArr, function (i, v) {
-                            v.statusText = consts.status.ordinary1[v.status];
-                            $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.name + v.statusText +'</div>'
-                        });
-                        $('.ability-list').remove();
-                        var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
-                        $(".supplierName").closest('.economy-wards').append($abilityList);
-
-                        $('.economy-ability-item').click(function(){
+                $(".supplierName").on("input",function(){
+                    var param = {
+                        pageNo: 1,
+                        pageSize:50,
+                        name:$(".supplierName").val(),
+                        status:'',
+                        source:'',
+                        accountType:''
+                    };
+                    utils.ajaxSubmit(apis.mallSupplier.getLists, param, function (data) {
+                        if(data.dataArr.length!=0){
+                            var $economyAbilityItem = '';
+                            $.each(data.dataArr, function (i, v) {
+                                v.statusText = consts.status.ordinary1[v.status];
+                                $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.name + v.statusText +'</div>'
+                            });
                             $('.ability-list').remove();
-                            var $index = $(this).index();
-                            $(".supplierName").val(data.dataArr[$index].name + data.dataArr[$index].statusText);
-                            $(".supplierId").val(data.dataArr[$index].id);
-                        });
-                    }
+                            var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
+                            $(".supplierName").closest('.economy-wards').append($abilityList);
+
+                            $('.economy-ability-item').click(function(){
+                                $('.ability-list').remove();
+                                var $index = $(this).index();
+                                $(".supplierName").val(data.dataArr[$index].name + data.dataArr[$index].statusText);
+                                $(".supplierId").val(data.dataArr[$index].id);
+                            });
+                        }
+                    });
                 });
-            });
-            $("select[name=parentCategoryId]").on("change",function(){
-                var parentCategoryId = $(this).val();
-                $("select[name=categoryId]").val('');
-                if(parentCategoryId==''){
-                    $("select[name=categoryId]").find("option").show();
-                }else{
-                    var categoryOptionArr = $("select[name=categoryId]").find("option");
-                    for(var i=0;i<categoryOptionArr.length;i++){
-                        if(categoryOptionArr.eq(i).attr("data-id")==parentCategoryId){
-                            categoryOptionArr.eq(i).show();
-                        }else{
-                            categoryOptionArr.eq(i).hide();
+                $("select[name=parentCategoryId]").on("change",function(){
+                    var parentCategoryId = $(this).val();
+                    $("select[name=categoryId]").val('');
+                    if(parentCategoryId==''){
+                        $("select[name=categoryId]").find("option").show();
+                    }else{
+                        var categoryOptionArr = $("select[name=categoryId]").find("option");
+                        for(var i=0;i<categoryOptionArr.length;i++){
+                            if(categoryOptionArr.eq(i).attr("data-id")==parentCategoryId){
+                                categoryOptionArr.eq(i).show();
+                            }else{
+                                categoryOptionArr.eq(i).hide();
+                            }
                         }
                     }
-                }
-                $("select[name=categoryId]").find("option").eq(0).show();
-            })
+                    $("select[name=categoryId]").find("option").eq(0).show();
+                })
+            });
         })
     }
 
     $.when(
         getConstsLists()
     ).done(function(){
-        loadInitialData();
+            setTimeout(function(){
+                loadInitialData();
+            },300)
     }).fail(function(){
         hound.error("ERROR", "", 1000);
     });
+
+    //2020.09.25
+    //var p1 = function (){
+    //    return new Promise((resolve, reject) => {
+    //        getConstsLists();
+    //        resolve("yes");
+    //        reject("no");
+    //    })
+    //};
+    //p1().then(function(data){
+    //    console.log(data);
+    //    console.log(initialData);
+    //    loadInitialData();
+    //});
 });

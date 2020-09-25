@@ -10,6 +10,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     };
     //页面操作配置
     var operates = {
+        backList:function(){
+            window.close();
+        },
         addGoods:function(){
             var editerContent = $(".w-e-text");
             var editerImg = editerContent.find("p").find("img");
@@ -138,7 +141,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 isExpressFeeSuperpositionArr:initialData.isExpressFeeSuperpositionArr,
                 dataArr:data.dataArr,
                 imagesArr:data.imagesArr,
-                specsArr:data.specsArr,
+                specsArr:data.specsArr
             };
             getByIdData.dataArr.statusText = consts.status.goodsStatus[getByIdData.dataArr.status];
             getByIdData.dataArr.previewUrl = data.previewUrl;
@@ -377,7 +380,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     $.when(
         getConstsLists()
     ).done(function(){
-            getGoodsData();
+            setTimeout(function(){
+                getGoodsData();
+            },300)
         }).fail(function(){
             hound.error("ERROR", "", 1000);
         });

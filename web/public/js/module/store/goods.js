@@ -165,7 +165,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         categoryId:'',
         parentCategoryId:'',
         tagId:'',
-        willExpire:''
+        willExpire:'',
+        id:''
     };
 
     var parentCategoryArr;
@@ -292,8 +293,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.title = $("#searchCont").val();
-        loadData();
+        var selectSearchLabel = $("#selectsearchlabel").text();
+        if(selectSearchLabel=="标题"){
+            param.title = $("#searchCont").val();
+            param.id = '';
+            loadData();
+        }else if(selectSearchLabel=="商品ID"){
+            param.id = $("#searchCont").val();
+            param.title = '';
+            loadData();
+        }
     });
     $('#searchCont').on('keypress',function(event){
         if (event.keyCode == 13) {
