@@ -32,6 +32,13 @@ define("consts", function() {
                 '7':'<span style="color:green">提交供应商</span>',
                 '8':'<span style="color:red">申请退款</span>'
             },
+            taobaoOrderStatus:{
+                '1':'<span style="color:orange">已付款</span>',
+                '2':'<span style="color:green">已收货</span>',
+                '3':'<span style="color:red">已结算</span>',
+                '4':'<span style="color:green">已失效</span>',
+                '5':'<span style="color:red">已维权退单</span>'
+            },
             orderLogStatus:{
                 '1':'<span style="color:orange">待支付</span>',
                 '2':'<span style="color:green">已支付</span>',

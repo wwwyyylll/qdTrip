@@ -1111,6 +1111,28 @@ define("apis", function() {
                 c:'mallBrand',
                 a:'offById'
             }
+        },
+        taobaoOrder:{
+            importFromExcel:{
+                c:'taobaoOrder',
+                a:'importFromExcel'
+            },
+            getLists:{
+                c:'taobaoOrder',
+                a:'getLists'
+            },
+            getById:{
+                c:'taobaoOrder',
+                a:'getById'
+            },
+            refundById:{
+                c:'taobaoOrder',
+                a:'refundById'
+            },
+            validById:{
+                c:'taobaoOrder',
+                a:'validById'
+            }
         }
     }
 });

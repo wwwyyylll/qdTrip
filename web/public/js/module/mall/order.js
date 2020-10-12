@@ -4,10 +4,12 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var $sampleTable = $('#sampleTable');
     var $visaPagination = $("#visaPagination");
     var $searchCont = $("#searchCont");
+    var $batchImport = $("#batchImport");
     //按钮组集合
-    var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
+    var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看订单详情</button>',
         completeBouutn =  '<button class="btn btn-primary" type="button" data-operate="complete">完成</button>',
-        refundButton = '<button class="btn btn-danger" type="button" data-operate="refund">申请退款</button>',
+        refundButton = '<button class="btn btn-danger" type="button" data-operate="activistRefund">维权退款</button>',
+        validButton = '<button class="btn btn-danger" type="button" data-operate="valid">无效</button>',
         deliverButton = '<button class="btn btn-primary" type="button" data-operate="deliver">发货</button>',
         submitSupplierButton = '<button class="btn btn-primary" type="button" data-operate="submitSupplier">接单</button>',
         noSupplierButton = '<button class="btn btn-danger" type="button" data-operate="noSupplier">不接单</button>',
@@ -30,10 +32,83 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $('#searchCont').data("daterangepicker").remove();
             }
         }
-    })
+    });
     $(document).on("click",function(){
         $('.ability-list').remove();
-    })
+    });
+
+    var importFileData = '';
+    $batchImport.on("click",function(){
+        utils.renderModal('批量导入', template('batchImportModal',''), function(){
+            utils.loading(true);
+            //console.log(importFileData);
+            //var importData = {
+            //    source:$("select[name=source]").val(),
+            //    file:importFileData
+            //}
+            //utils.ajaxSubmit(apis.goods.importFromExcel, importData, function (data) {
+            //    hound.success("导入成功", "", 1000);
+            //    utils.modal.modal('hide');
+            //    loadData();
+            //})
+
+            var formFile = new FormData();
+            formFile.append("c", "taobaoOrder");
+            formFile.append("a", "importFromExcel");
+            formFile.append("linkUserName", consts.param.linkUserName);
+            formFile.append("linkPassword", consts.param.linkPassword);
+            formFile.append("signature", consts.param.signature);
+            formFile.append("userToken", $.cookie('userToken'));
+            formFile.append("file", importFileData);
+
+            $.ajax({
+                type:'POST',
+                url: "@@API",
+                data: formFile,
+                dataType: 'json',
+                cache: false, //上传文件无需缓存
+                processData: false, //用于对data参数进行序列化处理 这里必须false
+                contentType: false, //必须
+                success: function (res) {
+                    utils.loading(false);
+                    if(res.code==200){
+                        hound.success(res.result,"",'').then(function(){
+                            utils.modal.modal('hide');
+                            loadData();
+                        });
+                    }else{
+                        hound.error(res.message);
+                    }
+                }
+            }).fail(function (jqXHR, textStatus) {
+                utils.loading(false);
+                hound.error('Request failed: ' + textStatus);
+            });
+
+        },'md');
+        $('.uploadFileBatch').change(function () {
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                hound.alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            $('.avatarUploadBatch').removeClass('btn-default').addClass('btn-primary').prop('disabled', false);
+            var file = this.files[0];
+            importFileData = file;
+            console.log(importFileData);
+            reader.onload = function(e) {
+                $(".imgUrl").html('<i class="fa fa-folder mr-2"></i>' + file.name)
+            };
+            reader.readAsDataURL(file);
+
+            //if(file){
+            //    var url = URL.createObjectURL(file);
+            //    var base64 = blobToDataURL(file,function(base64Url) {
+            //        importFileData = base64Url;
+            //    })
+            //}
+        });
+    });
 
     //导出订单
     $exportExcel.on("click",function(){
@@ -81,7 +156,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $('#reservation1').daterangepicker(null, function(start, end, label) {
             });
         });
-    })
+    });
     //页面操作配置
     var operates = {
         //查看
@@ -93,7 +168,25 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         complete:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认完成订单吗?', '', function () {
-                utils.ajaxSubmit(apis.mallOrder.completedById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.taobaoOrder.completedById, {id: id}, function (data) {
+                    loadData();
+                });
+            });
+        },
+        //维权退款
+        activistRefund:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认维权退款吗?', '', function () {
+                utils.ajaxSubmit(apis.taobaoOrder.refundById, {id: id}, function (data) {
+                    loadData();
+                });
+            });
+        },
+        //无效
+        valid:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认订单无效吗?', '', function () {
+                utils.ajaxSubmit(apis.taobaoOrder.validById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -138,7 +231,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             };
             utils.renderModal('发货', template('deliverModal', initialData), function(){
                 if($("#deliverForm").valid()) {
-                    utils.ajaxSubmit(apis.mallOrder.deliveredById, $("#deliverForm").serialize(), function (data) {
+                    utils.ajaxSubmit(apis.taobaoOrder.deliveredById, $("#deliverForm").serialize(), function (data) {
                         hound.success("发货成功", "", 1000);
                         utils.modal.modal('hide');
                         loadData();
@@ -157,7 +250,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             };
             utils.renderModal('接单', template('submitSupplierModal', initialData), function(){
                 if($("#submitSupplierForm").valid()) {
-                    utils.ajaxSubmit(apis.mallOrder.submitSupplierById, $("#submitSupplierForm").serialize(), function (data) {
+                    utils.ajaxSubmit(apis.taobaoOrder.submitSupplierById, $("#submitSupplierForm").serialize(), function (data) {
                         hound.success("接单成功", "", 1000);
                         utils.modal.modal('hide');
                         loadData();
@@ -169,7 +262,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         noSupplier:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.reason('确认不接单吗?','请输入不接单原因',function(data){
-                utils.ajaxSubmit(apis.mallOrder.submitSupplierById, {id: id,isAccept:2,reason:data}, function (data) {
+                utils.ajaxSubmit(apis.taobaoOrder.submitSupplierById, {id: id,isAccept:2,reason:data}, function (data) {
                     hound.success("操作成功", "", 1000);
                     loadData();
                 });
@@ -196,7 +289,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             };
             utils.renderModal('供应商接单', template('supplierModal', initialData), function(){
                 if($("#supplierForm").valid()) {
-                    utils.ajaxSubmit(apis.mallOrder.submitSupplierById, $("#supplierForm").serialize(), function (data) {
+                    utils.ajaxSubmit(apis.taobaoOrder.submitSupplierById, $("#supplierForm").serialize(), function (data) {
                         hound.success("操作成功", "", 1000);
                         utils.modal.modal('hide');
                         loadData();
@@ -243,12 +336,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
-        userId:'',
-        goodsTitle:'',
         orderNo:'',
-        time:'',
-        supplierId:'',
-        searchType:warnValue
+        memberOperationId:''
     };
 
     $("input[name=warnParam]").on("click",function(){
@@ -266,28 +355,24 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var showTypeArr;
     var parentArr;
     function getConstsLists(){
-        utils.ajaxSubmit(apis.mallOrder.getConstLists, '', function (data) {
+        utils.ajaxSubmit(apis.taobaoOrder.getConstLists, '', function (data) {
             showTypeArr = data.showTypeArr;
         });
     }
     function getParentLists(){
-        utils.ajaxSubmit(apis.mallOrder.getParentLists, '', function (data) {
+        utils.ajaxSubmit(apis.taobaoOrder.getParentLists, '', function (data) {
             parentArr = data;
         });
     }
     function loadData() {
-        utils.ajaxSubmit(apis.mallOrder.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.taobaoOrder.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
-                //for(var j=0;j<showTypeArr.length;j++){
-                //    if(n.goodsShowType==showTypeArr[j].val){
-                //        n.goodsShowTypeText=showTypeArr[j].name;
-                //    }
-                //}
-                n.statusText = consts.status.orderStatus[n.status];
-                (n.canComplete=="1")? n.materialButtonGroup = lookButton + completeBouutn : n.materialButtonGroup = lookButton;
-                (n.canDeliver=="1")? n.materialButtonGroup = n.materialButtonGroup + deliverButton : n.materialButtonGroup = n.materialButtonGroup;
-                (n.canSubmitSupplier=="1")? n.materialButtonGroup = n.materialButtonGroup + supplierButton : n.materialButtonGroup = n.materialButtonGroup;
-                (n.canRefund=="1")? n.materialButtonGroup = n.materialButtonGroup + refundButton : n.materialButtonGroup = n.materialButtonGroup;
+                n.statusText = consts.status.taobaoOrderStatus[n.status];
+                n.materialButtonGroup = lookButton + refundButton + validButton;
+                //(n.canComplete=="1")? n.materialButtonGroup = lookButton + completeBouutn : n.materialButtonGroup = lookButton;
+                //(n.canDeliver=="1")? n.materialButtonGroup = n.materialButtonGroup + deliverButton : n.materialButtonGroup = n.materialButtonGroup;
+                //(n.canSubmitSupplier=="1")? n.materialButtonGroup = n.materialButtonGroup + supplierButton : n.materialButtonGroup = n.materialButtonGroup;
+                //(n.canRefund=="1")? n.materialButtonGroup = n.materialButtonGroup + refundButton : n.materialButtonGroup = n.materialButtonGroup;
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
@@ -400,49 +485,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         if(selectSearchLabel=="订单号"){
             //订单号搜索
             param.orderNo = $("#searchCont").val();
-            param.userId = '';
-            param.goodsTitle = '';
-            param.time = '';
-            param.supplierId = '';
+            param.memberOperationId = '';
             loadData();
-        }else if(selectSearchLabel=="商品标题"){
+        }else if(selectSearchLabel=="会员运营ID"){
             //商品标题搜索
-            param.goodsTitle = $("#searchCont").val();
-            param.userId = '';
-            param.orderNo = '';
-            param.time = '';
-            param.supplierId = '';
-            loadData();
-        }else if(selectSearchLabel=="用户昵称"){
-            //用户昵称搜索
-            if($("#searchCont").val()==''){
-                param.userId = '';
-            }else{
-                param.userId = $("#searchCont").attr("data-id");
-            }
-            param.goodsTitle = '';
-            param.orderNo = '';
-            param.time = '';
-            param.supplierId = '';
-            loadData();
-        }else if(selectSearchLabel=="供应商"){
-            //供应商搜索
-            if($("#searchCont").val()==''){
-                param.supplierId = '';
-            }else{
-                param.supplierId = $("#searchCont").attr("data-id");
-            }
-            param.userId = '';
-            param.goodsTitle = '';
-            param.orderNo = '';
-            param.time = '';
-            loadData();
-        }else if(selectSearchLabel=="下单时间"){
-            //日期范围搜索
-            param.time = $("#searchCont").val();
-            param.supplierId = '';
-            param.userId = '';
-            param.goodsTitle = '';
+            param.memberOperationId = $("#searchCont").val();
             param.orderNo = '';
             loadData();
         }
