@@ -5,6 +5,24 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     };
     //页面操作配置
     var operates = {
+        //维权退款
+        activistRefund:function($this){
+            var id = $("#orderId").val();
+            hound.confirm('确认维权退款吗?', '', function () {
+                utils.ajaxSubmit(apis.taobaoOrder.refundById, {id: id}, function (data) {
+                    operates.look(param[0]);
+                });
+            });
+        },
+        //无效
+        valid:function($this){
+            var id = $("#orderId").val();
+            hound.confirm('确认订单无效吗?', '', function () {
+                utils.ajaxSubmit(apis.taobaoOrder.validById, {id: id}, function (data) {
+                    operates.look(param[0]);
+                });
+            });
+        },
         //完成
         complete:function(){
             var id = $("#orderId").val();
@@ -127,13 +145,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             })
         },
         //查看
-        look:function(orderNo){
-            utils.ajaxSubmit(apis.mallOrder.getByOrderNo, {orderNo: orderNo}, function (data) {
+        look:function(id){
+            utils.ajaxSubmit(apis.taobaoOrder.getById, {id: id}, function (data) {
                 getByIdData = {
                     dataArr:data,
                     expressArr:initialData.expressArr
                 };
-                getByIdData.dataArr.statusText = consts.status.orderStatus[getByIdData.dataArr.status];
+                getByIdData.dataArr.statusText = consts.status.taobaoOrderStatus[getByIdData.dataArr.status];
                 $("#basicMessage").html(template('orderMessage', getByIdData));
                 $("#basicMessage").find("input").prop('disabled', true);
                 $("#tabContent").html(template('goodsMessage', getByIdData));
@@ -176,9 +194,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     getConstsLists();
-    setTimeout(function(){
+    //setTimeout(function(){
         operates.look(param[0]);
-    },500);
+    //},500);
     $("#headerTab1").on("click",function(){
         operates.look(param[0]);
         $(this).css({color:"orange"});

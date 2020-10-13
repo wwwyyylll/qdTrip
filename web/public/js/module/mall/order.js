@@ -161,8 +161,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var operates = {
         //查看
         look:function($this){
+            var id = $this.closest("tr").attr("data-id");
             var orderNo = $this.closest("tr").find("td").eq(1).find("div").eq(0).text();
-            window.open("@@HOSTview/mall/orderDetails.html?orderNo=" + orderNo);
+            window.open("@@HOSTview/mall/orderDetails.html?id=" + id);
         },
         //完成
         complete:function($this){
@@ -337,7 +338,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         status:'',
         orderNo:'',
-        memberOperationId:''
+        memberOperationId:'',
+        time:''
     };
 
     $("input[name=warnParam]").on("click",function(){
@@ -368,16 +370,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.ajaxSubmit(apis.taobaoOrder.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.taobaoOrderStatus[n.status];
-                n.materialButtonGroup = lookButton + refundButton + validButton;
-                //(n.canComplete=="1")? n.materialButtonGroup = lookButton + completeBouutn : n.materialButtonGroup = lookButton;
-                //(n.canDeliver=="1")? n.materialButtonGroup = n.materialButtonGroup + deliverButton : n.materialButtonGroup = n.materialButtonGroup;
-                //(n.canSubmitSupplier=="1")? n.materialButtonGroup = n.materialButtonGroup + supplierButton : n.materialButtonGroup = n.materialButtonGroup;
-                //(n.canRefund=="1")? n.materialButtonGroup = n.materialButtonGroup + refundButton : n.materialButtonGroup = n.materialButtonGroup;
+                if(n.status==1 || n.status==2 || n.status==3){
+                    n.materialButtonGroup = lookButton + refundButton + validButton;
+                }else{
+                    n.materialButtonGroup = lookButton ;
+                }
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
+            $sampleTable.find('#time').val(param.time);
+            $('#time').daterangepicker(null, function(start, end, label) {});
         });
     }
     // 页面首次加载列表数据
@@ -395,6 +399,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         ($(this).text()=="所有") ? listDropDown.statusText = "订单状态" : listDropDown.statusText = $(this).text();
         loadData();
     });
+    setInterval(function () {
+        var $time = $sampleTable.find('#time');
+        if ($time.length === 1) {
+            if ($time.val() !== param.time) {
+                param.time = $time.val();
+                param.pageNo = 1;
+                loadData();
+            }
+        }
+    },500);
     $("#searchCont").on("input",function(){
         var selectSearchLabel = $("#selectsearchlabel").text();
         if(selectSearchLabel=="用户昵称"){

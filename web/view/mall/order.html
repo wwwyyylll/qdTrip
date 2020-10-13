@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <div class="row">
+                <div class="row" style="margin-bottom:20px">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="btn-group  economy-wards" role="group" aria-label="Button group with nested dropdown">
                             <input type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
@@ -31,7 +31,7 @@
                         <div class="btn-group" style="margin-left:5px">
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
-                        <div class="btn-group" style="margin-left:5px">
+                        <div class="btn-group" style="margin-left:5px;display: none">
                             <button id="exportExcel" class="btn btn-info" style="outline:none;margin-left: 3px">导出订单</button>
                         </div>
                         <div class="btn-group" style="float:right;margin-right: 5px">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-bottom:20px ">
+                <div class="row" style="margin-bottom:20px;display: none">
                     <div class="col-auto mt-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -448,72 +448,18 @@
 <script id="visaListItem" type="text/html">
     <thead>
     <tr>
-
-        amount: null                                    付款金额
-        cateName: null                                  类目名称
-        channelRelationshipId: null                     渠道关系ID
-        channelSpecificServiceRate: null                渠道专项服务费率
-        commission: null                                提成
-        commissionAmount: null                          佣金金额
-        commissionRate: null                            佣金比率
-        contentSpecificServiceRate: null                内容专项服务费率
-        depositPaymentAmount: null                      定金付款金额
-        depositPaymentTime: null                        定金付款时间
-        depositPaymentTime_taobao: null                 定金淘宝付款时间
-        incomeRate: null                                收入比率
-        itemCnt: null                                   商品数量
-        itemId: null                                    商品ID
-        itemPic: null                                   商品图片
-        itemPrice: null                                 商品单价
-        itemTitle: null                                 商品标题
-        koubeiOrderNo: null                             口碑父订单号
-        koubeiSubOrderNo: null                          口碑子订单号
-        mediaId: null                                   媒体ID
-        mediaName: null                                 媒体名称
-        memberOperationId: null                         会员运营ID
-        orderCreateTime: null                           订单创建时间
-        orderNo: null                                   淘宝订单编号
-        orderStatus: null                               订单原始状态
-        orderType: null                                 订单类型
-        payTime: "2020-10-12 12:12:23"                  付款时间
-        predictChannelSpecificServiceAmount: null       预估渠道专项服务费
-        predictContentSpecificServiceAmount: null       预估内容专项服务费
-        predictPayAmount: null                          付款预估收入
-        predictSettlementAmount: null                   结算预估收入
-        productType: null                               产品类型
-        promoterIdentity: null                          推广者身份
-        promotionId: null                               推广位ID
-        promotionName: null                             推广位名称
-        rightsProtectionLabel: null                     维权标签
-        sellerWangwang: null                            掌柜旺旺
-        settlementAmount: null                          结算金额
-        settlementChannelSpecificServiceAmount: null    结算内容专项服务费
-        settlementContentSpecificServiceAmount: null    结算渠道专项服务费
-        settlementTime: null                            结算时间
-        shareRate: null                                 分成比率
-        shopName: null                                  店铺名称
-        subOrderNo: null                                淘宝子订单号
-        subsidyAmount: null                             补贴金额
-        subsidyRate: null                               补贴比率
-        subsidyType: null                               补贴类型
-        taobaoPayTime: null                             淘宝付款时间
-        technicalServiceAmount: null                    技术服务费
-        technicalServiceRate: null                      技术服务费率
-        transactionPlatform: null                       成交平台
-
         <th>ID</th>
-        <th>订单号</th>
-        <th>用户昵称</th>
+        <th>淘宝订单编号</th>
+        <th>店铺名称</th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">商品标题</th>
-        <th>分类</th>
-        <th>供应商</th>
-        <th>总价格</th>
-        <th>实付款</th>
-        <th>抵扣价格</th>
-        <th>抵扣能量</th>
-        <th>购买数量</th>
-        <th>下单时间</th>
-        <th>付款时间</th>
+        <th>付款金额</th>
+        <th>维权标签</th>
+        <th>成交平台</th>
+        <th>会员运营ID</th>
+        <th class="em-min-8">
+            <div>订单创建时间</div>
+            <input type="text" autocomplete="off" class="em-12 py-0 px-1" placeholder="请选择筛选日期..." id="time">
+        </th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -537,36 +483,15 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
-        <td>
-            <div><%= dataArr[i].orderNo %></div>
-            <div style="color: red"><%= dataArr[i].submitSupplierContent %></div>
-        </td>
-        <td>
-            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetails.html?id=<%= dataArr[i].id %>"><%= dataArr[i].nickName %></a>
-        </td>
-        <td style="width:12%;word-wrap: break-word;word-break:break-all;">
-            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/look.html?id=<%= dataArr[i].id %>">  <%= dataArr[i].title %></a>
-            <div style="margin-top: 5px;color:darkorange">规格：<%= dataArr[i].title %></div>
-        </td>
-        <td><%= dataArr[i].name %></td>
-        <td><%= dataArr[i].name %></td>
-        <td>
-            <span><%= dataArr[i].totalAmount %>元</span>
-            <span style="display: none"><%= dataArr[i].goodsAmount %>元</span>
-            <span style="display: none"><%= dataArr[i].expressFee %>元</span>
-        </td>
-        <td><%= dataArr[i].actualTotalAmount %>元</td>
-        <td><%= dataArr[i].deductionPrice %>元</td>
-        <td><%= dataArr[i].deductionThinkingEnergy %></td>
-        <td><%= dataArr[i].num %></td>
-        <td><%= dataArr[i].createTime %></td>
-        <td><%= dataArr[i].payTime %></td>
-        <td>
-            <%- dataArr[i].statusText %>
-            <% if(dataArr[i].requestMemo!=""){ %>
-            <div style="color: red">（<%= dataArr[i].requestMemo %>）</div>
-            <% } %>
-        </td>
+        <td><%= dataArr[i].orderNo %></td>
+        <td><%= dataArr[i].shopName %></td>
+        <td><%= dataArr[i].itemTitle %></td>
+        <td><%= dataArr[i].amount %>元</td>
+        <td><%= dataArr[i].rightsProtectionLabel %></td>
+        <td><%= dataArr[i].transactionPlatform %></td>
+        <td><%= dataArr[i].memberOperationId %></td>
+        <td><%= dataArr[i].orderCreateTime %></td>
+        <td><%- dataArr[i].statusText %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;">
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>
