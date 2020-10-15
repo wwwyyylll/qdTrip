@@ -1133,6 +1133,12 @@ define("apis", function() {
                 c:'taobaoOrder',
                 a:'validById'
             }
+        },
+        tool:{
+            searchTbOptimusByMaterialId:{
+                c:'tool',
+                a:'searchTbOptimusByMaterialId'
+            }
         }
     }
 });
