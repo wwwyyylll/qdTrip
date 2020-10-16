@@ -86,7 +86,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     uploadFile.find(".temporaryFile").text(base64Url);
                 })
             }
-        })
+        });
         // 上传图片文件
         $('.avatarUpload').click(function () {
             var uploadFile = $(this).closest(".uploadFile");
@@ -186,6 +186,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
                 n.sourceText = consts.status.ranking[n.source];
+                n.isShowRankingIndexText = consts.status.isBind[n.isShowRankingIndex];
                 n.isShowSearchIndexText = consts.status.isBind[n.isShowSearchIndex];
                 n.showSearchIndexPositionText = consts.status.indexPosition[n.showSearchIndexPosition];
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;

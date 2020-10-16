@@ -82,6 +82,7 @@
         <th style="width:15%;word-wrap: break-word;word-break:break-all;">标题</th>
         <th>来源</th>
         <th>排序</th>
+        <th>是否显示在首页</th>
         <th>是否显示在搜索首页+位置</th>
         <th>首页标题图</th>
         <th>首页背景图</th>
@@ -113,6 +114,7 @@
         <td style="width:15%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
         <td><%- dataArr[i].sourceText %></td>
         <td><%= dataArr[i].sort %></td>
+        <td><%- dataArr[i].isShowRankingIndexText %></td>
         <td>
             <%- dataArr[i].isShowSearchIndexText %>
             <% if(dataArr[i].isShowSearchIndex==1){ %>
@@ -226,6 +228,20 @@
                 <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">是否显示在榜单首页</span>
+                        </div>
+                        <select name="isShowRankingIndex" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="1" <% if(dataArr.isShowRankingIndex==1){ %> selected <% } %>>是</option>
+                            <option value="2" <% if(dataArr.isShowRankingIndex==2){ %> selected <% } %>>否</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">是否显示在搜索首页</span>
                         </div>
                         <select name="isShowSearchIndex" class="form-control">
@@ -260,6 +276,25 @@
                     </div>
                 </div>
             </div>
+            <!--<div class="form-row uploadFile" style="margin-bottom: 15px">-->
+                <!--<div class="input-group">-->
+                    <!--<span style="margin-top:6px;margin-right: 10px">上传首页ICON</span>-->
+                    <!--<label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>-->
+                    <!--<button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>-->
+                    <!--<span class="temporaryFile" style="display: none"></span>-->
+                    <!--<% if (dataArr.indexIcon) { %>-->
+                    <!--<h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">-->
+                        <!--<a target='_blank' href='<%= dataArr.indexIcon %>'>-->
+                            <!--<img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.indexIcon %>">-->
+                        <!--</a>-->
+                    <!--</h6>-->
+                    <!--<% } else { %>-->
+                    <!--<h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无首页ICON</span></h6>-->
+                    <!--<% } %>-->
+                    <!--&lt;!&ndash;<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的首页标题图的尺寸为315×214或者787×399）</h6>&ndash;&gt;-->
+                    <!--<input type="hidden" name="indexIcon" value="<%= dataArr.indexIcon %>">-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="form-row uploadFile" style="margin-bottom: 15px">
                 <div class="input-group">
                     <span style="margin-top:6px;margin-right: 10px">上传首页标题图</span>
