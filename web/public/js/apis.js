@@ -1139,6 +1139,32 @@ define("apis", function() {
                 c:'tool',
                 a:'searchTbOptimusByMaterialId'
             }
+        },
+        taobaoBanner:{
+            getLists:{
+                c:'taobaoBanner',
+                a:'getLists'
+            },
+            create:{
+                c:'taobaoBanner',
+                a:'create'
+            },
+            getById:{
+                c:'taobaoBanner',
+                a:'getById'
+            },
+            updateById:{
+                c:'taobaoBanner',
+                a:'updateById'
+            },
+            onById:{
+                c:'taobaoBanner',
+                a:'onById'
+            },
+            offById:{
+                c:'taobaoBanner',
+                a:'offById'
+            }
         }
     }
 });

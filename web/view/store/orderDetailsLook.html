@@ -688,12 +688,18 @@
         </tr>
         </thead>
         <tbody>
+        <% if (dataArr.logisticsArr) { %>
         <% if (dataArr.logisticsArr.length > 0) { %>
         <% for (var i = 0; i < dataArr.logisticsArr.length; i++) { %>
         <tr>
             <!--<td><%= dataArr.logisticsArr[i].title %></td>-->
             <td><%= dataArr.logisticsArr[i].time %></td>
             <td style="text-align: left"><%= dataArr.logisticsArr[i].context %></td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="10">没有符合条件的记录</td>
         </tr>
         <% } %>
         <% } else { %>

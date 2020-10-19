@@ -226,5 +226,5 @@ define("common", ["consts", "apis", "utils"], function(consts, apis, utils) {
 
         })
     }
-    getMenuLists1();
+    //getMenuLists1();
 });
