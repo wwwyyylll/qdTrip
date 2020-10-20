@@ -184,6 +184,10 @@ define("consts", function() {
                 '2':'<span style="color:green"> 启用</span>',
                 '3':'<span style="color:red"> 停止</span>',
                 '4':'<span style="color:red"> 删除</span>'
+            },
+            orderSettlementStatus:{
+                '1':'已结算',
+                '2':'未结算'
             }
         }
     }

@@ -28,8 +28,26 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $("#visaPagination").html(utils.pagination(parseInt(data.cnt), commissionParam.pageNo));
             });
         },
+        taobaoCommissionLog:function(){
+            utils.ajaxSubmit(apis.user.getCommissionLogByUserId_taobao, taobaoCommissionParam, function (data) {
+                $.each(data.dataArr,function(i,n){
+                    n.typeText = consts.status.commissionType[n.type];
+                    n.settlementStatusText = consts.status.settlementStatus[n.isSettlement];
+                    n.contentArr.fansTypeText = consts.status.fansType[n.contentArr.fansType];
+                    n.contentArr.typeText = consts.status.buyType[n.contentArr.type];
+                    n.contentArr.typeText1 = consts.status.buyType1[n.contentArr.type];
+                });
+                $("#tabContent").html(template('taobaoCommissionLogList', data));
+                utils.bindPagination($("#visaPagination_taobao1"), taobaoCommissionParam, operates.taobaoCommissionLog);
+                $("#visaPagination_taobao1").html(utils.pagination(parseInt(data.cnt), taobaoCommissionParam.pageNo));
+            });
+        },
         walletMessage:function(){
             $("#tabContent").html(template('walletMessage', getByIdData.dataArr));
+            $("#tabContent").find("input").prop('disabled', true);
+        },
+        taobaoWalletMessage:function(){
+            $("#tabContent").html(template('taobaoWalletMessage', getByIdData.dataArr));
             $("#tabContent").find("input").prop('disabled', true);
         },
         getCashOutRequestLists:function(){
@@ -43,12 +61,30 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $("#visaPagination1").html(utils.pagination(parseInt(data.cnt), cashOutRequestParam.pageNo));
             });
         },
+        getTaoBaoCashOutRequestLists:function(){
+            utils.ajaxSubmit(apis.user.getCashOutRequestLists_taobao, taobaoCashOutRequestParam, function (data) {
+                $.each(data.dataArr,function(i,n){
+                    n.statusText = consts.status.userStatus[n.status];
+                    n.accountTypeText = consts.status.accountTypeShow[n.accountType];
+                });
+                $("#tabContent").html(template('taobaoCashOutRequestList', data));
+                utils.bindPagination($("#visaPagination_taobao"), taobaoCashOutRequestParam, operates.getTaoBaoCashOutRequestLists);
+                $("#visaPagination_taobao").html(utils.pagination(parseInt(data.cnt), taobaoCashOutRequestParam.pageNo));
+            });
+        },
         accountLists:function(){
             $.each(getByIdData.dataArr.accountArr,function(i,n){
                 n.accountTypeText = consts.status.accountType[n.accountType];
                 n.logArr = n.log.split("|");
             });
             $("#tabContent").html(template('accountList', getByIdData.dataArr));
+        },
+        taobaoAccountLists:function(){
+            $.each(getByIdData.dataArr.taobaoAccountArr,function(i,n){
+                n.accountTypeText = consts.status.accountType[n.accountType];
+                n.logArr = n.log.split("|");
+            });
+            $("#tabContent").html(template('taobaoAccountList', getByIdData.dataArr));
         },
         userLogLook:function($this){
             var logArrContent = [];
@@ -63,6 +99,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         certificationMessage:function(){
             $("#tabContent").html(template('certificationMessage', getByIdData.dataArr));
+            $("#tabContent").find("input").prop('disabled', true);
+        },
+        taobaoCertificationMessage:function(){
+            $("#tabContent").html(template('taobaoCertificationMessage', getByIdData.dataArr));
             $("#tabContent").find("input").prop('disabled', true);
         },
         userLevelLogLists:function(){
@@ -105,7 +145,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         userId:param[0]
     };
+    var taobaoCommissionParam = {
+        pageNo: 1,
+        pageSize:10,
+        userId:param[0]
+    };
     var cashOutRequestParam = {
+        pageNo: 1,
+        pageSize:10,
+        userId:param[0]
+    };
+    var taobaoCashOutRequestParam = {
         pageNo: 1,
         pageSize:10,
         userId:param[0]
@@ -116,28 +166,70 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         userId:param[0]
     };
     operates.look(param[0]);
-    $("#headerTab1").on("click",function(){
+    // 好物商城 or 带货笔记
+    $("#big_headerTab1").on("click",function(){
+        $("#headerTab1").css({color:"orange"});
+        $("#headerTab1").closest("li").siblings().find("a").css({color:"#555555"});
         operates.commissionLog();
+        $(".bigContent1").show();
+        $(this).css({color:"#ffffff"});
+        $(this).closest("li").css({background:"#fba07d"});
+        $(this).closest("li").siblings().css({background:"#ffffff"});
+        $(this).closest("li").siblings().find("a").css({color:"#555555"});
+    });
+    $("#big_headerTab2").on("click",function(){
+        $("#headerTab1").css({color:"orange"});
+        $("#headerTab1").closest("li").siblings().find("a").css({color:"#555555"});
+        operates.taobaoCommissionLog();
+        $(".bigContent1").hide();
+        $(this).css({color:"#ffffff"});
+        $(this).closest("li").css({background:"#fba07d"});
+        $(this).closest("li").siblings().css({background:"#ffffff"});
+        $(this).closest("li").siblings().find("a").css({color:"#555555"});
+    });
+    // Tab模块选择
+    $("#headerTab1").on("click",function(){
+        if($("#big_headerTab1").css("color")=="rgb(255, 255, 255)"){
+            operates.commissionLog();
+        }else{
+            operates.taobaoCommissionLog();
+        }
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
     $("#headerTab2").on("click",function(){
-        operates.walletMessage();
+        if($("#big_headerTab1").css("color")=="rgb(255, 255, 255)"){
+            operates.walletMessage();
+        }else{
+            operates.taobaoWalletMessage();
+        }
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
     $("#headerTab3").on("click",function(){
-        operates.getCashOutRequestLists();
+        if($("#big_headerTab1").css("color")=="rgb(255, 255, 255)"){
+            operates.getCashOutRequestLists();
+        }else{
+            operates.getTaoBaoCashOutRequestLists();
+        }
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
     $("#headerTab4").on("click",function(){
-        operates.certificationMessage();
+        if($("#big_headerTab1").css("color")=="rgb(255, 255, 255)"){
+            operates.certificationMessage();
+        }else{
+            operates.taobaoCertificationMessage();
+        }
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
     $("#headerTab5").on("click",function(){
-        operates.accountLists();
+        if($("#big_headerTab1").css("color")=="rgb(255, 255, 255)"){
+            operates.accountLists();
+        }else{
+            operates.taobaoAccountLists();
+        }
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });

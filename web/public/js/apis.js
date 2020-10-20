@@ -403,9 +403,17 @@ define("apis", function() {
                 c:'user',
                 a:'getCashOutRequestLists'
             },
+            getCashOutRequestLists_taobao:{
+                c:'user',
+                a:'getCashOutRequestLists_taobao'
+            },
             getCommissionLogByUserId:{
                 c:'user',
                 a:'getCommissionLogByUserId'
+            },
+            getCommissionLogByUserId_taobao:{
+                c:'user',
+                a:'getCommissionLogByUserId_taobao'
             },
             getUserLevelLogListsByUserId:{
                 c:'user',
@@ -1164,6 +1172,26 @@ define("apis", function() {
             offById:{
                 c:'taobaoBanner',
                 a:'offById'
+            }
+        },
+        taobaoUserCertification:{
+            getLists:{
+                c:'taobaoUserCertification',
+                a:'getLists'
+            }
+        },
+        taobaoUserCashOutRequest:{
+            getLists:{
+                c:'taobaoUserCashOutRequest',
+                a:'getLists'
+            },
+            completeById:{
+                c:'taobaoUserCashOutRequest',
+                a:'completeById'
+            },
+            rejectById:{
+                c:'taobaoUserCashOutRequest',
+                a:'rejectById'
             }
         }
     }

@@ -59,6 +59,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             formFile.append("linkPassword", consts.param.linkPassword);
             formFile.append("signature", consts.param.signature);
             formFile.append("userToken", $.cookie('userToken'));
+            formFile.append("source", $("select[name=source]").val());
             formFile.append("file", importFileData);
 
             $.ajax({
@@ -339,7 +340,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         status:'',
         orderNo:'',
         memberOperationId:'',
-        time:''
+        time:'',
+        isSettlement:''
     };
 
     $("input[name=warnParam]").on("click",function(){
@@ -352,7 +354,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             param.searchType = '';
             loadData();
         }
-    })
+    });
 
     var showTypeArr;
     var parentArr;
@@ -370,6 +372,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.ajaxSubmit(apis.taobaoOrder.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.taobaoOrderStatus[n.status];
+                n.isSettlementText = consts.status.orderSettlementStatus[n.isSettlement];
                 if(n.status==1 || n.status==2 || n.status==3){
                     n.materialButtonGroup = lookButton + refundButton + validButton;
                 }else{
@@ -377,6 +380,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }
             });
             data.statusText = listDropDown.statusText;
+            data.settlementText = listDropDown.settlementText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -392,11 +396,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //},100);
     utils.bindList($(document), operates);
     var listDropDown = {
-        statusText:'订单状态'
+        statusText:'订单状态',
+        settlementText:'结算状态'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "订单状态" : listDropDown.statusText = $(this).text();
+        loadData();
+    }).on('click', '#dropSettlementOptions a[data-id]', function () {
+        param.isSettlement = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.settlementText = "结算状态" : listDropDown.settlementText = $(this).text();
         loadData();
     });
     setInterval(function () {

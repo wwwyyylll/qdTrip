@@ -152,10 +152,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     expressArr:initialData.expressArr
                 };
                 getByIdData.dataArr.statusText = consts.status.taobaoOrderStatus[getByIdData.dataArr.status];
+                getByIdData.dataArr.isSettlementText = consts.status.orderSettlementStatus[getByIdData.dataArr.isSettlement];
                 $("#basicMessage").html(template('orderMessage', getByIdData));
                 $("#basicMessage").find("input").prop('disabled', true);
-                $("#tabContent").html(template('goodsMessage', getByIdData));
-                $("#tabContent").find("input").prop('disabled', true);
+                //$("#tabContent").html(template('goodsMessage', getByIdData));
+                //$("#tabContent").find("input").prop('disabled', true);
             });
         },
         user:function(){

@@ -77,6 +77,20 @@
 <!--批量导入-->
 <script id="batchImportModal" type="text/html">
     <form id="importExcelForm" disabled="true">
+        <div class="form-row" style="margin-bottom: 15px">
+            <div class="col-7">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">来源</span>
+                    </div>
+                    <select name="source" class="form-control">
+                        <option value="">请选择</option>
+                        <option value="1" selected>会员订单</option>
+                        <option value="2">普通订单</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="form-row uploadFileBatchDiv" style="margin-bottom: 15px">
             <div class="col-7">
                 <div class="input-group">
@@ -475,6 +489,18 @@
                 </div>
             </div>
         </th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropSettlement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= settlementText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropSettlement" id="dropSettlementOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">已结算</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">未结算</a>
+                </div>
+            </div>
+        </th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">操作</th>
     </tr>
     </thead>
@@ -492,6 +518,7 @@
         <td><%= dataArr[i].memberOperationId %></td>
         <td><%= dataArr[i].orderCreateTime %></td>
         <td><%- dataArr[i].statusText %></td>
+        <td><%- dataArr[i].isSettlementText %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;">
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>
