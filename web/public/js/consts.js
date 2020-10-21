@@ -94,6 +94,10 @@ define("consts", function() {
                 '1':'<span style="color:green">是</span>',
                 '2':'<span style="color:red">否</span>'
             },
+            isBind1:{
+                '1':'是',
+                '2':'否'
+            },
             syncWay:{
                 '1':'<span style="color:green">手动</span>',
                 '2':'<span style="color:orange">自动</span>'
@@ -156,6 +160,10 @@ define("consts", function() {
                 '4':'商品抵扣',
                 '5':'订单取消',
                 '6':'现金券'
+            },
+            taobaoCommissionType:{
+                '1':'返佣收益',
+                '2':'推广佣金'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',

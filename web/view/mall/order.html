@@ -463,17 +463,17 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>淘宝订单编号</th>
-        <th>店铺名称</th>
-        <th style="width:12%;word-wrap: break-word;word-break:break-all;">商品标题</th>
-        <th>付款金额</th>
-        <th>维权标签</th>
-        <th>成交平台</th>
+        <th>订单号</th>
         <th>会员运营ID</th>
+        <th style="width:12%;word-wrap: break-word;word-break:break-all;">商品标题</th>
+        <th>店铺名称</th>
+        <th>付款金额</th>
+        <th>付款预估收入</th>
         <th class="em-min-8">
-            <div>订单创建时间</div>
+            <div>订单支付时间</div>
             <input type="text" autocomplete="off" class="em-12 py-0 px-1" placeholder="请选择筛选日期..." id="time">
         </th>
+        <th>淘宝订单状态</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -489,18 +489,18 @@
                 </div>
             </div>
         </th>
-        <th class="em-min-7">
-            <div class="dropdown">
-                <span class="dropdown-toggle" id="dropSettlement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <%= settlementText %>
-                </span>
-                <div class="dropdown-menu" aria-labelledby="dropSettlement" id="dropSettlementOptions">
-                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <a class="dropdown-item" href="javascript:" data-id="1">已结算</a>
-                    <a class="dropdown-item" href="javascript:" data-id="2">未结算</a>
-                </div>
-            </div>
-        </th>
+        <!--<th class="em-min-7">-->
+            <!--<div class="dropdown">-->
+                <!--<span class="dropdown-toggle" id="dropSettlement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+                    <!--<%= settlementText %>-->
+                <!--</span>-->
+                <!--<div class="dropdown-menu" aria-labelledby="dropSettlement" id="dropSettlementOptions">-->
+                    <!--<a class="dropdown-item" href="javascript:" data-id="">所有</a>-->
+                    <!--<a class="dropdown-item" href="javascript:" data-id="1">已结算</a>-->
+                    <!--<a class="dropdown-item" href="javascript:" data-id="2">未结算</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</th>-->
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">操作</th>
     </tr>
     </thead>
@@ -510,15 +510,20 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td><%= dataArr[i].orderNo %></td>
-        <td><%= dataArr[i].shopName %></td>
-        <td><%= dataArr[i].itemTitle %></td>
-        <td><%= dataArr[i].amount %>元</td>
-        <td><%= dataArr[i].rightsProtectionLabel %></td>
-        <td><%= dataArr[i].transactionPlatform %></td>
         <td><%= dataArr[i].memberOperationId %></td>
+        <td><%= dataArr[i].itemTitle %></td>
+        <td><%= dataArr[i].shopName %></td>
+        <td><%= dataArr[i].amount %>元</td>
+        <td><%= dataArr[i].predictPayAmount %></td>
         <td><%= dataArr[i].orderCreateTime %></td>
-        <td><%- dataArr[i].statusText %></td>
-        <td><%- dataArr[i].isSettlementText %></td>
+        <td><%= dataArr[i].taobaoOrderStatus %></td>
+        <td>
+            <%- dataArr[i].statusText %>
+            <% if(dataArr[i].isSettlement==1){ %>
+            <div style="margin-top: 5px"><%= dataArr[i].settlementTime_sys %></div>
+            <% } %>
+        </td>
+        <!--<td><%- dataArr[i].isSettlementText %></td>-->
         <td style="width:12%;word-wrap: break-word;word-break:break-all;">
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>

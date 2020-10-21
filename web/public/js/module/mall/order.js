@@ -188,7 +188,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         valid:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认订单无效吗?', '', function () {
-                utils.ajaxSubmit(apis.taobaoOrder.validById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.taobaoOrder.inValidById, {id: id}, function (data) {
                     loadData();
                 });
             });

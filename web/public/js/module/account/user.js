@@ -88,6 +88,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
+        isSignUp:'',
         nickName:'',
         warn:warnValue
     };
@@ -97,6 +98,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //根据状态值显示对应的状态文字 + 显示对应的 允许登录/禁止登录 按钮
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.user[n.status];
+                n.isSignUpText = consts.status.isBind[n.isSignUp];
                 n.isDistributorsText = consts.status.isBind[n.isDistributors];
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
@@ -104,6 +106,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
             data.statusText = listDropDown.statusText;
             data.sourceText = listDropDown.sourceText;
+            data.signUpText = listDropDown.signUpText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -115,7 +118,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //列表筛选事件绑定
     var listDropDown = {
         statusText:'状态',
-        sourceText:'来源'
+        sourceText:'来源',
+        signUpText:'已签约'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -125,6 +129,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropTopOptions a[data-id]', function () {
         param.source = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.sourceText = "来源" : listDropDown.sourceText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropSignUpOptions a[data-id]', function () {
+        param.isSignUp = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.signUpText = "已签约" : listDropDown.signUpText = $(this).text();
         param.pageNo = 1;
         loadData();
     });

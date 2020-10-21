@@ -6,6 +6,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         look:function(id){
             utils.ajaxSubmit(apis.user.getById, {id: id}, function (data) {
                 data.sourceText = consts.status.userDetailSource[data.source];
+                data.isSignUpText = consts.status.isBind1[data.isSignUp];
                 getByIdData = {
                     dataArr:data
                 };
@@ -31,7 +32,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         taobaoCommissionLog:function(){
             utils.ajaxSubmit(apis.user.getCommissionLogByUserId_taobao, taobaoCommissionParam, function (data) {
                 $.each(data.dataArr,function(i,n){
-                    n.typeText = consts.status.commissionType[n.type];
+                    n.typeText = consts.status.taobaoCommissionType[n.type];
                     n.settlementStatusText = consts.status.settlementStatus[n.isSettlement];
                     n.contentArr.fansTypeText = consts.status.fansType[n.contentArr.fansType];
                     n.contentArr.typeText = consts.status.buyType[n.contentArr.type];
@@ -172,6 +173,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#headerTab1").closest("li").siblings().find("a").css({color:"#555555"});
         operates.commissionLog();
         $(".bigContent1").show();
+        $(".titleName").find("a").text("奖励明细");
         $(this).css({color:"#ffffff"});
         $(this).closest("li").css({background:"#fba07d"});
         $(this).closest("li").siblings().css({background:"#ffffff"});
@@ -182,6 +184,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#headerTab1").closest("li").siblings().find("a").css({color:"#555555"});
         operates.taobaoCommissionLog();
         $(".bigContent1").hide();
+        $(".titleName").find("a").text("收益明细");
         $(this).css({color:"#ffffff"});
         $(this).closest("li").css({background:"#fba07d"});
         $(this).closest("li").siblings().css({background:"#ffffff"});

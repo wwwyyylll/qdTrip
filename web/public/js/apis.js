@@ -1137,15 +1137,23 @@ define("apis", function() {
                 c:'taobaoOrder',
                 a:'refundById'
             },
-            validById:{
+            inValidById:{
                 c:'taobaoOrder',
-                a:'validById'
+                a:'inValidById'
             }
         },
         tool:{
             searchTbOptimusByMaterialId:{
                 c:'tool',
                 a:'searchTbOptimusByMaterialId'
+            },
+            getTaobaoSignUpPwd:{
+                c:'tool',
+                a:'getTaobaoSignUpPwd'
+            },
+            saveTaobaoSignUpPwd:{
+                c:'tool',
+                a:'saveTaobaoSignUpPwd'
             }
         },
         taobaoBanner:{
