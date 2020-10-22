@@ -59,7 +59,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             formFile.append("linkPassword", consts.param.linkPassword);
             formFile.append("signature", consts.param.signature);
             formFile.append("userToken", $.cookie('userToken'));
-            formFile.append("source", $("select[name=source]").val());
+            //formFile.append("source", $("select[name=source]").val());
             formFile.append("file", importFileData);
 
             $.ajax({

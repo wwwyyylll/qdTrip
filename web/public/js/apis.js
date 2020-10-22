@@ -1201,6 +1201,60 @@ define("apis", function() {
                 c:'taobaoUserCashOutRequest',
                 a:'rejectById'
             }
+        },
+        taobaoMemberOperationIdBindRequest:{
+            getLists:{
+                c:'taobaoMemberOperationIdBindRequest',
+                a:'getLists'
+            },
+            bindById:{
+                c:'taobaoMemberOperationIdBindRequest',
+                a:'bindById'
+            },
+            rejectById:{
+                c:'taobaoMemberOperationIdBindRequest',
+                a:'rejectById'
+            }
+        },
+        userWxMessage:{
+            getLists:{
+                c:'userWxMessage',
+                a:'getLists'
+            },
+            signUpById:{
+                c:'userWxMessage',
+                a:'signUpById'
+            },
+            noDealById:{
+                c:'userWxMessage',
+                a:'noDealById'
+            }
+        },
+        taobaoPopularizeImages:{
+            getLists:{
+                c:'taobaoPopularizeImages',
+                a:'getLists'
+            },
+            create:{
+                c:'taobaoPopularizeImages',
+                a:'create'
+            },
+            getById:{
+                c:'taobaoPopularizeImages',
+                a:'getById'
+            },
+            updateById:{
+                c:'taobaoPopularizeImages',
+                a:'updateById'
+            },
+            onById:{
+                c:'taobaoPopularizeImages',
+                a:'onById'
+            },
+            offById:{
+                c:'taobaoPopularizeImages',
+                a:'offById'
+            }
         }
     }
 });

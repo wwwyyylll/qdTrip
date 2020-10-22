@@ -52,7 +52,7 @@
         <div style="margin-bottom: 10px">
             <h5>
                 <i data-operate="showTwoLevel" class="fa fa-folder" style="margin-right: 10px;cursor: pointer"></i>
-                <span data-operate="showTwoLevel" style="cursor: pointer" data-id="<%= dataArr[i].id %>"><%= dataArr[i].title %></span>
+                <span data-operate="showTwoLevel" style="cursor: pointer" data-id="<%= dataArr[i].id %>"><%= dataArr[i].title %>&nbsp;&nbsp;<%= dataArr[i].idx %></span>
                 <i data-value="<%= dataArr[i].parentId %>" data-id="twoLevel" class="fa fa-plus-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="add"></i>
                 <i data-value="<%= dataArr[i].parentId %>" data-id="oneLevel" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
                 <i data-value="<%= dataArr[i].parentId %>" data-id="oneLevel" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer;font-size: 16px"  data-operate="look"></i>
@@ -74,7 +74,7 @@
                         <div style="width: 30px;height: 25px;margin-top: 15px;margin-right: 10px;float: left;border-left: 1px solid gray;border-bottom: 1px solid gray;position: absolute;left: 7px;top:-20px"></div>
                         <div>
                             <i data-operate="showThreeLevel" class="fa fa-folder" style="margin-right: 5px;margin-left: 40px;cursor: pointer"></i>
-                            <span data-operate="showThreeLevel" data-id="<%= dataArr[i].child[j].id %>" style="cursor: pointer"><%= dataArr[i].child[j].title %></span>
+                            <span data-operate="showThreeLevel" data-id="<%= dataArr[i].child[j].id %>" style="cursor: pointer"><%= dataArr[i].child[j].title %>&nbsp;&nbsp;<%= dataArr[i].child[j].idx %></span>
                             <i data-value="<%= dataArr[i].child[j].parentId %>" data-id="threeLevel" class="fa fa-plus-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="add"></i>
                             <i data-value="<%= dataArr[i].child[j].parentId %>" data-id="twoLevel" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
                             <i data-value="<%= dataArr[i].child[j].parentId %>" data-id="twoLevel" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer"  data-operate="look"></i>
@@ -97,7 +97,7 @@
                     <div style="width: 30px;height: 22px;float: left;border-left: 1px solid gray;border-bottom: 1px solid gray;position: absolute;left: 47px;top:5px"></div>
                     <div style="position: absolute;left:5px;top:17px">
                         <i class="fa fa-leaf" style="margin-right: 5px;margin-left: 80px"></i>
-                        <span data-id="<%= dataArr[i].child[j].child[k].id %>"> <%= dataArr[i].child[j].child[k].title %></span>
+                        <span data-id="<%= dataArr[i].child[j].child[k].id %>"> <%= dataArr[i].child[j].child[k].title %>&nbsp;&nbsp;<%= dataArr[i].child[j].child[k].idx %></span>
                         <i data-value="<%= dataArr[i].child[j].child[k].parentId %>" data-id="threeLevel" class="fa fa-pencil-square-o" style="margin-left: 5px;cursor: pointer"  data-operate="edit"></i>
                         <i data-value="<%= dataArr[i].child[j].child[k].parentId %>" data-id="threeLevel" class="fa fa-envelope-open-o" style="margin-left: 5px;cursor: pointer"  data-operate="look"></i>
                         <span style="display: none"><%= dataArr[i].child[j].child[k].idx %></span>

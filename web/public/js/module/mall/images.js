@@ -6,8 +6,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //按钮组集合
     var comButtons =
             '<button class="btn btn-primary" type="button" data-operate="edit">编辑</button>'+
-            '<button class="btn btn-info" type="button" data-operate="look">查看</button>'
-        ,
+            '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>';
 
@@ -72,22 +71,26 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 dataType: 'json',
                 success: function (res) {
                     $(".imgUrl").html("");
-                    $(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 45px;height: 20px' src='"+ res.result +"'></a>");
-                    $("input[name=picUrl]").val(res.result);
+                    $(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 100px;height: 33px' src='"+ res.result +"'></a>");
+                    $(".imgUrl").css({marginTop:0});
+                    $("input[name=pic]").val(res.result);
                 }
             }).fail(function (jqXHR, textStatus) {
                 hound.error('Request failed: ' + textStatus);
             });
         });
     }
+
     //新增
     $addModal.on("click",function(){
         var initialData = {
             dataArr:{}
         };
-        utils.renderModal('新增banner', template('modalDiv',initialData), function(){
+        utils.renderModal('新增海报', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
-                utils.ajaxSubmit(apis.taobaoBanner.create,$("#visaPassportForm").serialize(),function(data){
+                utils.loading(true);
+                utils.ajaxSubmit(apis.taobaoPopularizeImages.create,$("#visaPassportForm").serialize(),function(data){
+                    utils.loading(false);
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     param.pageNo = 1;
@@ -96,20 +99,22 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             }
         }, 'lg');
         uploadFile();
-    })
+    });
 
     //页面操作配置
     var operates = {
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.taobaoBanner.getById, {id: id}, function (data) {
-                var data = {
+            utils.ajaxSubmit(apis.taobaoPopularizeImages.getById, {id: id}, function (data) {
+                var getByIdData = {
                     dataArr:data
                 };
-                utils.renderModal('编辑——'+ data.dataArr.title, template('modalDiv', data), function(){
+                utils.renderModal('编辑海报', template('modalDiv', getByIdData), function(){
                     if($("#visaPassportForm").valid()) {
-                        utils.ajaxSubmit(apis.taobaoBanner.updateById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.loading(true);
+                        utils.ajaxSubmit(apis.taobaoPopularizeImages.updateById, $("#visaPassportForm").serialize(), function (data) {
+                            utils.loading(false);
                             hound.success("编辑成功", "", 1000);
                             utils.modal.modal('hide');
                             loadData();
@@ -122,11 +127,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.taobaoBanner.getById, {id: id}, function (data) {
-                var data = {
+            utils.ajaxSubmit(apis.taobaoPopularizeImages.getById, {id: id}, function (data) {
+                var getByIdData = {
                     dataArr:data
                 };
-                utils.renderModal('查看——'+ data.dataArr.title, template('modalDiv', data),'', 'lg');
+                utils.renderModal('查看海报', template('modalDiv', getByIdData),'', 'lg');
                 $("#visaPassportForm").append($("fieldset").prop('disabled', true));
             });
         },
@@ -134,7 +139,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认无效吗?', '', function () {
-                utils.ajaxSubmit(apis.taobaoBanner.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.taobaoPopularizeImages.offById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -143,7 +148,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认有效吗?', '', function () {
-                utils.ajaxSubmit(apis.taobaoBanner.onById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.taobaoPopularizeImages.onById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -153,20 +158,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var param = {
         pageNo: 1,
         pageSize:10,
-        status:'',
-        title:''
+        status:''
     };
 
     function loadData() {
-        utils.ajaxSubmit(apis.taobaoBanner.getLists, param, function (data) {
-            //根据状态值显示对应的状态文字
+        utils.ajaxSubmit(apis.taobaoPopularizeImages.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                n.positionText = consts.status.position[n.position];
-            });
-            //操作按钮 编辑 + 查看 + 有效/无效
-            $.each(data.dataArr,function(i,n){
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn ;
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
@@ -177,17 +176,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     // 页面首次加载列表数据
     loadData();
     utils.bindList($(document), operates);
+    //列表筛选事件绑定
     var listDropDown = {
         statusText:'状态'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
         loadData();
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
-        param.title = $("#searchCont").val();
+        param.name = $("#searchCont").val();
         loadData();
     });
     $('#searchCont').on('keypress',function(event){

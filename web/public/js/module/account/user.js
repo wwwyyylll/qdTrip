@@ -90,6 +90,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         status:'',
         isSignUp:'',
         nickName:'',
+        memberOperationId:'',
         warn:warnValue
     };
 
@@ -143,11 +144,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         var selectsearchLabel = $("#selectsearchlabel").text();
         if(selectsearchLabel=="昵称"){
             param.nickName = $("#searchCont").val();
-            //param.mobile = '';
+            param.memberOperationId = '';
             loadData();
-        }else{
+        }else if(selectsearchLabel=="会员运营Id"){
             param.nickName = '';
-            param.mobile = $("#searchCont").val();
+            param.memberOperationId = $("#searchCont").val();
             loadData();
         }
     });

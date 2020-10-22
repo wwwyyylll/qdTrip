@@ -153,6 +153,16 @@ define("consts", function() {
                 '2':'<span style="color:green">已打款</span>',
                 '3':'<span style="color:red">已驳回</span>'
             },
+            taobaoBindStatus:{
+                '1':'<span style="color:orange">等待绑定</span>',
+                '2':'<span style="color:green">已绑定</span>',
+                '3':'<span style="color:red">已驳回</span>'
+            },
+            userWxMessageStatus:{
+                '1':'<span style="color:orange">待处理</span>',
+                '2':'<span style="color:green">已签约</span>',
+                '3':'<span style="color:red">无需处理</span>'
+            },
             commissionType:{
                 '1':'奖励佣金',
                 '2':'推广佣金',
@@ -196,6 +206,10 @@ define("consts", function() {
             orderSettlementStatus:{
                 '1':'已结算',
                 '2':'未结算'
+            },
+            position:{
+                '1':'<span style="color:green"> 头部</span>',
+                '2':'<span style="color:darkorange"> 左下角</span>'
             }
         }
     }
