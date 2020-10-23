@@ -7,7 +7,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var comButtons = '<button class="btn btn-info" type="button" data-operate="look">查看详情</button>',
         allowButton = '<button class="btn btn-primary" type="button" data-operate="allow">允许登录</button>',
         disableButton = '<button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>',
-        addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">设为分销商</button>';
+        addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">设为分销商</button>',
+        bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -17,6 +18,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     //页面操作配置
     var operates = {
+        bindMemberId:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.reason('确认绑定会员运营ID吗?','请输入要绑定的会员运营ID',function(data){
+                utils.ajaxSubmit(apis.user.bindMemberOperationId, {id: id,memberOperationId:data}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
@@ -104,6 +114,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
                 (n.isDistributors=='1')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
+                if(n.memberOperationId=='' || n.memberOperationId==null){
+                    n.materialButtonGroup = n.materialButtonGroup + bindMemberIdButton ;
+                }else{
+                    n.materialButtonGroup = n.materialButtonGroup ;
+                }
             });
             data.statusText = listDropDown.statusText;
             data.sourceText = listDropDown.sourceText;

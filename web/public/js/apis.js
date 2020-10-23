@@ -418,6 +418,10 @@ define("apis", function() {
             getUserLevelLogListsByUserId:{
                 c:'user',
                 a:'getUserLevelLogListsByUserId'
+            },
+            bindMemberOperationId:{
+                c:'user',
+                a:'bindMemberOperationId'
             }
         },
         distributors:{
@@ -1140,6 +1144,10 @@ define("apis", function() {
             inValidById:{
                 c:'taobaoOrder',
                 a:'inValidById'
+            },
+            bindMemberOperationId:{
+                c:'taobaoOrder',
+                a:'bindMemberOperationId'
             }
         },
         tool:{
@@ -1254,6 +1262,12 @@ define("apis", function() {
             offById:{
                 c:'taobaoPopularizeImages',
                 a:'offById'
+            }
+        },
+        taobaoUserSignUpLog:{
+            getLists:{
+                c:'taobaoUserSignUpLog',
+                a:'getLists'
             }
         }
     }

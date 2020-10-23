@@ -13,7 +13,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         deliverButton = '<button class="btn btn-primary" type="button" data-operate="deliver">发货</button>',
         submitSupplierButton = '<button class="btn btn-primary" type="button" data-operate="submitSupplier">接单</button>',
         noSupplierButton = '<button class="btn btn-danger" type="button" data-operate="noSupplier">不接单</button>',
-        supplierButton = '<button class="btn btn-primary" type="button" data-operate="supplier">供应商接单</button>';
+        supplierButton = '<button class="btn btn-primary" type="button" data-operate="supplier">供应商接单</button>',
+        bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -270,6 +271,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             })
         },
+        bindMemberId:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.reason('确认绑定会员运营ID吗?','请输入要绑定的会员运营ID',function(data){
+                utils.ajaxSubmit(apis.taobaoOrder.bindMemberOperationId, {id: id,memberOperationId:data}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
         supplier:function($this){
             var id = $this.closest("tr").attr("data-id");
             var totalAmount = $this.closest("tr").find("td").eq(6).find("span").eq(0).text();
@@ -377,6 +387,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     n.materialButtonGroup = lookButton + refundButton + validButton;
                 }else{
                     n.materialButtonGroup = lookButton ;
+                }
+                if(n.memberOperationId=='' || n.memberOperationId==null){
+                    n.materialButtonGroup = n.materialButtonGroup + bindMemberIdButton ;
+                }else{
+                    n.materialButtonGroup = n.materialButtonGroup ;
                 }
             });
             data.statusText = listDropDown.statusText;

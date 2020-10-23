@@ -210,6 +210,10 @@ define("consts", function() {
             position:{
                 '1':'<span style="color:green"> 头部</span>',
                 '2':'<span style="color:darkorange"> 左下角</span>'
+            },
+            imageType:{
+                '1':'<span style="color:orange"> 内测</span>',
+                '2':'<span style="color:green"> 供会员使用</span>'
             }
         }
     }

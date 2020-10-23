@@ -51,9 +51,11 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>海报</th>
+        <th>海报原图</th>
+        <th>二维码图片</th>
         <th style="width:20%;word-wrap: break-word;word-break:break-all;">内容</th>
         <th>排序</th>
+        <th>类型</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -81,11 +83,21 @@
                 <img src="<%= dataArr[i].pic %>" style="display: inline-block;width:100px;height: 50px">
             </a>
             <% }else{ %>
-            <span style="color: red">暂无海报</span>
+            <span style="color: red">暂无海报原图</span>
+            <% } %>
+        </td>
+        <td>
+            <% if(dataArr[i].qrCodePic){ %>
+            <a target="_blank" href="<%= dataArr[i].qrCodePic %>">
+                <img src="<%= dataArr[i].qrCodePic %>" style="display: inline-block;width:100px;height: 50px">
+            </a>
+            <% }else{ %>
+            <span style="color: red">暂无二维码图片</span>
             <% } %>
         </td>
         <td style="width:20%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].content %></td>
         <td><%= dataArr[i].sort %></td>
+        <td><%- dataArr[i].typeText %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
@@ -110,7 +122,7 @@
             <div class="form-row uploadFile" style="margin-bottom: 15px">
                 <div class="col-5">
                     <div class="input-group">
-                        <span style="margin-top:6px;margin-right: 10px">上传海报</span>
+                        <span style="margin-top:6px;margin-right: 10px">上传海报原图</span>
                         <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar1" class="uploadImg d-none">选择图片文件</label>
                         <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
                     </div>
@@ -124,7 +136,7 @@
                             </a>
                         </h6>
                         <% } else { %>
-                        <h6 style="margin-top: 9px" class="imgUrl"><span style="color:red">暂无海报</span></h6>
+                        <h6 style="margin-top: 9px" class="imgUrl"><span style="color:red">暂无海报原图</span></h6>
                         <% } %>
                         <input type="hidden" name="pic" value="<%= dataArr.pic %>">
                     </div>
@@ -137,6 +149,18 @@
                             <span class="input-group-text">排序</span>
                         </div>
                         <input type="text" name="sort" placeholder="请输入排序" value="<%= dataArr.sort %>" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">类型</span>
+                        </div>
+                        <select name="type" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="1" <% if(dataArr.type==1){ %> selected <% } %>>内测</option>
+                            <option value="2" <% if(dataArr.type==2){ %> selected <% } %>>供会员使用</option>
+                        </select>
                     </div>
                 </div>
             </div>

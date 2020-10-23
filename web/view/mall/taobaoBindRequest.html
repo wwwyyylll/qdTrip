@@ -63,6 +63,7 @@
                                 <th>昵称</th>
                                 <th>会员ID</th>
                                 <th>订单号</th>
+                                <th>淘宝运营Id</th>
                                 <th>状态</th>
                                 <th>申请时间</th>
                             </tr>
@@ -77,6 +78,7 @@
                                 <td>
                                     <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/orderDetails.html?orderId=<%= dataArr[i].orderId %>"><%= dataArr[i].orderNo %></a>
                                 </td>
+                                <td><%= dataArr[i].memberOperationId %></td>
                                 <td><%- dataArr[i].statusText %></td>
                                 <td><%= dataArr[i].createTime %></td>
                             </tr>
@@ -128,6 +130,7 @@
                                 <th>昵称</th>
                                 <th>会员ID</th>
                                 <th>订单号</th>
+                                <th>淘宝运营Id</th>
                                 <th>状态</th>
                                 <th>申请时间</th>
                                 <th>操作</th>
@@ -143,6 +146,7 @@
                                 <td>
                                     <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/orderDetails.html?orderId=<%= dataArr[i].orderId %>"><%= dataArr[i].orderNo %></a>
                                 </td>
+                                <td><%= dataArr[i].memberOperationId %></td>
                                 <td><%- dataArr[i].statusText %></td>
                                 <td><%= dataArr[i].createTime %></td>
                                 <td>
@@ -200,6 +204,7 @@
                                 <th>昵称</th>
                                 <th>会员ID</th>
                                 <th>订单号</th>
+                                <th>淘宝运营Id</th>
                                 <th>状态</th>
                                 <th style="width:12%;word-wrap: break-word;word-break:break-all;">驳回原因</th>
                                 <th>申请时间</th>
@@ -215,6 +220,7 @@
                                 <td>
                                     <a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/orderDetails.html?orderId=<%= dataArr[i].orderId %>"><%= dataArr[i].orderNo %></a>
                                 </td>
+                                <td><%= dataArr[i].memberOperationId %></td>
                                 <td><%- dataArr[i].statusText %></td>
                                 <td style="width:12%;word-wrap: break-word;word-break:break-all;color: red"><%= dataArr[i].reason %></td>
                                 <td><%= dataArr[i].createTime %></td>
