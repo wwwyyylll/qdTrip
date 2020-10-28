@@ -1269,6 +1269,20 @@ define("apis", function() {
                 c:'taobaoUserSignUpLog',
                 a:'getLists'
             }
+        },
+        userRecommendTaobaoItemRequest:{
+            getLists:{
+                c:'userRecommendTaobaoItemRequest',
+                a:'getLists'
+            },
+            passById:{
+                c:'userRecommendTaobaoItemRequest',
+                a:'passById'
+            },
+            rejectById:{
+                c:'userRecommendTaobaoItemRequest',
+                a:'rejectById'
+            }
         }
     }
 });

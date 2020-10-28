@@ -53,6 +53,8 @@
         <th>ID</th>
         <th>海报原图</th>
         <th>二维码图片</th>
+        <th>二维码X + Y坐标</th>
+        <th>邀请码X + Y坐标</th>
         <th style="width:20%;word-wrap: break-word;word-break:break-all;">内容</th>
         <th>排序</th>
         <th>类型</th>
@@ -93,6 +95,22 @@
             </a>
             <% }else{ %>
             <span style="color: red">暂无二维码图片</span>
+            <% } %>
+        </td>
+        <td>
+            <% if(dataArr[i].qrCode_x){ %>
+            <div style="margin-bottom: 5px">X : <%= dataArr[i].qrCode_x %></div>
+            <% } %>
+            <% if(dataArr[i].qrCode_y){ %>
+            <div>Y : <%= dataArr[i].qrCode_y %></div>
+            <% } %>
+        </td>
+        <td>
+            <% if(dataArr[i].inviteCode_x){ %>
+            <div style="margin-bottom: 5px">X : <%= dataArr[i].inviteCode_x %></div>
+            <% } %>
+            <% if(dataArr[i].inviteCode_y){ %>
+            <div>Y : <%= dataArr[i].inviteCode_y %></div>
             <% } %>
         </td>
         <td style="width:20%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].content %></td>
@@ -139,6 +157,42 @@
                         <h6 style="margin-top: 9px" class="imgUrl"><span style="color:red">暂无海报原图</span></h6>
                         <% } %>
                         <input type="hidden" name="pic" value="<%= dataArr.pic %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">二维码X坐标</span>
+                        </div>
+                        <input type="text" name="qrCode_x" placeholder="请输入二维码X坐标" value="<%= dataArr.qrCode_x %>" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">二维码Y坐标</span>
+                        </div>
+                        <input type="text" name="qrCode_y" placeholder="请输入二维码Y坐标" value="<%= dataArr.qrCode_y %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">邀请码X坐标</span>
+                        </div>
+                        <input type="text" name="inviteCode_x" placeholder="请输入邀请码X坐标" value="<%= dataArr.inviteCode_x %>" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">邀请码Y坐标</span>
+                        </div>
+                        <input type="text" name="inviteCode_y" placeholder="请输入邀请码Y坐标" value="<%= dataArr.inviteCode_y %>" class="form-control">
                     </div>
                 </div>
             </div>

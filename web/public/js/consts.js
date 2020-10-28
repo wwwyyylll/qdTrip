@@ -163,6 +163,11 @@ define("consts", function() {
                 '2':'<span style="color:green">已签约</span>',
                 '3':'<span style="color:red">无需处理</span>'
             },
+            userRecommendStatus:{
+                '1':'<span style="color:orange">待审核</span>',
+                '2':'<span style="color:green">审核通过</span>',
+                '3':'<span style="color:red">已驳回</span>'
+            },
             commissionType:{
                 '1':'奖励佣金',
                 '2':'推广佣金',

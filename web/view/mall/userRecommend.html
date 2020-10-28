@@ -1,15 +1,15 @@
-@@include('../../inc-header.html', {"title": "会员运营号绑定申请"})
+@@include('../../inc-header.html', {"title": "好物推荐申请"})
 @@include('../../top-nav.html')
 @@include('../../left-nav.html')
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-th-list"></i> 会员运营号绑定申请</h1>
+            <h1><i class="fa fa-th-list"></i> 好物推荐申请</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active"><a href="#">会员运营号绑定申请</a></li>
+            <li class="breadcrumb-item active"><a href="#">好物推荐申请</a></li>
         </ul>
     </div>
     <div class="row" style="margin-top: 10px">
@@ -17,10 +17,10 @@
         <div class="col-lg-12" style="width: 97%">
             <ul class="nav nav-tabs">
                 <li class="active" style="height: 28px">
-                    <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;background: #ffffff;color: orange;cursor: pointer">待处理列表</a>
+                    <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;background: #ffffff;color: orange;cursor: pointer">待审核列表</a>
                 </li>
                 <li class="active" style="height: 28px">
-                    <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;background: #ffffff;cursor: pointer">已绑定列表</a>
+                    <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;background: #ffffff;cursor: pointer">已审核列表</a>
                 </li>
                 <li class="active" style="height: 28px">
                     <a href="#qh3" id="headerTab3" data-toggle="tab" style="outline:none;background: #ffffff;cursor: pointer">已驳回列表</a>
@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <div class="row" style="margin-bottom:20px;display: none">
+                <div class="row" style="margin-bottom:20px">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                             <input value="<%= content %>" type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
@@ -43,9 +43,7 @@
                             <div class="btn-group" role="group">
                                 <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item searchlabel" href="#">昵称</a>
-                                    <a class="dropdown-item searchlabel" href="#">真实姓名</a>
-                                    <a class="dropdown-item searchlabel" href="#">手机号</a>
+                                    <a class="dropdown-item searchlabel" href="#">物料商品Id</a>
                                 </div>
                             </div>
                         </div>
@@ -62,8 +60,8 @@
                                 <th>ID</th>
                                 <th>昵称</th>
                                 <th>会员ID</th>
-                                <th>订单号</th>
-                                <th>淘宝运营Id</th>
+                                <th>物料商品Id</th>
+                                <th style="width:12%;word-wrap: break-word;word-break:break-all;">用户推荐理由</th>
                                 <th>状态</th>
                                 <th>申请时间</th>
                             </tr>
@@ -75,11 +73,8 @@
                                 <td><%= dataArr[i].id %></td>
                                 <td><%= dataArr[i].nickName %></td>
                                 <td><%= dataArr[i].userId %></td>
-                                <td><%= dataArr[i].orderNo %></td>
-                                <!--<td>-->
-                                    <!--<a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/orderDetails.html?orderId=<%= dataArr[i].orderId %>"><%= dataArr[i].orderNo %></a>-->
-                                <!--</td>-->
-                                <td><%= dataArr[i].memberOperationId %></td>
+                                <td><%= dataArr[i].itemId %></td>
+                                <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].reason %></td>
                                 <td><%- dataArr[i].statusText %></td>
                                 <td><%= dataArr[i].createTime %></td>
                             </tr>
@@ -103,7 +98,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <div class="row" style="margin-bottom:20px;display: none">
+                <div class="row" style="margin-bottom:20px">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                             <input value="<%= content %>" type="text" class="form-control" id="searchCont1" autocomplete="off" style="width:60%">
@@ -111,9 +106,7 @@
                             <div class="btn-group" role="group">
                                 <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop11" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item searchlabel1" href="#">昵称</a>
-                                    <a class="dropdown-item searchlabel1" href="#">真实姓名</a>
-                                    <a class="dropdown-item searchlabel1" href="#">手机号</a>
+                                    <a class="dropdown-item searchlabel" href="#">物料商品Id</a>
                                 </div>
                             </div>
                         </div>
@@ -130,8 +123,7 @@
                                 <th>ID</th>
                                 <th>昵称</th>
                                 <th>会员ID</th>
-                                <th>订单号</th>
-                                <th>淘宝运营Id</th>
+                                <th>物料商品Id</th>
                                 <th>状态</th>
                                 <th>申请时间</th>
                                 <th>操作</th>
@@ -144,11 +136,7 @@
                                 <td><%= dataArr[i].id %></td>
                                 <td><%= dataArr[i].nickName %></td>
                                 <td><%= dataArr[i].userId %></td>
-                                <td><%= dataArr[i].orderNo %></td>
-                                <!--<td>-->
-                                    <!--<a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/orderDetails.html?orderId=<%= dataArr[i].orderId %>"><%= dataArr[i].orderNo %></a>-->
-                                <!--</td>-->
-                                <td><%= dataArr[i].memberOperationId %></td>
+                                <td><%= dataArr[i].itemId %></td>
                                 <td><%- dataArr[i].statusText %></td>
                                 <td><%= dataArr[i].createTime %></td>
                                 <td>
@@ -177,7 +165,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <div class="row" style="margin-bottom:20px;display: none">
+                <div class="row" style="margin-bottom:20px">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                             <input value="<%= content %>" type="text" class="form-control" id="searchCont2" autocomplete="off" style="width:60%">
@@ -185,9 +173,7 @@
                             <div class="btn-group" role="group">
                                 <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop12" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item searchlabel2" href="#">昵称</a>
-                                    <a class="dropdown-item searchlabel2" href="#">真实姓名</a>
-                                    <a class="dropdown-item searchlabel2" href="#">手机号</a>
+                                    <a class="dropdown-item searchlabel" href="#">物料商品Id</a>
                                 </div>
                             </div>
                         </div>
@@ -201,12 +187,10 @@
                         <table class="table table-hover table-bordered" id="rejectTable">
                             <thead>
                             <tr>
-
                                 <th>ID</th>
                                 <th>昵称</th>
                                 <th>会员ID</th>
-                                <th>订单号</th>
-                                <th>淘宝运营Id</th>
+                                <th>物料商品Id</th>
                                 <th>状态</th>
                                 <th style="width:12%;word-wrap: break-word;word-break:break-all;">驳回原因</th>
                                 <th>申请时间</th>
@@ -219,13 +203,9 @@
                                 <td><%= dataArr[i].id %></td>
                                 <td><%= dataArr[i].nickName %></td>
                                 <td><%= dataArr[i].userId %></td>
-                                <td><%= dataArr[i].orderNo %></td>
-                                <!--<td>-->
-                                    <!--<a style="text-decoration: underline" target="_blank" href="@@HOSTview/mall/orderDetails.html?orderId=<%= dataArr[i].orderId %>"><%= dataArr[i].orderNo %></a>-->
-                                <!--</td>-->
-                                <td><%= dataArr[i].memberOperationId %></td>
+                                <td><%= dataArr[i].itemId %></td>
                                 <td><%- dataArr[i].statusText %></td>
-                                <td style="width:12%;word-wrap: break-word;word-break:break-all;color: red"><%= dataArr[i].reason %></td>
+                                <td style="width:12%;word-wrap: break-word;word-break:break-all;color: red"><%= dataArr[i].rejectReason %></td>
                                 <td><%= dataArr[i].createTime %></td>
                             </tr>
                             <% } %>
@@ -243,5 +223,5 @@
         </div>
     </div>
 </script>
-<script data-main="/public/js/module/mall/taobaoBindRequest"></script>
+<script data-main="/public/js/module/mall/userRecommend"></script>
 @@include('../../inc-footer.html')
