@@ -422,6 +422,14 @@ define("apis", function() {
             bindMemberOperationId:{
                 c:'user',
                 a:'bindMemberOperationId'
+            },
+            canRecommendTaobaoItemById:{
+                c:'user',
+                a:'canRecommendTaobaoItemById'
+            },
+            cancelRecommendTaobaoItemById:{
+                c:'user',
+                a:'cancelRecommendTaobaoItemById'
             }
         },
         distributors:{

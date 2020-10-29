@@ -8,7 +8,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         allowButton = '<button class="btn btn-primary" type="button" data-operate="allow">允许登录</button>',
         disableButton = '<button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>',
         addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">设为分销商</button>',
-        bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>';
+        bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>',
+        canRecommendButton = '<button class="btn btn-primary" type="button" data-operate="canRecommend">设为好物推荐官</button>',
+        cancelRecommendButton = '<button class="btn btn-danger" type="button" data-operate="cancelRecommend">取消好物推荐官</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -47,6 +49,26 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             hound.reason('确认设为禁止登录吗?','请输入禁止登录原因',function(data){
                 utils.ajaxSubmit(apis.user.disableLoginById, {id: id,reason:data}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
+        //设为好物推荐官
+        canRecommend:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认设为好物推荐官吗?','',function(data){
+                utils.ajaxSubmit(apis.user.canRecommendTaobaoItemById, {id: id}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
+        //取消好物推荐官
+        cancelRecommend:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认取消好物推荐官吗?','',function(data){
+                utils.ajaxSubmit(apis.user.cancelRecommendTaobaoItemById, {id: id}, function (data) {
                     hound.success("操作成功", "", 1000);
                     loadData();
                 });
@@ -101,6 +123,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         isSignUp:'',
         nickName:'',
         memberOperationId:'',
+        canRecommendTaobaoItem:'',
         warn:warnValue
     };
 
@@ -111,6 +134,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.statusText = consts.status.user[n.status];
                 n.isSignUpText = consts.status.isBind[n.isSignUp];
                 n.isDistributorsText = consts.status.isBind[n.isDistributors];
+                n.canRecommendTaobaoItemText = consts.status.isBind[n.canRecommendTaobaoItem];
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
                 (n.isDistributors=='1')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
@@ -119,10 +143,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }else{
                     n.materialButtonGroup = n.materialButtonGroup ;
                 }
+                if(n.canRecommendTaobaoItem == 1){
+                    n.materialButtonGroup = n.materialButtonGroup + cancelRecommendButton ;
+                }else if(n.canRecommendTaobaoItem == 2){
+                    n.materialButtonGroup = n.materialButtonGroup + canRecommendButton ;
+                }
             });
             data.statusText = listDropDown.statusText;
             data.sourceText = listDropDown.sourceText;
             data.signUpText = listDropDown.signUpText;
+            data.canRecommendText = listDropDown.canRecommendText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -135,7 +165,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var listDropDown = {
         statusText:'状态',
         sourceText:'来源',
-        signUpText:'已签约'
+        signUpText:'已签约',
+        canRecommendText:'好物推荐官'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -150,6 +181,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropSignUpOptions a[data-id]', function () {
         param.isSignUp = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.signUpText = "已签约" : listDropDown.signUpText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropCanRecommendOptions a[data-id]', function () {
+        param.canRecommendTaobaoItem = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.canRecommendText = "好物推荐官" : listDropDown.canRecommendText = $(this).text();
         param.pageNo = 1;
         loadData();
     });
