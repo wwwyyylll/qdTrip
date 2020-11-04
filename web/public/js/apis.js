@@ -430,6 +430,10 @@ define("apis", function() {
             cancelRecommendTaobaoItemById:{
                 c:'user',
                 a:'cancelRecommendTaobaoItemById'
+            },
+            getTaobaoTaskLists:{
+                c:'user',
+                a:'getTaobaoTaskLists'
             }
         },
         distributors:{
@@ -1290,6 +1294,12 @@ define("apis", function() {
             rejectById:{
                 c:'userRecommendTaobaoItemRequest',
                 a:'rejectById'
+            }
+        },
+        taobaoUserTaskRebateCardBuyLog:{
+            getLists:{
+                c:'taobaoUserTaskRebateCardBuyLog',
+                a:'getLists'
             }
         }
     }

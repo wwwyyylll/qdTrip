@@ -219,6 +219,25 @@ define("consts", function() {
             imageType:{
                 '1':'<span style="color:orange"> 内测</span>',
                 '2':'<span style="color:green"> 供会员使用</span>'
+            },
+            taskType:{
+                '1':'加入淘宝返佣计划',
+                '2':'进行淘宝账号绑定',
+                '3':'购买1次返佣商品',
+                '4':'购买5次返佣商品',
+                '5':'购买15次返佣商品',
+                '6':'邀请1位朋友入驻带货笔记',
+                '7':'邀请5位朋友入驻带货笔记',
+                '8':'邀请15位朋友入驻带货笔记',
+                '9':'购买大神返利卡'
+            },
+            isCompletedType:{
+                '1':'<span style="color:green">已完成</span>',
+                '2':'<span style="color:red">未完成</span>'
+            },
+            isCompletedType1:{
+                '1':'<span style="color:green">已购买</span>',
+                '2':'<span style="color:red">未购买</span>'
             }
         }
     }

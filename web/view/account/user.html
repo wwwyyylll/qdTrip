@@ -67,6 +67,18 @@
             </div>
         </th>
         <th>邀请码</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropTaobaoCommissionRate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= taobaoCommissionRateText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropTaobaoCommissionRate" id="dropTaobaoCommissionRateOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                </div>
+            </div>
+        </th>
         <th>是否分销商</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -126,6 +138,7 @@
         </td>
         <td><%- dataArr[i].sourceText %></td>
         <td><%= dataArr[i].inviteCode %></td>
+        <td><%= dataArr[i].taobaoCommissionRate %></td>
         <td><%- dataArr[i].isDistributorsText %></td>
         <td><%- dataArr[i].canRecommendTaobaoItemText %></td>
         <td><%= dataArr[i].memberOperationId %></td>

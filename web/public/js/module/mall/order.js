@@ -6,9 +6,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var $searchCont = $("#searchCont");
     var $batchImport = $("#batchImport");
     //按钮组集合
-    var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看订单详情</button>',
+    var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         completeBouutn =  '<button class="btn btn-primary" type="button" data-operate="complete">完成</button>',
-        refundButton = '<button class="btn btn-danger" type="button" data-operate="activistRefund">维权退款</button>',
+        refundButton = '<button class="btn btn-danger" type="button" data-operate="activistRefund">退款</button>',
         validButton = '<button class="btn btn-danger" type="button" data-operate="valid">无效</button>',
         deliverButton = '<button class="btn btn-primary" type="button" data-operate="deliver">发货</button>',
         submitSupplierButton = '<button class="btn btn-primary" type="button" data-operate="submitSupplier">接单</button>',
@@ -74,7 +74,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 success: function (res) {
                     utils.loading(false);
                     if(res.code==200){
-                        hound.success(res.result,"",'').then(function(){
+                        hound.success('导入成功',res.result,'').then(function(){
                             utils.modal.modal('hide');
                             loadData();
                         });
@@ -112,48 +112,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     });
 
-    //导出订单
+    //订单支付时间筛选
     $exportExcel.on("click",function(){
-        utils.renderModal('导出订单', template('exportExcelModal', ''), function(){
+        utils.renderModal('订单支付时间筛选', template('exportExcelModal', ''), function(){
             if($("#exportExcelForm").valid()) {
-                utils.ajaxSubmit(apis.exportExcel.exportOrder, $("#exportExcelForm").serialize(), function (data) {
-                    var downloadUrl = $(".downloadUrl");
-                    if(data.url!=''){
-                        downloadUrl.html("<a style='text-decoration:underline' download='' href='"+ data.url +"'>点此下载</a>");
-                    }else{
-                        downloadUrl.html("<span style='color:red'>暂无符合条件的数据</span>");
-                    }
-                })
+                utils.modal.modal('hide');
+                param.time = $("#reservation1").val();
+                param.pageNo = 1;
+                loadData();
             }
         }, 'md');
-        $(".supplierName").on("click",function(){
-            var supplierParam = {
-                pageNo: 1,
-                pageSize:50,
-                name:$(".supplierName").val(),
-                status:'',
-                source:'',
-                accountType:''
-            };
-            utils.ajaxSubmit(apis.mallSupplier.getLists, supplierParam, function (data) {
-                if(data.dataArr.length!=0){
-                    var $economyAbilityItem = '';
-                    $.each(data.dataArr, function (i, v) {
-                        $economyAbilityItem += '<div data-id="'+ v.id +'" class="economy-ability-item">'+ v.name +'</div>'
-                    })
-                    $('.ability-list').remove();
-                    var $abilityList = '<div class="ability-list">'+ $economyAbilityItem +'</div>';
-                    $(".supplierName").closest('.economy-wards').append($abilityList);
-
-                    $('.economy-ability-item').click(function(){
-                        $('.ability-list').remove();
-                        var $index = $(this).index();
-                        $(".supplierName").val(data.dataArr[$index].name);
-                        $(".supplierId").val(data.dataArr[$index].id);
-                    });
-                }
-            });
-        });
         $(document).ready(function() {
             $('#reservation1').daterangepicker(null, function(start, end, label) {
             });
@@ -411,12 +379,12 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     //},100);
     utils.bindList($(document), operates);
     var listDropDown = {
-        statusText:'订单状态',
+        statusText:'状态',
         settlementText:'结算状态'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.statusText = "订单状态" : listDropDown.statusText = $(this).text();
+        ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
         loadData();
     }).on('click', '#dropSettlementOptions a[data-id]', function () {
         param.isSettlement = $(this).data('id');

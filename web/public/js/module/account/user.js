@@ -124,6 +124,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         nickName:'',
         memberOperationId:'',
         canRecommendTaobaoItem:'',
+        orderByTaobaoCommissionRate:'',
         warn:warnValue
     };
 
@@ -153,6 +154,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             data.sourceText = listDropDown.sourceText;
             data.signUpText = listDropDown.signUpText;
             data.canRecommendText = listDropDown.canRecommendText;
+            data.taobaoCommissionRateText = listDropDown.taobaoCommissionRateText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -166,7 +168,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         statusText:'状态',
         sourceText:'来源',
         signUpText:'已签约',
-        canRecommendText:'好物推荐官'
+        canRecommendText:'好物推荐官',
+        taobaoCommissionRateText:'佣金率'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -186,6 +189,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropCanRecommendOptions a[data-id]', function () {
         param.canRecommendTaobaoItem = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.canRecommendText = "好物推荐官" : listDropDown.canRecommendText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropTaobaoCommissionRateOptions a[data-id]', function () {
+        param.orderByTaobaoCommissionRate = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.taobaoCommissionRateText = "佣金率" : listDropDown.taobaoCommissionRateText = $(this).text();
         param.pageNo = 1;
         loadData();
     });

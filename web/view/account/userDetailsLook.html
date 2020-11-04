@@ -21,17 +21,20 @@
                         <!--数据表格modelBuilder.js-->
                         <div class="col-lg-12" style="width: 97%">
                             <ul style=" list-style: none;height: 45px;padding-left: 0;line-height: 45px;margin-bottom: 0;">
-                                <li class="active" style="float: left;padding-left: 15px;width: 90px;height: 100%;border: 1px solid #cccccc;background: #fba07d;border-bottom: none">
-                                    <a href="#bqh1" id="big_headerTab1" data-toggle="tab" style="outline:none;color: #ffffff;cursor: pointer">好物商城</a>
+                                <li class="active" style="float: left;width: 90px;height: 100%;border: 1px solid #cccccc;padding-left: 15px;border-bottom: none;background: #fba07d;">
+                                    <a href="#bqh2" id="big_headerTab2" data-toggle="tab" style="outline:none;cursor: pointer;color: #ffffff">带货笔记</a>
                                 </li>
-                                <li class="active" style="float: left;width: 90px;height: 100%;border: 1px solid #cccccc;padding-left: 15px;border-left: none;border-bottom: none">
-                                    <a href="#bqh2" id="big_headerTab2" data-toggle="tab" style="outline:none;cursor: pointer;color: #555555">带货笔记</a>
+                                <li class="active" style="float: left;padding-left: 15px;width: 90px;height: 100%;border: 1px solid #cccccc;border-bottom: none;border-left: none;">
+                                    <a href="#bqh1" id="big_headerTab1" data-toggle="tab" style="outline:none;color: #555555;cursor: pointer">好物商城</a>
                                 </li>
                             </ul>
                             <div style="border: 10px solid #fba07d;padding-top: 9px">
                                 <ul class="nav nav-tabs">
+                                    <li class="active bigContent2" style="height: 28px">
+                                        <a href="#qh7" id="headerTab7" data-toggle="tab" style="outline:none;cursor: pointer;color: orange;">任务中心</a>
+                                    </li>
                                     <li class="active titleName" style="height: 28px">
-                                        <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;color: orange;cursor: pointer">奖励明细</a>
+                                        <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;cursor: pointer">收益明细</a>
                                     </li>
                                     <li class="active" style="height: 28px">
                                         <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;cursor: pointer">钱包信息</a>
@@ -45,7 +48,7 @@
                                     <li class="active" style="height: 28px">
                                         <a href="#qh5" id="headerTab5" data-toggle="tab" style="outline:none;cursor: pointer">账户信息</a>
                                     </li>
-                                    <li class="active bigContent1" style="height: 28px">
+                                    <li class="active bigContent1" style="height: 28px;display: none">
                                         <a href="#qh6" id="headerTab6" data-toggle="tab" style="outline:none;cursor: pointer">等级变化日志</a>
                                     </li>
                                 </ul>
@@ -111,13 +114,21 @@
                     <div class="col-6">
                         <div class="input-group">
                             <div class="input-group-prepend">
+                                <span class="input-group-text">佣金率</span>
+                            </div>
+                            <input type="text" value="<%= dataArr.taobaoCommissionRate %>" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
                                 <span class="input-group-text">会员运营Id</span>
                             </div>
                             <input type="text" value="<%= dataArr.memberOperationId %>" class="form-control">
                         </div>
                     </div>
-                </div>
-                <div class="row" style="margin-bottom: 20px">
                     <div class="col-6">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -687,6 +698,61 @@
         </tbody>
     </table>
     <div id="visaPagination2" class="d-flex justify-content-end" style="width: 50%"></div>
+</script>
+<!--带货笔记------任务中心-->
+<script id="taskList" type="text/html">
+    <table class="table table-hover table-bordered" id="taskTable" style="width: 50%">
+        <thead>
+        <tr>
+            <th style="width: 55%">任务</th>
+            <th style="width: 20%">佣金提升</th>
+            <th style="width: 25%">完成情况</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (dataArr.length > 0) { %>
+        <% for (var i = 0; i < dataArr.length; i++) { %>
+        <tr>
+            <td><%- dataArr[i].typeText %></td>
+            <td>
+                <% if(dataArr[i].commissionRate){ %>
+                ↑ <%= dataArr[i].commissionRate %> %
+                <% } %>
+            </td>
+            <td>
+                <% if(dataArr[i].type==1 || dataArr[i].type==2){ %>
+                <!--加入淘宝返佣计划-->  <!--进行淘宝账号绑定-->  <!--购买大神返利卡-->
+                <%- dataArr[i].isCompletedText %>
+                <% }else if(dataArr[i].type==9){ %>
+
+                <% if(dataArr[i].isCompleted!=2){ %>
+                <a style="text-decoration: underline;font-weight: bolder" href="@@HOSTview/mall/taobaoUserBuyLog.html?id=<%= dataArr[i].userId %>" target="_blank">
+                    <%- dataArr[i].isCompletedText %>
+                </a>
+                <div style="margin-top: 5px;color: green">到期时间：<%= dataArr[i].expireTime %></div>
+                <% }else{ %>
+                <%- dataArr[i].isCompletedText %>
+                <% } %>
+
+                <% }else{ %>
+                <!--1 5 15-->
+                <% if(dataArr[i].isCompleted==2){ %>
+                <span style="color: red"><%= dataArr[i].currentCnt %> / <%= dataArr[i].totalCnt %></span>
+                <% }else{ %>
+                <%- dataArr[i].isCompletedText %>
+                <% } %>
+                <% } %>
+            </td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="10">没有符合条件的记录</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <div id="taskPagination" class="d-flex justify-content-end" style="width: 50%"></div>
 </script>
 <script data-main="/public/js/module/account/userDetailsLook"></script>
 @@include('../../inc-footer.html')

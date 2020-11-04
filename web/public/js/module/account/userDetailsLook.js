@@ -12,7 +12,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 };
                 $("#basicMessage").html(template('basicList', getByIdData));
                 $("#basicMessage").find("input").prop('disabled', true);
-                operates.commissionLog();
+                operates.taskLists();
             });
         },
         commissionLog:function(){
@@ -113,6 +113,22 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $("#visaPagination2").html(utils.pagination(parseInt(data.cnt), userLevelLogParam.pageNo));
             });
         },
+        taskLists:function(){
+            utils.ajaxSubmit(apis.user.getTaobaoTaskLists, taskParam, function (data) {
+                $.each(data.dataArr,function(i,n){
+                    n.typeText = consts.status.taskType[n.type];
+                    n.userId = taskParam.userId;
+                    if(n.type!=9){
+                        n.isCompletedText = consts.status.isCompletedType[n.isCompleted];
+                    }else{
+                        n.isCompletedText = consts.status.isCompletedType1[n.isCompleted];
+                    }
+                });
+                $("#tabContent").html(template('taskList', data));
+                utils.bindPagination($("#taskPagination"), taskParam, operates.taskLists);
+                $("#taskPagination").html(utils.pagination(parseInt(data.cnt), taskParam.pageNo));
+            });
+        },
         //允许登录
         allow:function($this){
             var id = $("input[name=id]").val();
@@ -166,6 +182,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         userId:param[0]
     };
+    var taskParam = {
+        pageNo: 1,
+        pageSize:20,
+        userId:param[0]
+    };
     operates.look(param[0]);
     // 好物商城 or 带货笔记
     $("#big_headerTab1").on("click",function(){
@@ -173,6 +194,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#headerTab1").closest("li").siblings().find("a").css({color:"#555555"});
         operates.commissionLog();
         $(".bigContent1").show();
+        $(".bigContent2").hide();
         $(".titleName").find("a").text("奖励明细");
         $(this).css({color:"#ffffff"});
         $(this).closest("li").css({background:"#fba07d"});
@@ -180,10 +202,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
     $("#big_headerTab2").on("click",function(){
-        $("#headerTab1").css({color:"orange"});
-        $("#headerTab1").closest("li").siblings().find("a").css({color:"#555555"});
-        operates.taobaoCommissionLog();
+        $("#headerTab7").css({color:"orange"});
+        $("#headerTab7").closest("li").siblings().find("a").css({color:"#555555"});
+        operates.taskLists();
         $(".bigContent1").hide();
+        $(".bigContent2").show();
         $(".titleName").find("a").text("收益明细");
         $(this).css({color:"#ffffff"});
         $(this).closest("li").css({background:"#fba07d"});
@@ -238,6 +261,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     });
     $("#headerTab6").on("click",function(){
         operates.userLevelLogLists();
+        $(this).css({color:"orange"});
+        $(this).closest("li").siblings().find("a").css({color:"#555555"});
+    });
+    $("#headerTab7").on("click",function(){
+        operates.taskLists();
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
