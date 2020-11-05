@@ -29,6 +29,35 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             })
         },
+        //编辑
+        edit:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            var nickName = $this.closest("tr").find("td").eq(1).find("a").text();
+            var alias = "";
+            if($this.closest("tr").find("td").eq(1).find("div").length>0){
+                alias = $this.closest("tr").find("td").eq(1).find("div").text();
+            }else{
+                alias = '';
+            }
+            var getByIdData = {
+                dataArr:{
+                    id:id,
+                    nickName:nickName,
+                    alias:alias
+                }
+            };
+            utils.renderModal('编辑会员', template('modalDiv', getByIdData), function(){
+                if($("#visaPassportForm").valid()) {
+                    utils.loading(true);
+                    utils.ajaxSubmit(apis.user.updById, $("#visaPassportForm").serialize(), function (data) {
+                        utils.loading(false);
+                        hound.success("编辑成功", "", 1000);
+                        utils.modal.modal('hide');
+                        loadData();
+                    })
+                }
+            }, 'md');
+        },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");

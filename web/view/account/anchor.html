@@ -256,6 +256,29 @@
                     </div>
                 </div>
             </div>
+            <div class="form-row uploadFile2" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <span style="margin-top:6px;margin-right: 10px">上传精选封面图</span>
+                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar3" class="uploadImg2 d-none">选择文件</label>
+                        <button type="button" class="btn btn-default avatarUpload2" disabled>上传文件</button>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <% if (dataArr.recommendImg) { %>
+                        <h6 class="imgUrl2">
+                            <a target='_blank' href='<%= dataArr.recommendImg %>'>
+                                <img src="<%= dataArr.recommendImg %>" style="display: inline-block;width:100px;height: 33px;">
+                            </a>
+                        </h6>
+                        <% } else { %>
+                        <h6 style="margin-top: 9px" class="imgUrl2"><span style="color:red">暂无精选封面图</span></h6>
+                        <% } %>
+                        <input type="hidden" name="recommendImg" value="<%= dataArr.recommendImg %>">
+                    </div>
+                </div>
+            </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-6 singItem">
                     <div class="input-group">

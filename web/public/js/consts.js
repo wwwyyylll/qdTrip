@@ -238,6 +238,10 @@ define("consts", function() {
             isCompletedType1:{
                 '1':'<span style="color:green">已购买</span>',
                 '2':'<span style="color:red">未购买</span>'
+            },
+            recommendType:{
+                '1':'<span style="color:green">视频</span>',
+                '2':'<span style="color:orange">物料商品</span>'
             }
         }
     }

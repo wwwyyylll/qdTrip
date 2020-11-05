@@ -391,6 +391,10 @@ define("apis", function() {
                 c:'user',
                 a:'getById'
             },
+            updById:{
+                c:'user',
+                a:'updById'
+            },
             disableLoginById:{
                 c:'user',
                 a:'disableLoginById'
@@ -1300,6 +1304,28 @@ define("apis", function() {
             getLists:{
                 c:'taobaoUserTaskRebateCardBuyLog',
                 a:'getLists'
+            }
+        },
+        userRecommendTaobaoItem:{
+            getLists:{
+                c:'userRecommendTaobaoItem',
+                a:'getLists'
+            },
+            create:{
+                c:'userRecommendTaobaoItem',
+                a:'create'
+            },
+            updById:{
+                c:'userRecommendTaobaoItem',
+                a:'updById'
+            },
+            topById:{
+                c:'userRecommendTaobaoItem',
+                a:'topById'
+            },
+            offById:{
+                c:'userRecommendTaobaoItem',
+                a:'offById'
             }
         }
     }

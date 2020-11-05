@@ -72,7 +72,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 dataType: 'json',
                 success: function (res) {
                     $(".imgUrl").html("");
-                    $(".imgUrl").html("<a target='_blank' href='"+ res.result +"'>图片预览</a>");
+                    $(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 45px;height: 20px' src='"+ res.result +"'></a>");
                     $("input[name=pic]").val(res.result);
                 }
             }).fail(function (jqXHR, textStatus) {
@@ -127,8 +127,62 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 dataType: 'json',
                 success: function (res) {
                     $(".imgUrl1").html("");
-                    $(".imgUrl1").html("<a target='_blank' href='"+ res.result +"'>头像预览</a>");
+                    $(".imgUrl1").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 45px;height: 20px' src='"+ res.result +"'></a>");
                     $("input[name=avatar]").val(res.result);
+                }
+            }).fail(function (jqXHR, textStatus) {
+                hound.error('Request failed: ' + textStatus);
+            });
+        });
+    }
+    var picFile2 = "";
+    function uploadFile2(){
+        //选择图片文件
+        $(".uploadImg2").change(function(){
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                hound.alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            var file = this.files[0];
+            reader.onload = function(e) {
+                //获取图片dom
+                $(".imgUrl2").html('<i class="fa fa-image mr-2"></i>' + file.name)
+                if(file.name!=""){
+                    $(".avatarUpload2").removeAttr("disabled");
+                    $(".avatarUpload2").removeClass("btn-default");
+                    $(".avatarUpload2").addClass("btn-primary");
+                }
+            };
+            reader.readAsDataURL(file);
+
+            if(file){
+                var url = URL.createObjectURL(file);
+                var base64 = blobToDataURL(file,function(base64Url) {
+                    picFile2 = base64Url;
+                })
+            }
+        })
+        // 上传图片文件
+        $(".uploadFile2").find('.avatarUpload2').click(function () {
+            $.ajax({
+                type:'POST',
+                url: "@@API",
+                data: {
+                    c:"img",
+                    a:"uploadForBase64",
+                    linkUserName:consts.param.linkUserName,
+                    linkPassword:consts.param.linkPassword,
+                    signature:consts.param.signature,
+                    userToken: $.cookie('userToken'),
+                    content:picFile2
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $(".imgUrl2").html("");
+                    $(".imgUrl2").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 45px;height: 20px' src='"+ res.result +"'></a>");
+                    $("input[name=recommendImg]").val(res.result);
                 }
             }).fail(function (jqXHR, textStatus) {
                 hound.error('Request failed: ' + textStatus);
@@ -160,6 +214,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         }, 'lg');
         uploadFile();
         uploadFile1();
+        uploadFile2();
     });
 
     //页面操作配置
@@ -197,6 +252,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }, 'lg');
                 uploadFile();
                 uploadFile1();
+                uploadFile2();
             });
         },
         addTag:function($this){

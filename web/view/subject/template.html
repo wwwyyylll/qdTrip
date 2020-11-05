@@ -116,6 +116,25 @@
                     <input type="hidden" name="shareImg" value="<%= dataArr.shareImg %>">
                 </div>
             </div>
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
+                <div class="input-group">
+                    <span style="margin-top:6px;margin-right: 10px">上传精选封面图</span>
+                    <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                    <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    <span class="temporaryFile" style="display: none"></span>
+                    <% if (dataArr.recommendImg) { %>
+                    <h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">
+                        <a target='_blank' href='<%= dataArr.recommendImg %>'>
+                            <img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.recommendImg %>">
+                        </a>
+                    </h6>
+                    <% } else { %>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无精选封面图</span></h6>
+                    <% } %>
+                    <!--<h6 style="color: red;margin-top: 9px;margin-left: 10px">（提示：上传的分享小图的尺寸为110×110）</h6>-->
+                    <input type="hidden" name="recommendImg" value="<%= dataArr.recommendImg %>">
+                </div>
+            </div>
         </div>
         <div class="tile-body">
             <div id="basicMessage"></div>
