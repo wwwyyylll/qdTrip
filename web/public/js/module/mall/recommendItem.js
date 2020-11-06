@@ -80,6 +80,24 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
         });
     }
+    function typeChange(){
+        $("select[name=type]").on("change",function(){
+            var typeValue = $(this).val();
+            if(typeValue==1){
+                $(".itemDiv").hide();
+                $(".uploadFile").show();
+                $(".videoDiv").show();
+            }else if(typeValue==2){
+                $(".itemDiv").show();
+                $(".uploadFile").hide();
+                $(".videoDiv").hide();
+            }else{
+                $(".itemDiv").hide();
+                $(".uploadFile").hide();
+                $(".videoDiv").hide();
+            }
+        })
+    }
     //新增
     $addModal.on("click",function(){
         var initialData = {
@@ -96,6 +114,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             }
         }, 'lg');
         uploadFile();
+        typeChange();
     });
 
     //页面操作配置
@@ -105,18 +124,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             var tr = $this.closest("tr");
             var userId = tr.find("td").eq(1).text();
-            var itemId = tr.find("td").eq(2).text();
-            var reason = tr.find("td").eq(5).text();
+            var itemId = tr.find("td").eq(3).text();
+            var reason = tr.find("td").eq(6).text();
             var type = "";
-            if(tr.find("td").eq(3).text()=="视频"){
+            if(tr.find("td").eq(4).text()=="视频"){
                 type = 1;
-            }else if(tr.find("td").eq(3).text()=="物料商品"){
+            }else if(tr.find("td").eq(4).text()=="物料商品"){
                 type = 2;
             }
-            var videoUrl = tr.find("td").eq(6).text();
+            var videoUrl = tr.find("td").eq(7).text();
             var coverImg = '';
-            if(tr.find("td").eq(4).find("a").length>0){
-                coverImg = tr.find("td").eq(4).find("a").attr("href");
+            if(tr.find("td").eq(5).find("a").length>0){
+                coverImg = tr.find("td").eq(5).find("a").attr("href");
             }else{
                 coverImg = '';
             }
@@ -141,24 +160,25 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }
             }, 'lg');
             uploadFile();
+            typeChange();
         },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
             var tr = $this.closest("tr");
             var userId = tr.find("td").eq(1).text();
-            var itemId = tr.find("td").eq(2).text();
-            var reason = tr.find("td").eq(5).text();
+            var itemId = tr.find("td").eq(3).text();
+            var reason = tr.find("td").eq(6).text();
             var type = "";
-            if(tr.find("td").eq(3).text()=="视频"){
+            if(tr.find("td").eq(4).text()=="视频"){
                 type = 1;
-            }else if(tr.find("td").eq(3).text()=="物料商品"){
+            }else if(tr.find("td").eq(4).text()=="物料商品"){
                 type = 2;
             }
-            var videoUrl = tr.find("td").eq(6).text();
+            var videoUrl = tr.find("td").eq(7).text();
             var coverImg = '';
-            if(tr.find("td").eq(4).find("a").length>0){
-                coverImg = tr.find("td").eq(4).find("a").attr("href");
+            if(tr.find("td").eq(5).find("a").length>0){
+                coverImg = tr.find("td").eq(5).find("a").attr("href");
             }else{
                 coverImg = '';
             }
@@ -185,11 +205,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             });
         },
-        //有效
+        //置顶
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
-            hound.reason('确认置顶吗?', '请输入置顶理由', function (data) {
-                utils.ajaxSubmit(apis.userRecommendTaobaoItem.topById, {id: id,reason:data}, function (data) {
+            hound.confirm('确认置顶吗?', '', function () {
+                utils.ajaxSubmit(apis.userRecommendTaobaoItem.topById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -211,7 +231,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.typeText = consts.status.recommendType[n.type];
             });
             $.each(data.dataArr,function(i,n){
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + startBouutn + stopButton : n.materialButtonGroup = comButtons ;
             });
             data.statusText = listDropDown.statusText;
             data.typeText = listDropDown.typeText;

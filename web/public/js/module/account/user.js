@@ -10,7 +10,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">设为分销商</button>',
         bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>',
         canRecommendButton = '<button class="btn btn-primary" type="button" data-operate="canRecommend">设为好物推荐官</button>',
-        cancelRecommendButton = '<button class="btn btn-danger" type="button" data-operate="cancelRecommend">取消好物推荐官</button>';
+        cancelRecommendButton = '<button class="btn btn-danger" type="button" data-operate="cancelRecommend">取消好物推荐官</button>',
+        signUpButton = '<button class="btn btn-primary" type="button" data-operate="signUp">已签约</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -103,6 +104,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             })
         },
+        signUp:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认已签约吗?','',function(data){
+                utils.ajaxSubmit(apis.user.signUpById, {id: id}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
         addDist:function($this){
             var userId = $this.closest("tr").attr("data-id");
             var tr = $this.closest("tr");
@@ -177,6 +187,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     n.materialButtonGroup = n.materialButtonGroup + cancelRecommendButton ;
                 }else if(n.canRecommendTaobaoItem == 2){
                     n.materialButtonGroup = n.materialButtonGroup + canRecommendButton ;
+                }
+                if(n.isSignUp == 2){
+                    n.materialButtonGroup = n.materialButtonGroup + signUpButton ;
+                }else{
+                    n.materialButtonGroup = n.materialButtonGroup ;
                 }
             });
             data.statusText = listDropDown.statusText;

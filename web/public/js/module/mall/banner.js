@@ -154,7 +154,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         status:'',
-        title:''
+        title:'',
+        position:''
     };
 
     function loadData() {
@@ -169,6 +170,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
             });
             data.statusText = listDropDown.statusText;
+            data.positionText = listDropDown.positionText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -178,11 +180,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     loadData();
     utils.bindList($(document), operates);
     var listDropDown = {
-        statusText:'状态'
+        statusText:'状态',
+        positionText:'显示位置'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        loadData();
+    }).on('click', '#dropPositionOptions a[data-id]', function () {
+        param.position = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.positionText = "显示位置" : listDropDown.positionText = $(this).text();
         loadData();
     });
     $("#search").on("click",function(){

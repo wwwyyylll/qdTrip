@@ -37,6 +37,9 @@
                     <a class="three_item common-item" href="@@HOSTview/mall/recommendItem.html"><i class="icon fa fa-circle-o"></i>好物推荐</a>
                 </li>
                 <li class="three_menu">
+                    <a class="three_item common-item" href="@@HOSTview/mall/recommendAnchorDate.html"><i class="icon fa fa-circle-o"></i>好物推荐---主播带货日期</a>
+                </li>
+                <li class="three_menu">
                     <a class="three_item common-item" href="@@HOSTview/mall/userRecommend.html"><i class="icon fa fa-circle-o"></i>好物推荐申请</a>
                 </li>
                 <li class="three_menu">
@@ -219,7 +222,7 @@
                     <span class="app-menu__label"><%= data[i].child[j].title %></span>
                     <i class="fa fa-angle-right"></i>
                 </a>
-                <ul class="three_list">
+                <ul class="three_list" style="padding-left: 20px">
                     <% for(var k=0;k < data[i].child[j].child.length;k++){ %>
                     <li><a class="three_item common-item" href="@@HOSTview/<%= data[i].child[j].child[k].url %>"><i class="icon fa fa-circle-o"></i><%= data[i].child[j].child[k].title %></a></li>
                     <% } %>

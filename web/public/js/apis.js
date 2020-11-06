@@ -438,6 +438,10 @@ define("apis", function() {
             getTaobaoTaskLists:{
                 c:'user',
                 a:'getTaobaoTaskLists'
+            },
+            signUpById:{
+                c:'user',
+                a:'signUpById'
             }
         },
         distributors:{
@@ -1325,6 +1329,20 @@ define("apis", function() {
             },
             offById:{
                 c:'userRecommendTaobaoItem',
+                a:'offById'
+            }
+        },
+        taobaoRecommendAnchorDateSubject:{
+            getLists:{
+                c:'taobaoRecommendAnchorDateSubject',
+                a:'getLists'
+            },
+            topById:{
+                c:'taobaoRecommendAnchorDateSubject',
+                a:'topById'
+            },
+            offById:{
+                c:'taobaoRecommendAnchorDateSubject',
                 a:'offById'
             }
         }

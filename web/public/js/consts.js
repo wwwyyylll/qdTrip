@@ -214,7 +214,8 @@ define("consts", function() {
             },
             position:{
                 '1':'<span style="color:green"> 头部</span>',
-                '2':'<span style="color:darkorange"> 左下角</span>'
+                '2':'<span style="color:darkorange"> 左下角</span>',
+                '3':'<span style="color:blue"> 头二</span>'
             },
             imageType:{
                 '1':'<span style="color:orange"> 内测</span>',
