@@ -10,7 +10,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
         lookGoodsButton = '<button class="btn btn-info" type="button" data-operate="lookGoods">查看商品</button>',
-        sendNoticeButton = '<button class="btn btn-success" type="button" data-operate="sendNotice">发送直播通知</button>';
+        sendNoticeButton = '<button class="btn btn-success" type="button" data-operate="sendNotice">发送直播通知</button>',
+        saveArticleButton = '<button class="btn btn-primary" type="button" data-operate="saveArticle">生成软文</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -105,11 +106,22 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             });
         },
+        //生成软文
+        saveArticle:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认生成软文吗?', '', function () {
+                utils.ajaxSubmit(apis.taobaoArticle.saveArticle, {id: id,type:1}, function (data) {
+                    hound.success("操作成功","",'').then(function(){
+                        loadData();
+                    });
+                });
+            });
+        },
         lookGoods:function($this){
             var id = $this.closest("tr").attr("data-id");
             window.open("@@HOSTview/mall/goods.html?dateId=" + id);
         }
-    }
+    };
 
     var param = {
         pageNo: 1,
@@ -148,6 +160,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 (n.isNotice=='2')? n.noticeText = "<span style='color:red'>未发送</span>" : n.noticeText = "<span style='color:green'>已发送"+ "【" + n.noticeCnt + "个】" +"用户</span>" ;
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + lookGoodsButton : n.materialButtonGroup = comButtons + startBouutn + lookGoodsButton ;
                 (n.isNotice=='2')? n.materialButtonGroup = n.materialButtonGroup + sendNoticeButton : n.materialButtonGroup = n.materialButtonGroup ;
+                n.materialButtonGroup = n.materialButtonGroup + saveArticleButton ;
             });
             data.statusText = listDropDown.statusText;
             data.goodsCntText = listDropDown.goodsCntText;

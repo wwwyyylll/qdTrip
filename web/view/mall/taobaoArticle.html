@@ -1,0 +1,145 @@
+@@include('../../inc-header.html', {"title": "软文列表"})
+@@include('../../top-nav.html')
+@@include('../../left-nav.html')
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-th-list"></i> 软文列表</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active"><a href="#">软文列表</a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top: 10px">
+        <!--数据表格modelBuilder.js-->
+        <div class="col-lg-12" style="width: 97%">
+            <ul class="nav nav-tabs">
+                <li class="active" style="height: 28px">
+                    <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;background: #ffffff;color: orange;cursor: pointer">支持CSS列表</a>
+                </li>
+                <li class="active" style="height: 28px">
+                    <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;background: #ffffff;cursor: pointer">不支持CSS列表</a>
+                </li>
+                <li class="active" style="color: red;padding-left: 10px">*类型：1==主播带货日期&nbsp;&nbsp;&nbsp;&nbsp;2==排行榜&nbsp;&nbsp;&nbsp;&nbsp;3==主题带货</li>
+            </ul>
+            <div class="tab-content" id="tabContent"></div>
+        </div>
+    </div>
+</main>
+<!--已处理列表信息模<-->
+<script id="processedList" type="text/html">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="row" style="margin-bottom:20px">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <input value="<%= content %>" type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
+                            <button class="btn btn-secondary" type="button" id="selectsearchlabel"><%= contentType %></button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item searchlabel" href="#">类型</a>
+                                    <a class="dropdown-item searchlabel" href="#">日期</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left:5px">
+                            <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-body">
+                    <div class="goodsSeparated specDiv">
+                        <% for (var i = 0; i < dataArr.length; i++) { %>
+                        <div class="goodsItemSeparated specItem" data-id="<%= dataArr[i].id %>">
+                            <div class="form-row" style="margin-bottom: 15px">
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">软文标题</span>
+                                        </div>
+                                        <input type="text" disabled  value="<%= dataArr[i].title %>" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-bottom: 15px">
+                                <div class="col-12">
+                                    <div class="editorDiv"></div>
+                                    <textarea style="resize:vertical;min-height: 300px" class="form-control" name="cssHtml" required><%= dataArr[i].cssHtml %></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row" style="padding-left: 5px">
+                                <button class="btn btn-success" data-id="1" data-operate="saveArticle">保存代码</button>
+                                <button class="btn btn-primary" data-operate="preview" style="margin-left: 10px">预览效果</button>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!--待处理列表信息模板-->
+<script id="waitList" type="text/html">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="row" style="margin-bottom:20px">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <input value="<%= content %>" type="text" class="form-control" id="searchCont1" autocomplete="off" style="width:60%">
+                            <button class="btn btn-secondary" type="button" id="selectsearchlabel1"><%= contentType %></button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop11" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item searchlabel" href="#">类型</a>
+                                    <a class="dropdown-item searchlabel" href="#">日期</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left:5px">
+                            <div id="search1" class="btn btn-primary" style="outline:none">提交搜索</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-body">
+                    <div class="goodsSeparated specDiv">
+                        <% for (var i = 0; i < dataArr.length; i++) { %>
+                        <div class="goodsItemSeparated specItem">
+                            <div class="form-row" style="margin-bottom: 15px">
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">软文标题</span>
+                                        </div>
+                                        <input type="text" disabled  value="<%= dataArr[i].title %>" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-bottom: 15px">
+                                <div class="col-12">
+                                    <div class="editorDiv"></div>
+                                    <textarea style="resize:vertical;min-height: 300px" class="form-control" name="cssHtml" required><%= dataArr[i].noCssHtml %></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row" style="padding-left: 5px">
+                                <button class="btn btn-success" data-id="2" data-operate="saveArticle">保存代码</button>
+                                <button class="btn btn-primary" data-operate="preview" style="margin-left: 10px">预览效果</button>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script data-main="/public/js/module/mall/taobaoArticle"></script>
+<script type="text/javascript" src="/public/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/public/js/plugins/moment.js"></script>
+@@include('../../inc-footer.html')
+<script type="text/javascript" src="/public/js/plugins/daterangepicker.js"></script>

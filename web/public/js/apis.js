@@ -278,6 +278,10 @@ define("apis", function() {
             sendNotice:{
                 c:'anchorGoodsDate',
                 a:'sendNotice'
+            },
+            saveArticle:{
+                c:'anchorGoodsDate',
+                a:'saveArticle'
             }
         },
         anchorCompleteRecord:{
@@ -442,6 +446,10 @@ define("apis", function() {
             signUpById:{
                 c:'user',
                 a:'signUpById'
+            },
+            cancelSignUpById:{
+                c:'user',
+                a:'cancelSignUpById'
             }
         },
         distributors:{
@@ -1344,6 +1352,20 @@ define("apis", function() {
             offById:{
                 c:'taobaoRecommendAnchorDateSubject',
                 a:'offById'
+            }
+        },
+        taobaoArticle:{
+            getLists:{
+                c:'taobaoArticle',
+                a:'getLists'
+            },
+            saveArticle:{
+                c:'taobaoArticle',
+                a:'saveArticle'
+            },
+            editArticle:{
+                c:'taobaoArticle',
+                a:'editArticle'
             }
         }
     }

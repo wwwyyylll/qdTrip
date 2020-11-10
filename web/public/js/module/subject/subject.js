@@ -9,8 +9,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
-        syncButton = '<button class="btn btn-success" type="button" data-operate="sync">同步商品</button>';
-
+        syncButton = '<button class="btn btn-success" type="button" data-operate="sync">同步商品</button>',
+        saveArticleButton = '<button class="btn btn-primary" type="button" data-operate="saveArticle">生成软文</button>';
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
         $("#searchCont").val("");
@@ -50,6 +50,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             });
         },
+        //生成软文
+        saveArticle:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认生成软文吗?', '', function () {
+                utils.ajaxSubmit(apis.taobaoArticle.saveArticle, {id: id,type:3}, function (data) {
+                    hound.success("操作成功","",'').then(function(){
+                        loadData();
+                    });
+                });
+            });
+        },
         //同步商品
         sync:function($this){
             var id = $this.closest("tr").attr("data-id");
@@ -83,7 +94,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + syncButton: n.materialButtonGroup = comButtons + startBouutn + syncButton;
-            })
+                n.materialButtonGroup = n.materialButtonGroup + saveArticleButton ;
+            });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
@@ -98,8 +110,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var urlParam = id.split("=");
     if(urlParam[0]==1){
         param.hasGoodsOff = 1;
+        param.status = 1;
     }else{
         param.hasGoodsOff = '';
+        param.status = '';
     }
 
     loadData();

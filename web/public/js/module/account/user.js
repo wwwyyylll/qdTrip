@@ -11,13 +11,79 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>',
         canRecommendButton = '<button class="btn btn-primary" type="button" data-operate="canRecommend">设为好物推荐官</button>',
         cancelRecommendButton = '<button class="btn btn-danger" type="button" data-operate="cancelRecommend">取消好物推荐官</button>',
-        signUpButton = '<button class="btn btn-primary" type="button" data-operate="signUp">已签约</button>';
+        signUpButton = '<button class="btn btn-primary" type="button" data-operate="signUp">已签约</button>',
+        cancelSignUpButton = '<button class="btn btn-danger" type="button" data-operate="cancelSignUp">取消签约</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
         $("#searchCont").val("");
         $("#searchCont").attr("data-id",'');
     });
+
+    //上传图片文件
+    function blobToDataURL(blob,cb) {
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var base64 = evt.target.result;
+            cb(base64)
+        };
+        reader.readAsDataURL(blob);
+    }
+    function uploadFile(){
+        //选择图片文件
+        $(".uploadImg").change(function(){
+            var uploadFile = $(this).closest(".uploadFile");
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                hound.alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            var file = this.files[0];
+            reader.onload = function(e) {
+                //获取图片dom
+                uploadFile.find(".imgUrl").html('<i class="fa fa-image mr-2"></i>' + file.name)
+                if(file.name!=""){
+                    uploadFile.find(".avatarUpload").removeAttr("disabled");
+                    uploadFile.find(".avatarUpload").removeClass("btn-default");
+                    uploadFile.find(".avatarUpload").addClass("btn-primary");
+                }
+            };
+            reader.readAsDataURL(file);
+
+            if(file){
+                var url = URL.createObjectURL(file);
+                var base64 = blobToDataURL(file,function(base64Url) {
+                    uploadFile.find(".temporaryFile").text(base64Url);
+                })
+            }
+        })
+        // 上传图片文件
+        $('.avatarUpload').click(function () {
+            var uploadFile = $(this).closest(".uploadFile");
+            $.ajax({
+                type:'POST',
+                url: "@@API",
+                data: {
+                    c:"img",
+                    a:"uploadForBase64",
+                    linkUserName:consts.param.linkUserName,
+                    linkPassword:consts.param.linkPassword,
+                    signature:consts.param.signature,
+                    userToken: $.cookie('userToken'),
+                    content:uploadFile.find(".temporaryFile").text()
+                },
+                dataType: 'json',
+                success: function (res) {
+                    uploadFile.find(".imgUrl").html("");
+                    uploadFile.find(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 25px;height: 20px' src='"+ res.result +"'></a>");
+                    uploadFile.find("input[type=hidden]").val(res.result);
+                }
+            }).fail(function (jqXHR, textStatus) {
+                hound.error('Request failed: ' + textStatus);
+            });
+        });
+    }
 
     //页面操作配置
     var operates = {
@@ -40,11 +106,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             }else{
                 alias = '';
             }
+            var avatar = "";
+            if($this.closest("tr").find("td").eq(2).find("a").length>0){
+                avatar = $this.closest("tr").find("td").eq(2).find("a").attr("href");
+            }else{
+                avatar = "";
+            }
             var getByIdData = {
                 dataArr:{
                     id:id,
                     nickName:nickName,
-                    alias:alias
+                    alias:alias,
+                    avatar:avatar
                 }
             };
             utils.renderModal('编辑会员', template('modalDiv', getByIdData), function(){
@@ -58,6 +131,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     })
                 }
             }, 'md');
+            uploadFile();
         },
         //查看
         look:function($this){
@@ -108,6 +182,15 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认已签约吗?','',function(data){
                 utils.ajaxSubmit(apis.user.signUpById, {id: id}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
+        cancelSignUp:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认取消签约吗?','',function(data){
+                utils.ajaxSubmit(apis.user.cancelSignUpById, {id: id}, function (data) {
                     hound.success("操作成功", "", 1000);
                     loadData();
                 });
@@ -191,7 +274,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 if(n.isSignUp == 2){
                     n.materialButtonGroup = n.materialButtonGroup + signUpButton ;
                 }else{
-                    n.materialButtonGroup = n.materialButtonGroup ;
+                    n.materialButtonGroup = n.materialButtonGroup + cancelSignUpButton ;
                 }
             });
             data.statusText = listDropDown.statusText;
