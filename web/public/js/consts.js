@@ -243,6 +243,20 @@ define("consts", function() {
             recommendType:{
                 '1':'<span style="color:green">视频</span>',
                 '2':'<span style="color:orange">物料商品</span>'
+            },
+            articleType:{
+                '1':'<span style="color:green">主播带货日期</span>',
+                '2':'<span style="color:orange">排行榜</span>',
+                '3':'<span style="color:blueviolet">主题带货</span>'
+            },
+            articleType1:{
+                '1':'主播带货日期',
+                '2':'排行榜',
+                '3':'主题带货'
+            },
+            recommendSource:{
+                '2':'<span style="color:green">后台</span>',
+                '1':'<span style="color:orange">H5</span>'
             }
         }
     }

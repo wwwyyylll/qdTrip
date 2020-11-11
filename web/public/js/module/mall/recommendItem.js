@@ -221,7 +221,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         status:'',
         itemId:'',
-        type:''
+        type:'',
+        source:''
     };
 
     function loadData() {
@@ -229,12 +230,14 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.goodsStatus[n.status];
                 n.typeText = consts.status.recommendType[n.type];
+                n.sourceText = consts.status.recommendSource[n.source];
             });
             $.each(data.dataArr,function(i,n){
                 (n.status=="1")? n.materialButtonGroup = comButtons + startBouutn + stopButton : n.materialButtonGroup = comButtons ;
             });
             data.statusText = listDropDown.statusText;
             data.typeText = listDropDown.typeText;
+            data.sourceText = listDropDown.sourceText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -245,7 +248,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     utils.bindList($(document), operates);
     var listDropDown = {
         statusText:'状态',
-        typeText:'类型'
+        typeText:'类型',
+        sourceText:'来源'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -254,6 +258,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropTypeOptions a[data-id]', function () {
         param.type = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.typeText = "类型" : listDropDown.typeText = $(this).text();
+        loadData();
+    }).on('click', '#dropSourceOptions a[data-id]', function () {
+        param.source = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.sourceText = "来源" : listDropDown.sourceText = $(this).text();
         loadData();
     });
     $("#search").on("click",function(){

@@ -54,7 +54,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         saveArticle:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认生成软文吗?', '', function () {
+                utils.loading(true);
                 utils.ajaxSubmit(apis.taobaoArticle.saveArticle, {id: id,type:3}, function (data) {
+                    utils.loading(false);
                     hound.success("操作成功","",'').then(function(){
                         loadData();
                     });

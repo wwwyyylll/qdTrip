@@ -1359,6 +1359,10 @@ define("apis", function() {
                 c:'taobaoArticle',
                 a:'getLists'
             },
+            getById:{
+                c:'taobaoArticle',
+                a:'getById'
+            },
             saveArticle:{
                 c:'taobaoArticle',
                 a:'saveArticle'

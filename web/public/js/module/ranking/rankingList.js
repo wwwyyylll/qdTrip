@@ -9,7 +9,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-primary" type="button" data-operate="edit">编辑</button>'+
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">有效</button>',
-        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>';
+        stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">无效</button>',
+        saveArticleButton = '<button class="btn btn-primary" type="button" data-operate="saveArticle">生成软文</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -169,6 +170,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     loadData();
                 });
             });
+        },
+        //生成软文
+        saveArticle:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认生成软文吗?', '', function () {
+                utils.loading(true);
+                utils.ajaxSubmit(apis.taobaoArticle.saveArticle, {id: id,type:2}, function (data) {
+                    utils.loading(false);
+                    hound.success("操作成功","",'').then(function(){
+                        loadData();
+                    });
+                });
+            });
         }
     };
 
@@ -190,6 +204,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.isShowSearchIndexText = consts.status.isBind[n.isShowSearchIndex];
                 n.showSearchIndexPositionText = consts.status.indexPosition[n.showSearchIndexPosition];
                 (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                if(n.canCreateArticle=='yes'){
+                    n.materialButtonGroup = n.materialButtonGroup + saveArticleButton ;
+                }else{
+                    n.materialButtonGroup = n.materialButtonGroup ;
+                }
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));
