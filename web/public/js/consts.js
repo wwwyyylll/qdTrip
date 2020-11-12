@@ -178,7 +178,8 @@ define("consts", function() {
             },
             taobaoCommissionType:{
                 '1':'返佣收益',
-                '2':'推广佣金'
+                '2':'推广佣金',
+                '3':'大神卡佣金'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',

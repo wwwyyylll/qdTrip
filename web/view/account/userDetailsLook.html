@@ -250,9 +250,8 @@
                 <div><%- dataArr[i].contentArr.typeText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==3){ %>
                 <!--销售佣金-->
-                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
-                <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
-                <div><%= dataArr[i].createTime %></div>
+                <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
+                <div><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==4){ %>
                 <!--商品抵扣-->
                 <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
@@ -722,7 +721,13 @@
             <td>
                 <% if(dataArr[i].type==1 || dataArr[i].type==2){ %>
                 <!--加入淘宝返佣计划-->  <!--进行淘宝账号绑定-->  <!--购买大神返利卡-->
+                <% if(dataArr[i].isCompleted==2){ %>
                 <%- dataArr[i].isCompletedText %>
+                <% }else{ %>
+                <%- dataArr[i].isCompletedText %>
+                <div style="margin-top: 5px"><%= dataArr[i].updateTime %></div>
+                <% } %>
+
                 <% }else if(dataArr[i].type==9){ %>
 
                 <% if(dataArr[i].isCompleted!=2){ %>
@@ -740,6 +745,7 @@
                 <span style="color: red"><%= dataArr[i].currentCnt %> / <%= dataArr[i].totalCnt %></span>
                 <% }else{ %>
                 <%- dataArr[i].isCompletedText %>
+                <div style="margin-top: 5px"><%= dataArr[i].updateTime %></div>
                 <% } %>
                 <% } %>
             </td>
