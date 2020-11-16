@@ -126,7 +126,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
                 $("#tabContent").html(template('taskList', data));
                 utils.bindPagination($("#taskPagination"), taskParam, operates.taskLists);
-                $("#taskPagination").html(utils.pagination(parseInt(data.cnt), taskParam.pageNo));
+                $("#taskPagination").html(utils.pagination(parseInt(data.cnt), taskParam.pageNo,20));
             });
         },
         //允许登录

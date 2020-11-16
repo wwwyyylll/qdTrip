@@ -1,6 +1,6 @@
 require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var getByIdData = {};
-    var loadFlag = 1;
+    var loadFlag = 2;
     //页面操作配置
     var operates = {
         //查看
@@ -37,6 +37,22 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         preview:function($this){
             var runTextArea = $this.closest(".tile-body").find("textarea").val();
+            var oNewWin = window.open('about:blank');
+            oNewWin.document.write(runTextArea);
+        },
+        previewPwd:function($this){
+            var runTextArea = $this.closest(".tile-body").find("textarea").val();
+            var oNewWin = window.open('about:blank');
+            oNewWin.document.write(runTextArea);
+
+            var arr = oNewWin.document.querySelectorAll("div");
+            for(var i=0;i<arr.length;i++){
+                if(arr[i].innerText.indexOf("淘口令")!='-1'){
+                    var nextElement = arr[i].nextSibling.nextSibling;
+                    arr[i].remove();
+                    nextElement.remove();
+                }
+            }
             var oNewWin = window.open('about:blank');
             oNewWin.document.write(runTextArea);
         },
