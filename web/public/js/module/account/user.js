@@ -100,6 +100,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
             var nickName = $this.closest("tr").find("td").eq(1).find("a").text();
+            var inviteCode = $this.closest("tr").find("td").eq(4).text();
             var alias = "";
             if($this.closest("tr").find("td").eq(1).find("div").length>0){
                 alias = $this.closest("tr").find("td").eq(1).find("div").text();
@@ -117,6 +118,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     id:id,
                     nickName:nickName,
                     alias:alias,
+                    inviteCode:inviteCode,
                     avatar:avatar
                 }
             };

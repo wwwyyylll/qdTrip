@@ -279,6 +279,29 @@
                     </div>
                 </div>
             </div>
+            <div class="form-row uploadFile3" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <span style="margin-top:6px;margin-right: 10px">上传分享小图</span>
+                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar4" class="uploadImg3 d-none">选择文件</label>
+                        <button type="button" class="btn btn-default avatarUpload3" disabled>上传文件</button>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <% if (dataArr.shareImg) { %>
+                        <h6 class="imgUrl3">
+                            <a target='_blank' href='<%= dataArr.shareImg %>'>
+                                <img src="<%= dataArr.shareImg %>" style="display: inline-block;width:33px;height: 33px;">
+                            </a>
+                        </h6>
+                        <% } else { %>
+                        <h6 style="margin-top: 9px" class="imgUrl3"><span style="color:red">暂无分享小图</span></h6>
+                        <% } %>
+                        <input type="hidden" name="shareImg" value="<%= dataArr.shareImg %>">
+                    </div>
+                </div>
+            </div>
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-6 singItem">
                     <div class="input-group">

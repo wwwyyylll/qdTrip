@@ -189,6 +189,60 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
         });
     }
+    var picFile3 = "";
+    function uploadFile3(){
+        //选择图片文件
+        $(".uploadImg3").change(function(){
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                hound.alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+            var file = this.files[0];
+            reader.onload = function(e) {
+                //获取图片dom
+                $(".imgUrl3").html('<i class="fa fa-image mr-2"></i>' + file.name)
+                if(file.name!=""){
+                    $(".avatarUpload3").removeAttr("disabled");
+                    $(".avatarUpload3").removeClass("btn-default");
+                    $(".avatarUpload3").addClass("btn-primary");
+                }
+            };
+            reader.readAsDataURL(file);
+
+            if(file){
+                var url = URL.createObjectURL(file);
+                var base64 = blobToDataURL(file,function(base64Url) {
+                    picFile3 = base64Url;
+                })
+            }
+        })
+        // 上传图片文件
+        $(".uploadFile3").find('.avatarUpload3').click(function () {
+            $.ajax({
+                type:'POST',
+                url: "@@API",
+                data: {
+                    c:"img",
+                    a:"uploadForBase64",
+                    linkUserName:consts.param.linkUserName,
+                    linkPassword:consts.param.linkPassword,
+                    signature:consts.param.signature,
+                    userToken: $.cookie('userToken'),
+                    content:picFile3
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $(".imgUrl3").html("");
+                    $(".imgUrl3").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 25px;height: 20px' src='"+ res.result +"'></a>");
+                    $("input[name=shareImg]").val(res.result);
+                }
+            }).fail(function (jqXHR, textStatus) {
+                hound.error('Request failed: ' + textStatus);
+            });
+        });
+    }
 
     //新增
     $addModal.on("click",function(){
@@ -215,6 +269,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         uploadFile();
         uploadFile1();
         uploadFile2();
+        uploadFile3();
     });
 
     //页面操作配置
@@ -253,6 +308,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 uploadFile();
                 uploadFile1();
                 uploadFile2();
+                uploadFile3();
             });
         },
         addTag:function($this){
