@@ -247,6 +247,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         isSignUp:'',
         nickName:'',
         memberOperationId:'',
+        id:'',
         canRecommendTaobaoItem:'',
         orderByTaobaoCommissionRate:'',
         warn:warnValue
@@ -333,10 +334,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         if(selectsearchLabel=="昵称"){
             param.nickName = $("#searchCont").val();
             param.memberOperationId = '';
+            param.id = '';
             loadData();
         }else if(selectsearchLabel=="会员运营Id"){
+            param.id = '';
             param.nickName = '';
             param.memberOperationId = $("#searchCont").val();
+            loadData();
+        }else if(selectsearchLabel=="会员ID"){
+            param.nickName = '';
+            param.memberOperationId = '';
+            param.id = $("#searchCont").val();
             loadData();
         }
     });

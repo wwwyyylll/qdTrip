@@ -1371,6 +1371,62 @@ define("apis", function() {
                 c:'taobaoArticle',
                 a:'editArticle'
             }
+        },
+        announce:{
+            getLists:{
+                c:'announce',
+                a:'getLists'
+            },
+            create:{
+                c:'announce',
+                a:'create'
+            },
+            getById:{
+                c:'announce',
+                a:'getById'
+            },
+            updateById:{
+                c:'announce',
+                a:'updateById'
+            },
+            onById:{
+                c:'announce',
+                a:'onById'
+            },
+            offById:{
+                c:'announce',
+                a:'offById'
+            }
+        },
+        groupGoods:{
+            getLists:{
+                c:'groupGoods',
+                a:'getLists'
+            },
+            create:{
+                c:'groupGoods',
+                a:'create'
+            },
+            getById:{
+                c:'groupGoods',
+                a:'getById'
+            },
+            updateById:{
+                c:'groupGoods',
+                a:'updateById'
+            },
+            onById:{
+                c:'groupGoods',
+                a:'onById'
+            },
+            offById:{
+                c:'groupGoods',
+                a:'offById'
+            },
+            delById:{
+                c:'groupGoods',
+                a:'delById'
+            }
         }
     }
 });
