@@ -39,7 +39,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $("input[name=details]").val($(".w-e-text").html());
             utils.reInputName($(".specItem"));
             utils.reInputName($(".imgItem"));
-            utils.ajaxSubmit(apis.groupGoods.create,$("#goodsForm").serialize(),function(data){
+            utils.ajaxSubmit(apis.cutGoods.create,$("#goodsForm").serialize(),function(data){
                 hound.success("添加成功","",1000);
                 utils.modal.modal('hide');
             })
@@ -130,7 +130,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         var n2 = loc.indexOf("=");//取得=号的位置
         var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
         var urlParam = id.split("=");
-        utils.ajaxSubmit(apis.groupGoods.getById, {id:urlParam[0]}, function (data) {
+        utils.ajaxSubmit(apis.cutGoods.getById, {id:urlParam[0]}, function (data) {
             var getByIdData = {
                 categoryArr:initialData.categoryArr,
                 parentCategoryArr:initialData.parentCategoryArr,
@@ -257,7 +257,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         var n2 = loc.indexOf("=");//取得=号的位置
         var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
         var urlParam = id.split("=");
-        utils.ajaxSubmit(apis.groupGoods.getById, {id:urlParam[0]}, function (data) {
+        utils.ajaxSubmit(apis.cutGoods.getById, {id:urlParam[0]}, function (data) {
             var getByIdData = {
                 categoryArr:initialData.categoryArr,
                 parentCategoryArr:initialData.parentCategoryArr,

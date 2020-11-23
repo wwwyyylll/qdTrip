@@ -181,7 +181,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                         utils.reInputName($(".imgItem"));
                                         utils.reInputName($(".delSpecSingle"));
                                         utils.reInputName($(".delImgSingle"));
-                                        utils.ajaxSubmit(apis.groupGoods.create,$("#goodsForm").serialize(),function(data){
+                                        utils.ajaxSubmit(apis.cutGoods.create,$("#goodsForm").serialize(),function(data){
                                             utils.loading(false);
                                             hound.success("添加成功","",'').then(function(){
                                                 window.location.href = "@@HOSTview/bargaining/edit.html?id=" + data.id;
@@ -218,7 +218,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     //            utils.reInputName($(".imgItem"));
                     //            utils.reInputName($(".delSpecSingle"));
                     //            utils.reInputName($(".delImgSingle"));
-                    //            utils.ajaxSubmit(apis.groupGoods.create,$("#goodsForm").serialize(),function(data){
+                    //            utils.ajaxSubmit(apis.cutGoods.create,$("#goodsForm").serialize(),function(data){
                     //                hound.success("添加成功","",'').then(function(){
                     //                    window.location.href = "@@HOSTview/bargaining/edit.html?id=" + data.id;
                     //                });
@@ -233,7 +233,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                         utils.reInputName($(".imgItem"));
                         utils.reInputName($(".delSpecSingle"));
                         utils.reInputName($(".delImgSingle"));
-                        utils.ajaxSubmit(apis.groupGoods.create,$("#goodsForm").serialize(),function(data){
+                        utils.ajaxSubmit(apis.cutGoods.create,$("#goodsForm").serialize(),function(data){
                             utils.loading(false);
                             hound.success("添加成功","",'').then(function(){
                                 window.location.href = "@@HOSTview/bargaining/edit.html?id=" + data.id;
@@ -250,7 +250,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     utils.reInputName($(".imgItem"));
                     utils.reInputName($(".delSpecSingle"));
                     utils.reInputName($(".delImgSingle"));
-                    utils.ajaxSubmit(apis.groupGoods.create,$("#goodsForm").serialize(),function(data){
+                    utils.ajaxSubmit(apis.cutGoods.create,$("#goodsForm").serialize(),function(data){
                         utils.loading(false);
                         hound.success("添加成功","",'').then(function(){
                             window.location.href = "@@HOSTview/bargaining/edit.html?id=" + data.id;

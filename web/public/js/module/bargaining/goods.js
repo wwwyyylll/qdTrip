@@ -10,7 +10,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         startBouutn =  '<button class="btn btn-primary" type="button" data-operate="setOn">上架</button>',
         stopButton = '<button class="btn btn-danger" type="button" data-operate="setOff">下架</button>',
-        delButton = '<button class="btn btn-danger" type="button" data-operate="delGoods">删除</button>';
+        delButton = '<button class="btn btn-danger" type="button" data-operate="delGoods">删除</button>',
+        createGroupButton = '<button class="btn btn-primary" type="button" data-operate="createGroup">开团</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -27,7 +28,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         initialData.dataArr.showTypeArr = showTypeArr;
         utils.renderModal('新增商品', template('modalDiv',initialData), function(){
             if($("#visaPassportForm").valid()){
-                utils.ajaxSubmit(apis.groupGoods.create,$("#visaPassportForm").serialize(),function(data){
+                utils.ajaxSubmit(apis.cutGoods.create,$("#visaPassportForm").serialize(),function(data){
                     hound.success("添加成功","",1000);
                     utils.modal.modal('hide');
                     loadData();
@@ -128,7 +129,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOff:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认下架吗?', '', function () {
-                utils.ajaxSubmit(apis.groupGoods.offById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.cutGoods.offById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -137,7 +138,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         setOn:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认上架吗?', '', function () {
-                utils.ajaxSubmit(apis.groupGoods.onById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.cutGoods.onById, {id: id}, function (data) {
                     loadData();
                 });
             });
@@ -146,7 +147,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         delGoods:function($this){
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认删除吗?', '', function () {
-                utils.ajaxSubmit(apis.groupGoods.delById, {id: id}, function (data) {
+                utils.ajaxSubmit(apis.cutGoods.delById, {id: id}, function (data) {
+                    loadData();
+                });
+            });
+        },
+        //开团
+        createGroup:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认开团吗?', '', function () {
+                utils.ajaxSubmit(apis.cutGroup.createGroup, {goodsId: id}, function (data) {
                     loadData();
                 });
             });
@@ -201,10 +211,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
     function loadData() {
-        utils.ajaxSubmit(apis.groupGoods.getLists, param, function (data) {
+        utils.ajaxSubmit(apis.cutGoods.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.goodsStatus[n.status];
-                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton + createGroupButton : n.materialButtonGroup = comButtons + startBouutn;
                 (n.canDel=="1")? n.materialButtonGroup = n.materialButtonGroup + delButton : n.materialButtonGroup = n.materialButtonGroup;
                 (n.status=="3")? n.materialButtonGroup = '<button class="btn btn-info" type="button" data-operate="look">查看</button>' : n.materialButtonGroup = n.materialButtonGroup;
             });

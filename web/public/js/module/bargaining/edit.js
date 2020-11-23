@@ -191,7 +191,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                         utils.reInputName($(".imgItem"));
                                         utils.reInputName($(".delSpecSingle"));
                                         utils.reInputName($(".delImgSingle"));
-                                        utils.ajaxSubmit(apis.groupGoods.updateById,$("#goodsForm").serialize(),function(data){
+                                        utils.ajaxSubmit(apis.cutGoods.updateById,$("#goodsForm").serialize(),function(data){
                                             utils.loading(false);
                                             hound.success("编辑成功","",'').then(function(){
                                                 getGoodsData();
@@ -227,7 +227,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     //            utils.reInputName($(".imgItem"));
                     //            utils.reInputName($(".delSpecSingle"));
                     //            utils.reInputName($(".delImgSingle"));
-                    //            utils.ajaxSubmit(apis.groupGoods.updateById,$("#goodsForm").serialize(),function(data){
+                    //            utils.ajaxSubmit(apis.cutGoods.updateById,$("#goodsForm").serialize(),function(data){
                     //                hound.success("编辑成功","",'').then(function(){
                     //                    getGoodsData();
                     //                });
@@ -242,7 +242,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                         utils.reInputName($(".imgItem"));
                         utils.reInputName($(".delSpecSingle"));
                         utils.reInputName($(".delImgSingle"));
-                        utils.ajaxSubmit(apis.groupGoods.updateById,$("#goodsForm").serialize(),function(data){
+                        utils.ajaxSubmit(apis.cutGoods.updateById,$("#goodsForm").serialize(),function(data){
                             utils.loading(false);
                             hound.success("编辑成功","",'').then(function(){
                                 getGoodsData();
@@ -259,7 +259,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     utils.reInputName($(".imgItem"));
                     utils.reInputName($(".delSpecSingle"));
                     utils.reInputName($(".delImgSingle"));
-                    utils.ajaxSubmit(apis.groupGoods.updateById,$("#goodsForm").serialize(),function(data){
+                    utils.ajaxSubmit(apis.cutGoods.updateById,$("#goodsForm").serialize(),function(data){
                         utils.loading(false);
                         hound.success("编辑成功","",'').then(function(){
                             getGoodsData();
@@ -360,7 +360,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         var n2 = loc.indexOf("=");//取得=号的位置
         var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
         var urlParam = id.split("=");
-        utils.ajaxSubmit(apis.groupGoods.getById, {id:urlParam[0]}, function (data) {
+        utils.ajaxSubmit(apis.cutGoods.getById, {id:urlParam[0]}, function (data) {
             var getByIdData = {
                 categoryArr:initialData.categoryArr,
                 parentCategoryArr:initialData.parentCategoryArr,

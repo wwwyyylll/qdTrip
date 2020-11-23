@@ -1398,34 +1398,72 @@ define("apis", function() {
                 a:'offById'
             }
         },
-        groupGoods:{
+        cutGoods:{
             getLists:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'getLists'
             },
             create:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'create'
             },
             getById:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'getById'
             },
             updateById:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'updateById'
             },
             onById:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'onById'
             },
             offById:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'offById'
             },
             delById:{
-                c:'groupGoods',
+                c:'cutGoods',
                 a:'delById'
+            }
+        },
+        cutGroup:{
+            getLists:{
+                c:'cutGroup',
+                a:'getLists'
+            },
+            getJoinerLists:{
+                c:'cutGroup',
+                a:'getJoinerLists'
+            },
+            createGroup:{
+                c:'cutGroup',
+                a:'createGroup'
+            }
+        },
+        expressCompany:{
+            getLists:{
+                c:'expressCompany',
+                a:'getLists'
+            }
+        },
+        cutReward:{
+            getLists:{
+                c:'cutReward',
+                a:'getLists'
+            },
+            getById:{
+                c:'cutReward',
+                a:'getById'
+            },
+            deliveredById:{
+                c:'cutReward',
+                a:'deliveredById'
+            },
+            receivedById:{
+                c:'cutReward',
+                a:'receivedById'
             }
         }
     }

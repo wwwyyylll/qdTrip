@@ -262,6 +262,11 @@ define("consts", function() {
             recommendSource:{
                 '2':'<span style="color:green">后台</span>',
                 '1':'<span style="color:orange">H5</span>'
+            },
+            expressStatus:{
+                '1':'<span style="color:red">待发货</span>',
+                '2':'<span style="color:orange">已发货</span>',
+                '3':'<span style="color:green">已收货</span>'
             }
         }
     }
