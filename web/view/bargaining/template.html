@@ -6,9 +6,6 @@
         <div class="goodsSeparated">
             <h5 style="margin-bottom: 15px">商品基本信息&nbsp;  <% if(dataArr.id){ %> (<%- dataArr.statusText %>)<% } %>&nbsp;&nbsp;&nbsp;
                 <button class="btn btn-primary saveButton" type="button" data-operate="addGoods">保存</button>
-                <% if(dataArr.id){ %>
-                <span style="background: #1ab394;cursor: pointer;border-color: #1ab394;color:#ffffff;padding: 11px 15px;font-size: 14px;border-radius: 3px" data-clipboard-text="<%= dataArr.previewUrl %>" class="copyBtn">预览</span>
-                <% } %>
             </h5>
             <div class="form-row" style="margin-bottom: 15px">
                 <% if(dataArr.id){ %>
@@ -56,6 +53,9 @@
                             <span class="input-group-text">任务时间</span>
                         </div>
                         <input autocomplete="off" type="text" name="taskTime" placeholder="请输入任务时间" value="<%= dataArr.taskTime %>" class="form-control" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">小时</span>
+                        </div>
                     </div>
                 </div>
             </div>

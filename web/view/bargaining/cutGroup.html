@@ -53,13 +53,24 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th style="width:20%;word-wrap: break-word;word-break:break-all;">标题</th>
-        <th>会员ID</th>
-        <th>会员昵称</th>
-        <th>商品ID</th>
+        <th>团主昵称</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= typeText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropType" id="dropTypeOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">机器人</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">自然人</a>
+                </div>
+            </div>
+        </th>
+        <th style="width:15%;word-wrap: break-word;word-break:break-all;">商品标题</th>
         <th>商品价格</th>
-        <th>帮砍价格</th>
+        <th>帮砍总价</th>
         <th>参与人数</th>
+        <th>拉新人数</th>
         <th>开始+结束时间</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -68,8 +79,9 @@
                 </span>
                 <div class="dropdown-menu" aria-labelledby="dropdownVisaStatus" id="dropStatusOptions">
                     <a class="dropdown-item" href="javascript:" data-id="">所有</a>
-                    <a class="dropdown-item" href="javascript:" data-id="1">有效</a>
-                    <a class="dropdown-item" href="javascript:" data-id="2">无效</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">进行中</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">已完成</a>
+                    <a class="dropdown-item" href="javascript:" data-id="3">失败</a>
                 </div>
             </div>
         </th>
@@ -81,13 +93,17 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>" <% if (dataArr[i].status == 3) { %> style="background: lightgrey" <% } %>>
         <td><%= dataArr[i].id %></td>
-        <td style="width:20%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
-        <td><%= dataArr[i].userId %></td>
-        <td><%= dataArr[i].nickName %></td>
-        <td><%= dataArr[i].goodsId %></td>
+        <td>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].userId %>"><%= dataArr[i].nickName %></a>
+        </td>
+        <td><%- dataArr[i].typeText %></td>
+        <td style="width:15%;word-wrap: break-word;word-break:break-all;">
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/bargaining/look.html?id=<%= dataArr[i].goodsId %>"><%= dataArr[i].title %></a>
+        </td>
         <td><% if(dataArr[i].price){ %><%= dataArr[i].price %>元<% } %></td>
-        <td><% if(dataArr[i].currentPrice){ %><%= dataArr[i].currentPrice %>元<% } %></td>
+        <td><%= dataArr[i].currentPrice %></td>
         <td><%= dataArr[i].joinerCnt %></td>
+        <td><%= dataArr[i].newUserCnt %></td>
         <td>
             <div style="margin-bottom: 5px"><%= dataArr[i].startTime %></div>
             <div><%= dataArr[i].endTime %></div>
@@ -113,24 +129,18 @@
         <thead>
         <tr>
             <th style="width:25%;word-wrap: break-word;word-break:break-all;">昵称</th>
-            <th style="width:25%;word-wrap: break-word;word-break:break-all;">头像</th>
             <th style="width:25%;word-wrap: break-word;word-break:break-all;">帮砍价格</th>
-            <th style="width:25%;word-wrap: break-word;word-break:break-all;">帮砍时间</th>
+            <th style="width:25%;word-wrap: break-word;word-break:break-all;">显示时间</th>
+            <th style="width:25%;word-wrap: break-word;word-break:break-all;">创建时间</th>
         </tr>
         </thead>
         <tbody>
         <% if (dataArr.length > 0) { %>
         <% for (var i = 0; i < dataArr.length; i++) { %>
         <tr data-id="<%= dataArr[i].id %>">
-        <td><%= dataArr[i].nickName %></td>
-        <td>
-            <% if (dataArr[i].avatar) { %>
-            <a target="_blank" href="<%= dataArr[i].avatar %>"><img src="<%= dataArr[i].avatar %>" alt="" style="display: inline-block;width:50px;height: 50px"></a>
-            <% } else { %>
-            <span style="color:red">暂无头像</span>
-            <% } %>
-        </td>
-        <td><%= dataArr[i].price %></td>
+        <td style="width:25%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].nickName %></td>
+        <td><% if(dataArr[i].price){ %> <%= dataArr[i].price %>元 <% } %></td>
+        <td><%= dataArr[i].showTime %></td>
         <td><%= dataArr[i].createTime %></td>
         </tr>
         <% } %>
@@ -143,6 +153,44 @@
     </table>
     <div id="cutPagination" class="d-flex justify-content-end">
     </div>
+</script>
+<!-- 帮砍 -->
+<script id="createJoiner" type="text/html">
+    <form id="createJoinerForm" disabled="true">
+        <fieldset>
+            <input type="hidden" name="groupId" value="<%= dataArr.groupId %>">
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">机器人数</span>
+                        </div>
+                        <input type="text" name="robotCnt" placeholder="请输入机器人数" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">开始时间</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="startTime" placeholder="请输入开始时间" onclick="laydate({istime: false, format: 'YYYY-MM-DD hh:mm:ss'})" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">结束时间</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="endTime" placeholder="请输入结束时间" onclick="laydate({istime: false, format: 'YYYY-MM-DD hh:mm:ss'})" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </script>
 <script data-main="/public/js/module/bargaining/cutGroup"></script>
 <script type="text/javascript" src="/public/js/plugins/clipboard.min.js"></script>

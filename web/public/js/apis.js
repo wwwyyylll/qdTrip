@@ -1440,6 +1440,10 @@ define("apis", function() {
             createGroup:{
                 c:'cutGroup',
                 a:'createGroup'
+            },
+            createJoiner:{
+                c:'cutGroup',
+                a:'createJoiner'
             }
         },
         expressCompany:{
@@ -1464,6 +1468,12 @@ define("apis", function() {
             receivedById:{
                 c:'cutReward',
                 a:'receivedById'
+            }
+        },
+        cutGrouper:{
+            getLists:{
+                c:'cutGrouper',
+                a:'getLists'
             }
         }
     }

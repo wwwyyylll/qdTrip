@@ -157,7 +157,10 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var id = $this.closest("tr").attr("data-id");
             hound.confirm('确认开团吗?', '', function () {
                 utils.ajaxSubmit(apis.cutGroup.createGroup, {goodsId: id}, function (data) {
-                    loadData();
+                    var groupId = data.groupId;
+                    hound.success("开团成功","",'').then(function(){
+                        window.open("@@HOSTview/bargaining/cutGroup.html?groupId=" + groupId);
+                    });
                 });
             });
         }
