@@ -57,7 +57,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     $("#search").on("click",function(){
         param.pageNo = 1;
         var selectSearchLabel = $("#selectsearchlabel").text();
-        if(selectSearchLabel=="会员ID"){
+        if(selectSearchLabel=="团主会员Id"){
             param.userId = $("#searchCont").val();
             loadData();
         }

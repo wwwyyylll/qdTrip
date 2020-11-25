@@ -4,7 +4,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var $visaPagination = $("#visaPagination");
     var $searchCont = $("#searchCont");
     //按钮组集合
-    var deliverButton = '<button class="btn btn-primary" type="button" data-operate="deliver">发货</button>',
+    var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
+        deliverButton = '<button class="btn btn-primary" type="button" data-operate="deliver">发货</button>',
         receiveButton = '<button class="btn btn-success" type="button" data-operate="receive">收货</button>';
 
     searchlabel.on("click",function(){
@@ -15,6 +16,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
 
     //页面操作配置
     var operates = {
+        //查看
+        look:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            utils.ajaxSubmit(apis.cutReward.getById, {id: id}, function (data) {
+                var initialData = {
+                    dataArr:data
+                };
+                initialData.dataArr.statusText = consts.status.expressStatus[initialData.dataArr.status];
+                utils.renderModal('查看详情', template('lookModal', initialData), '', 'lg');
+            })
+        },
         //发货
         deliver:function($this){
             var id = $this.closest("tr").attr("data-id");
@@ -94,13 +106,12 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         utils.ajaxSubmit(apis.cutReward.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.expressStatus[n.status];
-                n.materialButtonGroup = deliverButton;
                 if(n.status==1){
-                    n.materialButtonGroup = deliverButton
+                    n.materialButtonGroup = lookButton + deliverButton
                 }else if(n.status==2){
-                    n.materialButtonGroup = receiveButton
+                    n.materialButtonGroup = lookButton + receiveButton
                 }else if(n.status==3){
-                    n.materialButtonGroup = "<span style='color: orangered'>------</span>"
+                    n.materialButtonGroup = lookButton
                 }
             });
             data.statusText = listDropDown.statusText;
