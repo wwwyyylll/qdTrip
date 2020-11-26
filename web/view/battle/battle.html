@@ -1,0 +1,287 @@
+@@include('../../inc-header.html', {"title": "PK购管理"})
+@@include('../../top-nav.html')
+@@include('../../left-nav.html')
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-th-list"></i> PK购管理</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active"><a href="#">PK购管理</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="row" style="margin-bottom:20px ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <input type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
+                            <button class="btn btn-secondary" type="button" id="selectsearchlabel">ID</button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item searchlabel" href="#">ID</a>
+                                    <a class="dropdown-item searchlabel" href="#">标题</a>
+                                    <a class="dropdown-item searchlabel" href="#">团主会员ID</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left:1%">
+                            <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
+                        </div>
+                        <div class="btn-group" style="margin-left:1%">
+                            <button data-operate="createGroup" class="btn btn-success" style="outline:none;">开团</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-body">
+                    <div class="table-responsive" style="min-height: 300px">
+                        <table class="table table-hover table-bordered" id="sampleTable"></table>
+                        <div id="visaPagination" class="d-flex justify-content-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- 列表模板 -->
+<script id="visaListItem" type="text/html">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>团主会员ID</th>
+        <th>团主昵称</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= typeText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropType" id="dropTypeOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">机器人</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">自然人</a>
+                </div>
+            </div>
+        </th>
+        <th style="width:15%;word-wrap: break-word;word-break:break-all;">标题</th>
+        <th>价格</th>
+        <th>队伍总人数</th>
+        <th>参与人数</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropRank" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= rankText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropRank" id="dropRankOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="asc">升序</a>
+                    <a class="dropdown-item" href="javascript:" data-id="desc">降序</a>
+                </div>
+            </div>
+        </th>
+        <th>与前一名差距</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (dataArr.length > 0) { %>
+    <% for (var i = 0; i < dataArr.length; i++) { %>
+    <tr data-id="<%= dataArr[i].id %>">
+        <td><%= dataArr[i].id %></td>
+        <td><%= dataArr[i].userId %></td>
+        <td>
+            <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].userId %>"><%= dataArr[i].nickName %></a>
+        </td>
+        <td><%- dataArr[i].typeText %></td>
+        <td style="width:15%;word-wrap: break-word;word-break:break-all;">
+            <%= dataArr[i].title %>
+        </td>
+        <td><% if(dataArr[i].price){ %><%= dataArr[i].price %>元<% } %></td>
+        <td><%= dataArr[i].userCnt %></td>
+        <td><%= dataArr[i].joinerCnt %></td>
+        <td><%= dataArr[i].rank %></td>
+        <td><% if(dataArr[i].differPrice){ %><%= dataArr[i].differPrice %>元<% } %></td>
+        <td><%= dataArr[i].createTime %></td>
+        <td>
+            <div class="d-flex flex-wrap justify-content-center">
+                <%- dataArr[i].materialButtonGroup %>
+            </div>
+        </td>
+    </tr>
+    <% } %>
+    <% } else { %>
+    <tr>
+        <td colspan="13">没有符合条件的记录</td>
+    </tr>
+    <% } %>
+    </tbody>
+</script>
+<!-- 查 看 -->
+<script id="lookModal" type="text/html">
+    <div class="form-row" style="text-align: center">
+        <div class="col-12" style="text-align: center">
+            <h4><span style="color: darkorange"><%= dataArr.title %></span> 队</h4>
+        </div>
+    </div>
+    <div class="form-row" style="text-align: center">
+        <div class="col-12" style="text-align: center">
+            <h4 style="text-align: center">本队商品总价</h4>
+        </div>
+    </div>
+    <div class="form-row" style="text-align: center">
+        <div class="col-12" style="text-align: center">
+            <h4 style="text-align: center"><span style="color: darkorange"><%= dataArr.price %></span> 元</h4>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-5" style="text-align: center">
+           <h4>当前排名</h4>
+        </div>
+        <div class="col-7" style="text-align: center">
+            <h4>与前一名差距</h4>
+        </div>
+    </div>
+    <div class="form-row" style="margin-bottom: 8px">
+        <div class="col-5" style="text-align: center">
+            <h4><span style="color: darkorange"><%= dataArr.rank %></span> 名</h4>
+        </div>
+        <div class="col-7" style="text-align: center">
+            <h4><span style="color: darkorange"><%= dataArr.differPrice %></span> 元</h4>
+        </div>
+    </div>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>动态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (dataArr.joinerArr.length > 0) { %>
+        <% for (var i = 0; i < dataArr.joinerArr.length; i++) { %>
+        <tr>
+            <td>
+                <div style="width:70px;height: 70px;float: left">
+                    <% if(dataArr.joinerArr[i].avatar){ %>
+                    <a href="<%= dataArr.joinerArr[i].avatar %>" target="_blank">
+                        <img src="<%= dataArr.joinerArr[i].avatar %>" style="display: inline-block;width:70px;height: 70px">
+                    </a>
+                    <% } %>
+                </div>
+                <div style="margin-left: 70px;float: left">
+                    <div style="height: 35px;line-height: 35px;font-size: 16px">
+                        <% if(dataArr.joinerArr[i].isLeader=='1'){ %> <span style="color: red">队长</span> <% } %> <%= dataArr.joinerArr[i].nickName %>
+                    </div>
+                    <div style="height: 35px;line-height: 35px;font-size: 16px;color: blue">
+                        已购买商品  <%= dataArr.joinerArr[i].price %>  元
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="2">没有符合条件的记录</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</script>
+<!-- 开团 -->
+<script id="createGroup" type="text/html">
+    <form id="createGroupForm" disabled="true">
+        <fieldset>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">团名</span>
+                        </div>
+                        <input type="text" name="title" placeholder="请输入团名" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">队员数</span>
+                        </div>
+                        <input type="text" name="robotCnt" placeholder="请输入队员数" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div style="line-height: 37px;width:18%">
+                    商品购买时间段:
+                </div>
+                <div style="width: 37%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">开始时间</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="startTime" placeholder="请输入开始时间" onclick="laydate({istime: false, format: 'YYYY-MM-DD hh:mm:ss'})" class="form-control" required>
+                    </div>
+                </div>
+                <div style="line-height: 37px;text-align: center;width: 8%">——</div>
+                <div style="width: 37%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">结束时间</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="endTime" placeholder="请输入结束时间" onclick="laydate({istime: false, format: 'YYYY-MM-DD hh:mm:ss'})" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div style="line-height: 37px;width:18%">
+                    购买商品数量区间:
+                </div>
+                <div style="width: 37%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最小数量值</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="numMin" placeholder="请输入最小数量值" class="form-control" required>
+                    </div>
+                </div>
+                <div style="line-height: 37px;text-align: center;width: 8%">——</div>
+                <div style="width: 37%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最大数量值</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="numMax" placeholder="请输入最大数量值" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div style="line-height: 37px;width:18%">
+                购买商品的价值区间:
+                </div>
+                <div style="width: 37%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最低价格</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="priceMin" placeholder="请输入最低价格" class="form-control" required>
+                    </div>
+                </div>
+                <div style="line-height: 37px;text-align: center;width: 8%">——</div>
+                <div style="width: 37%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最高价格</span>
+                        </div>
+                        <input autocomplete="off" type="text" name="priceMax" placeholder="请输入最高价格" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
+<script data-main="/public/js/module/battle/battle"></script>
+<script type="text/javascript" src="/public/js/plugins/clipboard.min.js"></script>
+@@include('../../inc-footer.html')

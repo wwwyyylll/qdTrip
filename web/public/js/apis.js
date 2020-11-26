@@ -1475,6 +1475,20 @@ define("apis", function() {
                 c:'cutGrouper',
                 a:'getLists'
             }
+        },
+        pkBuyGroup:{
+            getLists:{
+                c:'pkBuyGroup',
+                a:'getLists'
+            },
+            getById:{
+                c:'pkBuyGroup',
+                a:'getById'
+            },
+            createGroup:{
+                c:'pkBuyGroup',
+                a:'createGroup'
+            }
         }
     }
 });
