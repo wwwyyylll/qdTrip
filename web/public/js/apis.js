@@ -1489,6 +1489,12 @@ define("apis", function() {
                 c:'pkBuyGroup',
                 a:'createGroup'
             }
+        },
+        pkBuyOrder:{
+            getLists:{
+                c:'pkBuyOrder',
+                a:'getLists'
+            }
         }
     }
 });

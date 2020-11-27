@@ -154,15 +154,24 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         },
         //开团
         createGroup:function($this){
-            var id = $this.closest("tr").attr("data-id");
-            hound.confirm('确认开团吗?', '', function () {
-                utils.ajaxSubmit(apis.cutGroup.createGroup, {goodsId: id}, function (data) {
-                    var groupId = data.groupId;
-                    hound.success("开团成功","",'').then(function(){
-                        window.open("@@HOSTview/bargaining/cutGroup.html?groupId=" + groupId);
-                    });
-                });
-            });
+            var goodsId = $this.closest("tr").attr("data-id");
+            var getByIdData = {
+                dataArr:{
+                    goodsId:goodsId
+                }
+            };
+            utils.renderModal('开团', template('createGroup', getByIdData), function(){
+                if($("#createGroupForm").valid()) {
+                    utils.ajaxSubmit(apis.cutGroup.createGroup, $("#createGroupForm").serialize(), function (data) {
+                        var groupId = data.groupId;
+                        hound.success("开团成功","",'').then(function(){
+                            utils.modal.modal('hide');
+                            window.open("@@HOSTview/bargaining/cutGroup.html?groupId=" + groupId);
+                        });
+                    })
+                }
+            }, 'md');
+
         }
     };
 

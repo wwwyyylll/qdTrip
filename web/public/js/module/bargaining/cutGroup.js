@@ -76,7 +76,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }
     function loadJoinerData(){
         utils.ajaxSubmit(apis.cutGroup.getJoinerLists, joinerParam, function (data) {
-            utils.renderModal('帮砍记录列表', template('joinerList',data), function(){}, 'lg');
+            utils.renderModal('帮砍记录列表', template('joinerList',data), '', 'lg');
             utils.bindPagination($("#cutPagination"), joinerParam, loadJoinerData);
             $("#cutPagination").html(utils.pagination(parseInt(data.cnt), joinerParam.pageNo));
         });

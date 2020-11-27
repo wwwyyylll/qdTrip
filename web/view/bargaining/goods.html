@@ -136,6 +136,24 @@
     <% } %>
     </tbody>
 </script>
+<!-- 列表模板 -->
+<script id="createGroup" type="text/html">
+    <form id="createGroupForm" disabled="true">
+        <fieldset>
+            <input type="hidden" name="goodsId" value="<%= dataArr.goodsId %>">
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">指定机器人ID</span>
+                        </div>
+                        <input type="text" name="userId" placeholder="请输入指定机器人ID" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
 <script data-main="/public/js/module/bargaining/goods"></script>
 <script type="text/javascript" src="/public/js/plugins/clipboard.min.js"></script>
 @@include('../../inc-footer.html')
