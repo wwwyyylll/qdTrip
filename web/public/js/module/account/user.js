@@ -12,7 +12,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         canRecommendButton = '<button class="btn btn-primary" type="button" data-operate="canRecommend">设为好物推荐官</button>',
         cancelRecommendButton = '<button class="btn btn-danger" type="button" data-operate="cancelRecommend">取消好物推荐官</button>',
         signUpButton = '<button class="btn btn-primary" type="button" data-operate="signUp">已签约</button>',
-        cancelSignUpButton = '<button class="btn btn-danger" type="button" data-operate="cancelSignUp">取消签约</button>';
+        cancelSignUpButton = '<button class="btn btn-danger" type="button" data-operate="cancelSignUp">取消签约</button>',
+        channelBusinessButton = '<button class="btn btn-success" type="button" data-operate="channelBusiness">成为渠道商</button>',
+        copyUrlButton = '<button class="btn btn-success" type="button" data-operate="copyUrl">复制推广连接</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -85,6 +87,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         });
     }
 
+    function copyText(){
+        var btns = document.querySelectorAll('.copyBtn');
+        var clipboard = new ClipboardJS(btns);
+        clipboard.on('success', function(e) {
+            hound.success("推广链接复制成功", "", 1000);
+        });
+        clipboard.on('error', function(e) {
+            hound.error("推广链接复制失败", "", 1000);
+        });
+    }
     //页面操作配置
     var operates = {
         bindMemberId:function($this){
@@ -198,6 +210,25 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 });
             })
         },
+        channelBusiness:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.confirm('确认成为渠道商吗?','',function(data){
+                utils.ajaxSubmit(apis.channelBusiness.create, {userId: id}, function (data) {
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
+        },
+        copyUrl:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            utils.ajaxSubmit(apis.channelBusiness.copyUrlById, {userId: id}, function (data) {
+                $this.parent().find(".copyBtn").remove();
+                var hideButton ='<button data-clipboard-text="'+ data.url +'" class="btn btn-info copyBtn" type="button" style="display:none">预览</button>';
+                $this.parent().append(hideButton);
+                copyText();
+                $this.parent().find(".copyBtn").click();
+            });
+        },
         addDist:function($this){
             var userId = $this.closest("tr").attr("data-id");
             var tr = $this.closest("tr");
@@ -250,6 +281,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         id:'',
         canRecommendTaobaoItem:'',
         orderByTaobaoCommissionRate:'',
+        isChannelBusiness:'',
         warn:warnValue
     };
 
@@ -261,6 +293,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.isSignUpText = consts.status.isBind[n.isSignUp];
                 n.isDistributorsText = consts.status.isBind[n.isDistributors];
                 n.canRecommendTaobaoItemText = consts.status.isBind[n.canRecommendTaobaoItem];
+                n.isChannelBusinessText = consts.status.isBind[n.isChannelBusiness];
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
                 (n.isDistributors=='1')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
@@ -279,12 +312,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }else{
                     n.materialButtonGroup = n.materialButtonGroup + cancelSignUpButton ;
                 }
+                if(n.isChannelBusiness==1){
+                    n.materialButtonGroup = n.materialButtonGroup ;
+                }else{
+                    n.materialButtonGroup = n.materialButtonGroup + channelBusinessButton ;
+                }
             });
             data.statusText = listDropDown.statusText;
             data.sourceText = listDropDown.sourceText;
             data.signUpText = listDropDown.signUpText;
             data.canRecommendText = listDropDown.canRecommendText;
             data.taobaoCommissionRateText = listDropDown.taobaoCommissionRateText;
+            data.isChannelBusinessText = listDropDown.isChannelBusinessText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -299,7 +338,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         sourceText:'来源',
         signUpText:'已签约',
         canRecommendText:'好物推荐官',
-        taobaoCommissionRateText:'佣金率'
+        taobaoCommissionRateText:'佣金率',
+        isChannelBusinessText:'是否渠道商'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -324,6 +364,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropTaobaoCommissionRateOptions a[data-id]', function () {
         param.orderByTaobaoCommissionRate = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.taobaoCommissionRateText = "佣金率" : listDropDown.taobaoCommissionRateText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropIsChannelBusinessOptions a[data-id]', function () {
+        param.isChannelBusiness = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.isChannelBusinessText = "是否渠道商" : listDropDown.isChannelBusinessText = $(this).text();
         param.pageNo = 1;
         loadData();
     });

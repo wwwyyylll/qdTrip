@@ -276,6 +276,10 @@ define("consts", function() {
             groupType:{
                 '1':'<span style="color:orange">机器人</span>',
                 '2':'<span style="color:green">自然人</span>'
+            },
+            channelBusinessType:{
+                '1':'<span style="color:green">启用</span>',
+                '2':'<span style="color:red">停止</span>'
             }
         }
     }

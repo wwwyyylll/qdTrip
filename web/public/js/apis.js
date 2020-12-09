@@ -1495,6 +1495,54 @@ define("apis", function() {
                 c:'pkBuyOrder',
                 a:'getLists'
             }
+        },
+        channelBusiness:{
+            getLists:{
+                c:'channelBusiness',
+                a:'getLists'
+            },
+            onById:{
+                c:'channelBusiness',
+                a:'onById'
+            },
+            offById:{
+                c:'channelBusiness',
+                a:'offById'
+            },
+            create:{
+                c:'channelBusiness',
+                a:'create'
+            },
+            copyUrlById:{
+                c:'channelBusiness',
+                a:'copyUrlById'
+            }
+        },
+        channelBusinessPopularize:{
+            getLists:{
+                c:'channelBusinessPopularize',
+                a:'getLists'
+            },
+            create:{
+                c:'channelBusinessPopularize',
+                a:'create'
+            },
+            getById:{
+                c:'channelBusinessPopularize',
+                a:'getById'
+            },
+            updateById:{
+                c:'channelBusinessPopularize',
+                a:'updateById'
+            },
+            onById:{
+                c:'channelBusinessPopularize',
+                a:'onById'
+            },
+            offById:{
+                c:'channelBusinessPopularize',
+                a:'offById'
+            }
         }
     }
 });

@@ -67,7 +67,18 @@
                 </div>
             </div>
         </th>
-        <th>邀请码</th>
+        <th class="em-min-7" style="width:130px">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropIsChannelBusiness" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= isChannelBusinessText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropIsChannelBusiness" id="dropIsChannelBusinessOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">是</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">否</a>
+                </div>
+            </div>
+        </th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropTaobaoCommissionRate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -80,7 +91,7 @@
                 </div>
             </div>
         </th>
-        <th>是否分销商</th>
+        <!--<th>是否分销商</th>-->
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropCanRecommend" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -132,6 +143,9 @@
             <% if(dataArr[i].alias){ %>
             <div style="margin-top: 5px;color: coral"><%= dataArr[i].alias %></div>
             <% } %>
+            <% if(dataArr[i].inviteCode){ %>
+            <div style="margin-top: 5px;color: red"><%= dataArr[i].inviteCode %></div>
+            <% } %>
         </td>
         <td>
             <% if(dataArr[i].avatar){ %>
@@ -141,9 +155,16 @@
             <% } %>
         </td>
         <td><%- dataArr[i].sourceText %></td>
-        <td><%= dataArr[i].inviteCode %></td>
+        <td style="width:130px">
+            <% if(dataArr[i].isChannelBusiness==1 || dataArr[i].isChannelBusiness==2){ %>
+            <%- dataArr[i].isChannelBusinessText %>
+            <% if(dataArr[i].isChannelBusiness==1){ %>
+            <br><button class="btn btn-success" type="button" data-operate="copyUrl" style="margin-top: 5px">复制推广连接</button>
+            <% } %>
+            <% } %>
+        </td>
         <td><%= dataArr[i].taobaoCommissionRate %></td>
-        <td><%- dataArr[i].isDistributorsText %></td>
+        <!--<td><%- dataArr[i].isDistributorsText %></td>-->
         <td><%- dataArr[i].canRecommendTaobaoItemText %></td>
         <td><%= dataArr[i].memberOperationId %></td>
         <td><%- dataArr[i].isSignUpText %></td>
@@ -325,4 +346,5 @@
     </form>
 </script>
 <script data-main="/public/js/module/account/user"></script>
+<script type="text/javascript" src="/public/js/plugins/clipboard.min.js"></script>
 @@include('../../inc-footer.html')
