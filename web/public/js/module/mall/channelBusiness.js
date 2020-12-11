@@ -146,32 +146,30 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //编辑
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.channelBusiness.getById, {id: id}, function (data) {
-                var data = {
-                    dataArr:data
-                };
-                utils.renderModal('编辑——'+ data.dataArr.title, template('modalDiv', data), function(){
-                    if($("#visaPassportForm").valid()) {
-                        utils.ajaxSubmit(apis.channelBusiness.updateById, $("#visaPassportForm").serialize(), function (data) {
-                            hound.success("编辑成功", "", 1000);
-                            utils.modal.modal('hide');
-                            loadData();
-                        })
-                    }
-                }, 'lg');
-                uploadFile();
-            });
+            var tr = $this.closest("tr");
+            var mobile = tr.find("td").eq(3).find("div").eq(0).text();
+            var pwd = tr.find("td").eq(3).find("div").eq(1).text();
+            var data = {
+                dataArr:{
+                    id:id,
+                    mobile:mobile,
+                    pwd:pwd
+                }
+            };
+            utils.renderModal('编辑渠道商', template('modalDiv', data), function(){
+                if($("#visaPassportForm").valid()) {
+                    utils.ajaxSubmit(apis.channelBusiness.updateById, $("#visaPassportForm").serialize(), function (data) {
+                        hound.success("编辑成功", "", 1000);
+                        utils.modal.modal('hide');
+                        loadData();
+                    })
+                }
+            }, 'md');
         },
         //查看
         look:function($this){
             var id = $this.closest("tr").attr("data-id");
-            utils.ajaxSubmit(apis.channelBusiness.getById, {id: id}, function (data) {
-                var data = {
-                    dataArr:data
-                };
-                utils.renderModal('查看——'+ data.dataArr.title, template('modalDiv', data),'', 'lg');
-                $("#visaPassportForm").append($("fieldset").prop('disabled', true));
-            });
+            window.open("@@HOSTview/mall/channelBusinessLook.html?id=" + id);
         },
         //停止
         setOff:function($this){
@@ -207,7 +205,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.statusText = consts.status.channelBusinessType[n.status];
             });
             $.each(data.dataArr,function(i,n){
-                (n.status=="1")? n.materialButtonGroup = stopButton : n.materialButtonGroup = startBouutn;
+                (n.status=="1")? n.materialButtonGroup = comButtons + stopButton : n.materialButtonGroup = comButtons + startBouutn;
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));

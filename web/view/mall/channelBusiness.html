@@ -30,7 +30,7 @@
                         <div class="btn-group" style="margin-left:1%">
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
-                        <div class="btn-group" style="float:right">
+                        <div class="btn-group" style="float:right;display: none">
                             <button id="addModal" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="outline:none;margin-left: 3px">新增</button>
                         </div>
                     </div>
@@ -53,6 +53,7 @@
         <th>ID</th>
         <th>会员ID</th>
         <th>会员昵称</th>
+        <th>手机号</th>
         <th style="width:17%;word-wrap: break-word;word-break:break-all;">推广连接</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -80,6 +81,10 @@
         <td>
             <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].userId %>"><%= dataArr[i].nickName %></a>
         </td>
+        <td>
+            <div><%= dataArr[i].mobile %></div>
+            <div style="display: none"><%= dataArr[i].pwd %></div>
+        </td>
         <td style="width:17%;word-wrap: break-word;word-break:break-all;">
             <a href="<%= dataArr[i].url %>" target="_blank"><%= dataArr[i].url %></a>
         </td>
@@ -104,14 +109,24 @@
 <script id="modalDiv" type="text/html">
     <form id="visaPassportForm" disabled="true">
         <fieldset>
-            <input type="hidden" name="userId">
+            <input type="hidden" name="id" value="<%= dataArr.id %>">
             <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-12">
                     <div class="input-group economy-wards">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">会员昵称</span>
+                            <span class="input-group-text">手机号</span>
                         </div>
-                        <input type="text" placeholder="请输入会员昵称" class="form-control nickName" required>
+                        <input type="text" name="mobile" value="<%= dataArr.mobile %>" placeholder="请输入手机号" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group economy-wards">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">密码</span>
+                        </div>
+                        <input type="text" name="pwd" placeholder="请输入密码" class="form-control">
                     </div>
                 </div>
             </div>

@@ -1513,9 +1513,29 @@ define("apis", function() {
                 c:'channelBusiness',
                 a:'create'
             },
+            getById:{
+                c:'channelBusiness',
+                a:'getById'
+            },
+            updateById:{
+                c:'channelBusiness',
+                a:'updateById'
+            },
             copyUrlById:{
                 c:'channelBusiness',
                 a:'copyUrlById'
+            },
+            getFansLists:{
+                c:'channelBusiness',
+                a:'getFansLists'
+            },
+            getCommissionLogLists:{
+                c:'channelBusiness',
+                a:'getCommissionLogLists'
+            },
+            getWalletArr:{
+                c:'channelBusiness',
+                a:'getWalletArr'
             }
         },
         channelBusinessPopularize:{
@@ -1542,6 +1562,20 @@ define("apis", function() {
             offById:{
                 c:'channelBusinessPopularize',
                 a:'offById'
+            }
+        },
+        channelBusinessCashOutRequest:{
+            getLists:{
+                c:'channelBusinessCashOutRequest',
+                a:'getLists'
+            },
+            completeById:{
+                c:'channelBusinessCashOutRequest',
+                a:'completeById'
+            },
+            rejectById:{
+                c:'channelBusinessCashOutRequest',
+                a:'rejectById'
             }
         }
     }

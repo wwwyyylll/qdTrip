@@ -280,6 +280,16 @@ define("consts", function() {
             channelBusinessType:{
                 '1':'<span style="color:green">启用</span>',
                 '2':'<span style="color:red">停止</span>'
+            },
+            channelBusinessCommissionType:{
+                '2':'<span style="color:green">推广佣金</span>'
+            },
+            channelBusinessOrderStatus:{
+                '1':'<span style="color:orange">已付款</span>',
+                '2':'<span style="color:green">已收货</span>',
+                '3':'<span style="color:green">已结算</span>',
+                '4':'<span style="color:red">已失效</span>',
+                '5':'<span style="color:red">已维权退单</span>'
             }
         }
     }
