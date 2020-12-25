@@ -54,6 +54,7 @@
     <tr>
         <th>会员ID</th>
         <th>昵称</th>
+        <th>邀请人</th>
         <th>头像</th>
         <th class="em-min-7">
             <div class="dropdown">
@@ -141,12 +142,13 @@
         <td>
             <a style="text-decoration: underline" target="_blank" href="@@HOSTview/account/userDetailsLook.html?id=<%= dataArr[i].id %>"><%= dataArr[i].nickName %></a>
             <% if(dataArr[i].alias){ %>
-            <div style="margin-top: 5px;color: coral"><%= dataArr[i].alias %></div>
+            <div class="div1" style="margin-top: 5px;color: coral"><%= dataArr[i].alias %></div>
             <% } %>
             <% if(dataArr[i].inviteCode){ %>
-            <div style="margin-top: 5px;color: red"><%= dataArr[i].inviteCode %></div>
+            <div class="div2" style="margin-top: 5px;color: red"><%= dataArr[i].inviteCode %></div>
             <% } %>
         </td>
+        <td><%= dataArr[i].distributorsName %></td>
         <td>
             <% if(dataArr[i].avatar){ %>
             <a href="<%= dataArr[i].avatar %>">

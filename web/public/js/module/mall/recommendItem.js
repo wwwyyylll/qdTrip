@@ -132,7 +132,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             }else if(tr.find("td").eq(4).text()=="物料商品"){
                 type = 2;
             }
-            var videoUrl = tr.find("td").eq(7).text();
+            var videoUrl = tr.find("td").eq(7).find("a").text();
             var coverImg = '';
             if(tr.find("td").eq(5).find("a").length>0){
                 coverImg = tr.find("td").eq(5).find("a").attr("href");
@@ -175,7 +175,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             }else if(tr.find("td").eq(4).text()=="物料商品"){
                 type = 2;
             }
-            var videoUrl = tr.find("td").eq(7).text();
+            var videoUrl = tr.find("td").eq(7).find("a").text();
             var coverImg = '';
             if(tr.find("td").eq(5).find("a").length>0){
                 coverImg = tr.find("td").eq(5).find("a").attr("href");

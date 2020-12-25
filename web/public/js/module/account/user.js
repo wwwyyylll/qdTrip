@@ -112,16 +112,23 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         edit:function($this){
             var id = $this.closest("tr").attr("data-id");
             var nickName = $this.closest("tr").find("td").eq(1).find("a").text();
-            var inviteCode = $this.closest("tr").find("td").eq(4).text();
+
             var alias = "";
-            if($this.closest("tr").find("td").eq(1).find("div").length>0){
-                alias = $this.closest("tr").find("td").eq(1).find("div").text();
+            var inviteCode = "";
+            if($this.closest("tr").find("td").eq(1).find(".div1")){
+                alias = $this.closest("tr").find("td").eq(1).find(".div1").text();
             }else{
-                alias = '';
+                alias = "";
             }
+            if($this.closest("tr").find("td").eq(1).find(".div2")){
+                inviteCode = $this.closest("tr").find("td").eq(1).find(".div2").text();
+            }else{
+                inviteCode = "";
+            }
+
             var avatar = "";
-            if($this.closest("tr").find("td").eq(2).find("a").length>0){
-                avatar = $this.closest("tr").find("td").eq(2).find("a").attr("href");
+            if($this.closest("tr").find("td").eq(3).find("a").length>0){
+                avatar = $this.closest("tr").find("td").eq(3).find("a").attr("href");
             }else{
                 avatar = "";
             }
