@@ -155,7 +155,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageSize:10,
         status:'',
         title:'',
-        position:''
+        position:'',
+        channel:''
     };
 
     function loadData() {
@@ -164,6 +165,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
                 n.positionText = consts.status.position[n.position];
+                n.channelText = consts.status.bannerSource[n.channel];
             });
             //操作按钮 编辑 + 查看 + 有效/无效
             $.each(data.dataArr,function(i,n){
@@ -171,6 +173,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
             data.statusText = listDropDown.statusText;
             data.positionText = listDropDown.positionText;
+            data.channelText = listDropDown.channelText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -181,7 +184,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     utils.bindList($(document), operates);
     var listDropDown = {
         statusText:'状态',
-        positionText:'显示位置'
+        positionText:'显示位置',
+        channelText:'来源'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -190,6 +194,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     }).on('click', '#dropPositionOptions a[data-id]', function () {
         param.position = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.positionText = "显示位置" : listDropDown.positionText = $(this).text();
+        loadData();
+    }).on('click', '#dropChannelOptions a[data-id]', function () {
+        param.channel = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.channelText = "来源" : listDropDown.channelText = $(this).text();
+        param.pageNo = 1;
         loadData();
     });
     $("#search").on("click",function(){

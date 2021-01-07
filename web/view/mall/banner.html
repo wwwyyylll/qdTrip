@@ -52,6 +52,18 @@
     <tr>
         <th>ID</th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">标题</th>
+        <th class="em-min-7">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropChannel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <%= channelText %>
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropChannel" id="dropChannelOptions">
+                    <a class="dropdown-item" href="javascript:" data-id="">所有</a>
+                    <a class="dropdown-item" href="javascript:" data-id="1">淘宝</a>
+                    <a class="dropdown-item" href="javascript:" data-id="2">拼多多</a>
+                </div>
+            </div>
+        </th>
         <th>排序</th>
         <th>图片</th>
         <th class="em-min-7">
@@ -91,6 +103,7 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
+        <td><%- dataArr[i].channelText %></td>
         <td><%= dataArr[i].idx %></td>
         <td>
             <% if (dataArr[i].picUrl) { %>
@@ -166,6 +179,18 @@
                             <option value="1" <% if(dataArr.position==1){ %> selected <% } %>>头部</option>
                             <option value="2" <% if(dataArr.position==2){ %> selected <% } %>>左下角</option>
                             <option value="3" <% if(dataArr.position==3){ %> selected <% } %>>头二</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">来源</span>
+                        </div>
+                        <select name="channel" class="form-control" required>
+                            <option value="">请选择</option>
+                            <option value="1" <% if(dataArr.channel==1){ %> selected <% } %>>淘宝</option>
+                            <option value="2" <% if(dataArr.channel==2){ %> selected <% } %>>拼多多</option>
                         </select>
                     </div>
                 </div>

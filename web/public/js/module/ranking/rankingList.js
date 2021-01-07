@@ -189,17 +189,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var param = {
         pageNo: 1,
         pageSize:10,
-        status:''
+        status:'',
+        channel:''
     };
     var listDropDown = {
-        statusText:'状态'
+        statusText:'状态',
+        channelText:'来源'
     };
 
     function loadData() {
         utils.ajaxSubmit(apis.ranking.getLists, param, function (data) {
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.ordinary[n.status];
-                n.sourceText = consts.status.ranking[n.source];
+                n.channelText = consts.status.bannerSource[n.channel];
                 n.isShowRankingIndexText = consts.status.isBind[n.isShowRankingIndex];
                 n.isShowSearchIndexText = consts.status.isBind[n.isShowSearchIndex];
                 n.showSearchIndexPositionText = consts.status.indexPosition[n.showSearchIndexPosition];
@@ -211,6 +213,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }
             });
             data.statusText = listDropDown.statusText;
+            data.channelText = listDropDown.channelText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -223,6 +226,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
         ($(this).text()=="所有") ? listDropDown.statusText = "状态" : listDropDown.statusText = $(this).text();
+        param.pageNo = 1;
+        loadData();
+    }).on('click', '#dropChannelOptions a[data-id]', function () {
+        param.channel = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.channelText = "来源" : listDropDown.channelText = $(this).text();
         param.pageNo = 1;
         loadData();
     });
