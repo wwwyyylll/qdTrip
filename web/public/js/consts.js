@@ -235,7 +235,8 @@ define("consts", function() {
                 '10':'订阅公众号',
                 '11':'填写邀请人',
                 '12':'连续签到6天',
-                '13':'连续签到15天'
+                '13':'连续签到15天',
+                '14':'加入拼多多返利授权'
             },
             isCompletedType:{
                 '1':'<span style="color:green">已完成</span>',
