@@ -291,6 +291,26 @@ define("consts", function() {
                 '3':'<span style="color:green">已结算</span>',
                 '4':'<span style="color:red">已失效</span>',
                 '5':'<span style="color:red">已维权退单</span>'
+            },
+            pddStatus:{
+                '1':'<span style="color:orange">未支付</span>',
+                '2':'<span style="color:green">已付款</span>',
+                '3':'<span style="color:green">已成团</span>',
+                '4':'<span style="color:green">已收货</span>',
+                '5':'<span style="color:deeppink">待结算</span>',
+                '6':'<span style="color:green">已结算</span>',
+                '7':'<span style="color:red">已失效</span>',
+                '8':'<span style="color:red">无佣金单</span>'
+            },
+            pddOrderStatus:{
+                '-1':'<span style="color:orange">未支付</span>',
+                '0':'<span style="color:green">已支付</span>',
+                '1':'<span style="color:green">已成团</span>',
+                '2':'<span style="color:green">确认收货</span>',
+                '3':'<span style="color:green">审核成功</span>',
+                '4':'<span style="color:red">审核失败</span>',
+                '5':'<span style="color:green">已经结算</span>',
+                '8':'<span style="color:red">非多多进宝商品</span>'
             }
         }
     }

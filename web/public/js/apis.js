@@ -1577,6 +1577,20 @@ define("apis", function() {
                 c:'channelBusinessCashOutRequest',
                 a:'rejectById'
             }
+        },
+        pddOrder:{
+            getLists:{
+                c:'pddOrder',
+                a:'getLists'
+            },
+            getById:{
+                c:'pddOrder',
+                a:'getById'
+            },
+            syncOrder:{
+                c:'pddOrder',
+                a:'syncOrder'
+            }
         }
     }
 });

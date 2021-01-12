@@ -8,7 +8,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         allowButton = '<button class="btn btn-primary" type="button" data-operate="allow">允许登录</button>',
         disableButton = '<button class="btn btn-danger" type="button" data-operate="notAllow">禁止登录</button>',
         addDistButton = '<button class="btn btn-primary" type="button" data-operate="addDist">设为分销商</button>',
-        bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定会员运营ID</button>',
+        bindMemberIdButton = '<button class="btn btn-primary" type="button" data-operate="bindMemberId">绑定淘宝会员运营Id</button>',
         canRecommendButton = '<button class="btn btn-primary" type="button" data-operate="canRecommend">设为好物推荐官</button>',
         cancelRecommendButton = '<button class="btn btn-danger" type="button" data-operate="cancelRecommend">取消好物推荐官</button>',
         signUpButton = '<button class="btn btn-primary" type="button" data-operate="signUp">已签约</button>',
@@ -101,7 +101,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var operates = {
         bindMemberId:function($this){
             var id = $this.closest("tr").attr("data-id");
-            hound.reason('确认绑定会员运营ID吗?','请输入要绑定的会员运营ID',function(data){
+            hound.reason('确认绑定淘宝会员运营Id吗?','请输入要绑定的淘宝会员运营Id',function(data){
                 utils.ajaxSubmit(apis.user.bindMemberOperationId, {id: id,memberOperationId:data}, function (data) {
                     hound.success("操作成功", "", 1000);
                     loadData();
@@ -289,6 +289,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         canRecommendTaobaoItem:'',
         orderByTaobaoCommissionRate:'',
         isChannelBusiness:'',
+        pddPid:'',
+        pddPidIsAuthority:'',
         warn:warnValue
     };
 
@@ -301,6 +303,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 n.isDistributorsText = consts.status.isBind[n.isDistributors];
                 n.canRecommendTaobaoItemText = consts.status.isBind[n.canRecommendTaobaoItem];
                 n.isChannelBusinessText = consts.status.isBind[n.isChannelBusiness];
+                n.pddPidIsAuthorityText = consts.status.isBind[n.pddPidIsAuthority];
                 n.sourceText = consts.status.userSource[n.source];
                 (n.status=="1")? n.materialButtonGroup = disableButton : n.materialButtonGroup = allowButton  ;
                 (n.isDistributors=='1')? n.materialButtonGroup = n.materialButtonGroup : n.materialButtonGroup = n.materialButtonGroup + addDistButton ;
@@ -331,6 +334,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             data.canRecommendText = listDropDown.canRecommendText;
             data.taobaoCommissionRateText = listDropDown.taobaoCommissionRateText;
             data.isChannelBusinessText = listDropDown.isChannelBusinessText;
+            data.pddText = listDropDown.pddPidIsAuthorityText;
             $sampleTable.html(template('visaListItem', data));
             utils.bindPagination($visaPagination, param, loadData);
             $visaPagination.html(utils.pagination(parseInt(data.cnt), param.pageNo));
@@ -343,10 +347,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var listDropDown = {
         statusText:'状态',
         sourceText:'来源',
-        signUpText:'已签约',
+        signUpText:'淘宝已签约',
         canRecommendText:'好物推荐官',
         taobaoCommissionRateText:'佣金率',
-        isChannelBusinessText:'是否渠道商'
+        isChannelBusinessText:'是否渠道商',
+        pddPidIsAuthorityText:'拼多多授权'
     };
     $sampleTable.on('click', '#dropStatusOptions a[data-id]', function () {
         param.status = $(this).data('id');
@@ -360,7 +365,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         loadData();
     }).on('click', '#dropSignUpOptions a[data-id]', function () {
         param.isSignUp = $(this).data('id');
-        ($(this).text()=="所有") ? listDropDown.signUpText = "已签约" : listDropDown.signUpText = $(this).text();
+        ($(this).text()=="所有") ? listDropDown.signUpText = "淘宝已签约" : listDropDown.signUpText = $(this).text();
         param.pageNo = 1;
         loadData();
     }).on('click', '#dropCanRecommendOptions a[data-id]', function () {
@@ -378,6 +383,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         ($(this).text()=="所有") ? listDropDown.isChannelBusinessText = "是否渠道商" : listDropDown.isChannelBusinessText = $(this).text();
         param.pageNo = 1;
         loadData();
+    }).on('click', '#dropPddOptions a[data-id]', function () {
+        param.pddPidIsAuthority = $(this).data('id');
+        ($(this).text()=="所有") ? listDropDown.pddPidIsAuthorityText = "拼多多授权" : listDropDown.pddPidIsAuthorityText = $(this).text();
+        param.pageNo = 1;
+        loadData();
     });
     $("#search").on("click",function(){
         param.pageNo = 1;
@@ -387,16 +397,25 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             param.nickName = $("#searchCont").val();
             param.memberOperationId = '';
             param.id = '';
+            param.pddPid = '';
             loadData();
-        }else if(selectsearchLabel=="会员运营Id"){
+        }else if(selectsearchLabel=="淘宝会员运营Id"){
             param.id = '';
             param.nickName = '';
+            param.pddPid = '';
             param.memberOperationId = $("#searchCont").val();
             loadData();
         }else if(selectsearchLabel=="会员ID"){
             param.nickName = '';
             param.memberOperationId = '';
+            param.pddPid = '';
             param.id = $("#searchCont").val();
+            loadData();
+        }else if(selectsearchLabel=="拼多多推广位"){
+            param.nickName = '';
+            param.memberOperationId = '';
+            param.id = '';
+            param.pddPid = $("#searchCont").val();
             loadData();
         }
     });

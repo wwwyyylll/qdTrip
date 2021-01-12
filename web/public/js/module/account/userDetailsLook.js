@@ -7,6 +7,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             utils.ajaxSubmit(apis.user.getById, {id: id}, function (data) {
                 data.sourceText = consts.status.userDetailSource[data.source];
                 data.isSignUpText = consts.status.isBind1[data.isSignUp];
+                data.pddPidIsAuthorityText = consts.status.isBind1[data.pddPidIsAuthority];
                 getByIdData = {
                     dataArr:data
                 };

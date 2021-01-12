@@ -215,6 +215,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });
 
+    var loc = location.href;
+    var n1 = loc.length;//地址的总长度
+    var n2 = loc.indexOf("=");//取得=号的位置
+    var id = decodeURI(loc.substr(n2+1,n1-n2));//从=号后面的内容
+    var urlParam = id.split("=");
+    if(urlParam[0]==1){
+        $("#headerTab2").click();
+    }else{
+        $("#headerTab1").click();
+    }
+
     var param = {
        materialId:''
     };
