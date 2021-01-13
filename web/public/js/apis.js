@@ -1591,6 +1591,12 @@ define("apis", function() {
                 c:'pddOrder',
                 a:'syncOrder'
             }
+        },
+        redPacket:{
+            getLists:{
+                c:'redPacket',
+                a:'getLists'
+            }
         }
     }
 });
