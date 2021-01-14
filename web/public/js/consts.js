@@ -127,7 +127,8 @@ define("consts", function() {
             },
             bannerSource:{
                 '1':'<span style="color:orange">淘宝</span>',
-                '2':'<span style="color:red">拼多多</span>'
+                '2':'<span style="color:red">拼多多</span>',
+                '3':'<span style="color:orange">美团</span>'
             },
             indexPosition:{
                 '1':'<span style="color:red">【左一】</span>',
@@ -179,7 +180,8 @@ define("consts", function() {
             taobaoCommissionType:{
                 '1':'返佣收益',
                 '2':'推广佣金',
-                '3':'大神卡佣金'
+                '3':'大神卡佣金',
+                '4':'红包'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',
