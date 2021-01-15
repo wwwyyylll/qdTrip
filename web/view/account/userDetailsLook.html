@@ -259,13 +259,13 @@
             <td style="text-align: left;padding-left: 10%">
                 <% if(dataArr[i].type==1){ %>
                 <!--自购-->
-                <div style="margin-bottom: 5px"><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% } %><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
+                <div style="margin-bottom: 5px"><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% } %> <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
                 <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
                 <div><%= dataArr[i].createTime %></div>
                 <% }else if(dataArr[i].type==2){ %>
                 <!--推广佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
-                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% } %><%- dataArr[i].contentArr.typeText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].payTime %></div>
+                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% } %> <%- dataArr[i].contentArr.typeText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].payTime %></div>
                 <% }else if(dataArr[i].type==3){ %>
                 <!--销售佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>

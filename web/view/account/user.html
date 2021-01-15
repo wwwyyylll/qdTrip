@@ -27,6 +27,7 @@
                                     <a class="dropdown-item searchlabel" href="#">昵称</a>
                                     <a class="dropdown-item searchlabel" href="#">淘宝会员运营Id</a>
                                     <a class="dropdown-item searchlabel" href="#">拼多多推广位</a>
+                                    <a class="dropdown-item searchlabel" href="#">美团推广位</a>
                                 </div>
                             </div>
                         </div>
@@ -119,6 +120,7 @@
                 </div>
             </div>
         </th>
+        <th style="width: 100px;word-wrap: break-word;word-break:break-all;">美团推广位</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropSignUp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -188,6 +190,7 @@
             <%= dataArr[i].pddPid %>
             <% } %>
         </td>
+        <td style="width: 100px;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].meituanSid %></td>
         <td><%- dataArr[i].isSignUpText %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>

@@ -1597,6 +1597,34 @@ define("apis", function() {
                 c:'redPacket',
                 a:'getLists'
             }
+        },
+        meituanCoupon:{
+            getLists:{
+                c:'meituanCoupon',
+                a:'getLists'
+            },
+            getById:{
+                c:'meituanCoupon',
+                a:'getById'
+            },
+            create:{
+                c:'meituanCoupon',
+                a:'create'
+            },
+            updateById:{
+                c:'meituanCoupon',
+                a:'updateById'
+            }
+        },
+        meituanOrder:{
+            getLists:{
+                c:'meituanOrder',
+                a:'getLists'
+            },
+            getById:{
+                c:'meituanOrder',
+                a:'getById'
+            }
         }
     }
 });

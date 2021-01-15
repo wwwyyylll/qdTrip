@@ -1,0 +1,215 @@
+@@include('../../inc-header.html', {"title": "订单详情"})
+@@include('../../top-nav.html')
+@@include('../../left-nav.html')
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-th-list"></i> 订单详情</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Tables</li>
+            <li class="breadcrumb-item active"><a href="@@HOSTview/mall/order.html">返回订单管理</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div id="basicMessage"></div>
+                    <div class="row" style="margin-top: 10px;display: none">
+                        <!--数据表格modelBuilder.js-->
+                        <div class="col-lg-12" style="width: 97%">
+                            <ul class="nav nav-tabs">
+                                <li class="active" style="height: 28px">
+                                    <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;color: orange;cursor: pointer">商品信息</a>
+                                </li>
+                                <li class="active" style="height: 28px">
+                                    <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;cursor: pointer">收货人信息</a>
+                                </li>
+                                <li class="active" style="height: 28px">
+                                    <a href="#qh3" id="headerTab3" data-toggle="tab" style="outline:none;cursor: pointer">操作日志</a>
+                                </li>
+                                <li class="active" style="height: 28px">
+                                    <a href="#qh4" id="headerTab4" data-toggle="tab" style="outline:none;cursor: pointer">物流信息</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tabContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--订单信息模板-->
+<script id="orderMessage" type="text/html">
+    <div style="padding: 20px; border: 1px solid lightgray;background: #f2f2f2;margin-bottom: 30px;">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-4">
+                <h5>订单信息&nbsp; (笔记订单状态：<%- dataArr.statusText %>) (美团订单状态：<%- dataArr.meituanStatusText %>)</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 15px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">ID</span>
+                    </div>
+                    <input type="text" name="id" value="<%= dataArr.id %>" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单标题</span>
+                    </div>
+                    <input type="text" name="smstitle" value="<%= dataArr.smstitle %>" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单所含商品id</span>
+                    </div>
+                    <input type="text" name="dealid" value="<%= dataArr.dealid %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单ID</span>
+                    </div>
+                    <input type="text" name="orderid" value="<%= dataArr.orderid %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单数量</span>
+                    </div>
+                    <input type="text" name="quantity" value="<%= dataArr.quantity %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单类型</span>
+                    </div>
+                    <% if(dataArr.type==99){ %>
+                    <input type="text" name="type" value="团购订单" class="form-control">
+                    <% }else if(dataArr.type==2){ %>
+                    <input type="text" name="type" value="酒店订单" class="form-control">
+                    <% }else if(dataArr.type==4){ %>
+                    <input type="text" name="type" value="外卖订单" class="form-control">
+                    <% }else if(dataArr.type==5){ %>
+                    <input type="text" name="type" value="话费订单" class="form-control">
+                    <% }else if(dataArr.type==6){ %>
+                    <input type="text" name="type" value="闪购订单" class="form-control">
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单总金额</span>
+                    </div>
+                    <input type="text" name="total" value="<%= dataArr.total %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单实际支付金额</span>
+                    </div>
+                    <input type="text" name="direct" value="<%= dataArr.direct %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单返佣比例</span>
+                    </div>
+                    <input type="text" name="ratio" value="<%= dataArr.ratio %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单返佣金额</span>
+                    </div>
+                    <input type="text" name="profit" value="<%= dataArr.profit %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">下单时间</span>
+                    </div>
+                    <input type="text" name="ordertime" value="<%= dataArr.ordertime %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单支付时间</span>
+                    </div>
+                    <input type="text" name="paytime" value="<%= dataArr.paytime %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">结算时间</span>
+                    </div>
+                    <input type="text" name="settlementTime_sys" value="<%= dataArr.settlementTime_sys %>" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">媒体方id</span>
+                    </div>
+                    <input type="text" name="uid" value="<%= dataArr.uid %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">媒体推广位sid</span>
+                    </div>
+                    <input type="text" name="sid" value="<%= dataArr.sid %>" class="form-control">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">订单签名字段</span>
+                    </div>
+                    <input type="text" name="sign" value="<%= dataArr.sign %>" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script data-main="/public/js/module/mall/meituanOrderDetails"></script>
+@@include('../../inc-footer.html')

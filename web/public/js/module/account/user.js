@@ -291,6 +291,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         isChannelBusiness:'',
         pddPid:'',
         pddPidIsAuthority:'',
+        meituanSid:'',
         warn:warnValue
     };
 
@@ -398,24 +399,35 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             param.memberOperationId = '';
             param.id = '';
             param.pddPid = '';
+            param.meituanSid = '';
             loadData();
         }else if(selectsearchLabel=="淘宝会员运营Id"){
             param.id = '';
             param.nickName = '';
             param.pddPid = '';
+            param.meituanSid = '';
             param.memberOperationId = $("#searchCont").val();
             loadData();
         }else if(selectsearchLabel=="会员ID"){
             param.nickName = '';
             param.memberOperationId = '';
             param.pddPid = '';
+            param.meituanSid = '';
             param.id = $("#searchCont").val();
             loadData();
         }else if(selectsearchLabel=="拼多多推广位"){
             param.nickName = '';
             param.memberOperationId = '';
             param.id = '';
+            param.meituanSid = '';
             param.pddPid = $("#searchCont").val();
+            loadData();
+        }else if(selectsearchLabel=="美团推广位"){
+            param.nickName = '';
+            param.memberOperationId = '';
+            param.id = '';
+            param.pddPid = '';
+            param.meituanSid = $("#searchCont").val();
             loadData();
         }
     });

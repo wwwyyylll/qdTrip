@@ -128,7 +128,7 @@ define("consts", function() {
             bannerSource:{
                 '1':'<span style="color:orange">淘宝</span>',
                 '2':'<span style="color:red">拼多多</span>',
-                '3':'<span style="color:orange">美团</span>'
+                '3':'<span style="color:green">美团</span>'
             },
             indexPosition:{
                 '1':'<span style="color:red">【左一】</span>',
@@ -313,6 +313,28 @@ define("consts", function() {
                 '4':'<span style="color:red">审核失败</span>',
                 '5':'<span style="color:green">已经结算</span>',
                 '8':'<span style="color:red">非多多进宝商品</span>'
+            },
+            actIdType:{
+                '2':'<span style="color:orangered">美团外卖</span>',
+                '4':'<span style="color:green">美团闪购</span>'
+            },
+            meituanOrderType:{
+                '99':'<span style="color:red">团购订单</span>',
+                '2':'<span style="color:deeppink">酒店订单</span>',
+                '4':'<span style="color:orange">外卖订单</span>',
+                '5':'<span style="color:blue">话费订单</span>',
+                '6':'<span style="color:green">闪购订单</span>'
+            },
+            meituanOrderMeituanStatus:{
+                '1':'<span style="color:orangered">已付款</span>',
+                '8':'<span style="color:green">已完成</span>',
+                '9':'<span style="color:red">已退款或风控</span>'
+            },
+            meituanOrderStatus:{
+                '1':'<span style="color:orangered">已付款</span>',
+                '2':'<span style="color:deeppink">待结算</span>',
+                '3':'<span style="color:green">已结算</span>',
+                '4':'<span style="color:red">已失效</span>'
             }
         }
     }
