@@ -130,6 +130,21 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $("#taskPagination").html(utils.pagination(parseInt(data.cnt), taskParam.pageNo,20));
             });
         },
+        //带货笔记------待结算推广收益
+        popularizeCommissionLogLists:function(){
+            utils.ajaxSubmit(apis.user.getPopularizeCommissionLogById, popularizeCommissionParam, function (data) {
+                $.each(data.dataArr,function(i,n){
+                    n.typeText = consts.status.taobaoCommissionType[n.type];
+                    n.settlementStatusText = consts.status.settlementStatus[n.isSettlement];
+                    n.contentArr.fansTypeText = consts.status.fansType[n.contentArr.fanType];
+                    n.contentArr.typeText = consts.status.buyType[n.contentArr.type];
+                    n.contentArr.typeText1 = consts.status.buyType1[n.contentArr.type];
+                });
+                $("#tabContent").html(template('popularizeCommissionLogList', data));
+                utils.bindPagination($("#visaPagination_popularize"), popularizeCommissionParam, operates.popularizeCommissionLogLists);
+                $("#visaPagination_popularize").html(utils.pagination(parseInt(data.cnt), popularizeCommissionParam.pageNo));
+            });
+        },
         //允许登录
         allow:function($this){
             var id = $("input[name=id]").val();
@@ -167,6 +182,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         pageNo: 1,
         pageSize:10,
         userId:param[0]
+    };
+    var popularizeCommissionParam = {
+        pageNo: 1,
+        pageSize:10,
+        id:param[0]
     };
     var cashOutRequestParam = {
         pageNo: 1,
@@ -267,6 +287,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     });
     $("#headerTab7").on("click",function(){
         operates.taskLists();
+        $(this).css({color:"orange"});
+        $(this).closest("li").siblings().find("a").css({color:"#555555"});
+    });
+    $("#headerTab8").on("click",function(){
+        operates.popularizeCommissionLogLists();
         $(this).css({color:"orange"});
         $(this).closest("li").siblings().find("a").css({color:"#555555"});
     });

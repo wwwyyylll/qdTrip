@@ -450,6 +450,10 @@ define("apis", function() {
             cancelSignUpById:{
                 c:'user',
                 a:'cancelSignUpById'
+            },
+            getPopularizeCommissionLogById:{
+                c:'user',
+                a:'getPopularizeCommissionLogById'
             }
         },
         distributors:{

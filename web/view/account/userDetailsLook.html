@@ -39,6 +39,9 @@
                                     <li class="active" style="height: 28px">
                                         <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;cursor: pointer">钱包信息</a>
                                     </li>
+                                    <li class="active bigContent2" style="height: 28px">
+                                        <a href="#qh8" id="headerTab8" data-toggle="tab" style="outline:none;cursor: pointer">待结算推广收益</a>
+                                    </li>
                                     <li class="active" style="height: 28px">
                                         <a href="#qh3" id="headerTab3" data-toggle="tab" style="outline:none;cursor: pointer">提现流水</a>
                                     </li>
@@ -308,6 +311,77 @@
         </tbody>
     </table>
     <div id="visaPagination_taobao1" class="d-flex justify-content-end" style="width: 50%"></div>
+</script>
+<!--带货笔记------待结算推广收益-->
+<script id="popularizeCommissionLogList" type="text/html">
+    <table class="table table-hover table-bordered" id="popularizeCommissionTable" style="width: 50%">
+        <thead>
+        <tr>
+            <th>收益（元）</th>
+            <th>收益来源</th>
+            <th>结算状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (dataArr.length > 0) { %>
+        <% for (var i = 0; i < dataArr.length; i++) { %>
+        <tr>
+            <td>
+                <div style="margin-bottom: 5px"><%- dataArr[i].typeText %></div>
+                <div style="color: red"><%= dataArr[i].money %></div>
+            </td>
+            <td style="text-align: left;padding-left: 10%">
+                <% if(dataArr[i].type==1){ %>
+                <!--自购-->
+                <div style="margin-bottom: 5px"><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% } %> <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;&nbsp;<%- dataArr[i].contentArr.typeText1 %></div>
+                <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
+                <div><%= dataArr[i].createTime %></div>
+                <% }else if(dataArr[i].type==2){ %>
+                <!--推广佣金-->
+                <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
+                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% } %> <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].createTime %></div>
+                <% }else if(dataArr[i].type==3){ %>
+                <!--销售佣金-->
+                <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
+                <div><%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].createTime %></div>
+                <% }else if(dataArr[i].type==4){ %>
+                <!--新年开红包-->
+                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
+                <div style="margin-bottom: 5px;color: green">
+                    <% if(dataArr[i].contentArr.type==3){ %> <span style="color: red">开启红包</span> <% }else if(dataArr[i].contentArr.type==4){ %> <span style="color: deeppink">分享红包</span> <% } %> &nbsp;&nbsp; <%= dataArr[i].createTime %>
+                </div>
+                <% }else if(dataArr[i].type==5){ %>
+                <!--订单取消-->
+                <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
+                <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
+                <div><%= dataArr[i].createTime %></div>
+                <% }else if(dataArr[i].type==6){ %>
+                <!--现金券-->
+                <div style="margin-bottom: 5px"><span style="color: green">现金券领取</span></div>
+                <div><%= dataArr[i].createTime %></div>
+                <% } %>
+            </td>
+            <td>
+                <% if(dataArr[i].type!=6){ %>
+                <% if(dataArr[i].isSettlement==1 || dataArr[i].isSettlement==2){ %>
+                <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
+                <div><%= dataArr[i].settlementTime %></div>
+                <% }else if(dataArr[i].isSettlement==4){ %>
+                <div style="margin-bottom: 5px"><%- dataArr[i].settlementStatusText %></div>
+                <div><%= dataArr[i].updateTime %></div>
+                <% } %>
+                <% } %>
+            </td>
+        </tr>
+        <% } %>
+        <% } else { %>
+        <tr>
+            <td colspan="10">没有符合条件的记录</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <div id="visaPagination_popularize" class="d-flex justify-content-end" style="width: 50%"></div>
 </script>
 <!--好物商城------提现流水-->
 <script id="cashOutRequestList" type="text/html">
@@ -592,9 +666,55 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">未结算金额</span>
+                        <span class="input-group-text">未结算总金额</span>
                     </div>
                     <input type="text" value="<%= taobaoWalletArr.unSettlementMoney %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">淘宝未结算金额</span>
+                    </div>
+                    <input type="text" value="<%= taobaoWalletArr.unSettlementMoney_tb %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">拼多多未结算金额</span>
+                    </div>
+                    <input type="text" value="<%= taobaoWalletArr.unSettlementMoney_pdd %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">美团未结算金额</span>
+                    </div>
+                    <input type="text" value="<%= taobaoWalletArr.unSettlementMoney_meituan %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">推广未结算金额</span>
+                    </div>
+                    <input type="text" value="<%= taobaoWalletArr.unSettlementMoney_popularize %>" class="form-control">
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>
