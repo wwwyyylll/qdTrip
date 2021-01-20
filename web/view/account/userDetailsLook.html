@@ -339,7 +339,7 @@
                 <% }else if(dataArr[i].type==2){ %>
                 <!--推广佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
-                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% } %> <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].createTime %></div>
+                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% } %> <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].contentArr.payTime %></div>
                 <% }else if(dataArr[i].type==3){ %>
                 <!--销售佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
