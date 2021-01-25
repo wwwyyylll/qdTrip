@@ -1529,6 +1529,10 @@ define("apis", function() {
                 c:'channelBusiness',
                 a:'copyUrlById'
             },
+            copyUrlForRedPacketById:{
+                c:'channelBusiness',
+                a:'copyUrlForRedPacketById'
+            },
             getFansLists:{
                 c:'channelBusiness',
                 a:'getFansLists'

@@ -97,6 +97,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             hound.error("推广链接复制失败", "", 1000);
         });
     }
+    function copyRedPacketText(){
+        var btns = document.querySelectorAll('.copyRedPacketBtn');
+        var clipboard = new ClipboardJS(btns);
+        clipboard.on('success', function(e) {
+            hound.success("红包推广链接复制成功", "", 1000);
+        });
+        clipboard.on('error', function(e) {
+            hound.error("红包推广链接复制失败", "", 1000);
+        });
+    }
     //页面操作配置
     var operates = {
         bindMemberId:function($this){
@@ -234,6 +244,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $this.parent().append(hideButton);
                 copyText();
                 $this.parent().find(".copyBtn").click();
+            });
+        },
+        copyRedPacketUrl:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            utils.ajaxSubmit(apis.channelBusiness.copyUrlForRedPacketById, {userId: id}, function (data) {
+                $this.parent().find(".copyRedPacketBtn").remove();
+                var hideButton ='<button data-clipboard-text="'+ data.url +'" class="btn btn-info copyRedPacketBtn" type="button" style="display:none">预览</button>';
+                $this.parent().append(hideButton);
+                copyRedPacketText();
+                $this.parent().find(".copyRedPacketBtn").click();
             });
         },
         addDist:function($this){

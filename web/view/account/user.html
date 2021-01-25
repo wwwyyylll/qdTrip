@@ -70,7 +70,7 @@
                 </div>
             </div>
         </th>
-        <th class="em-min-7" style="width:130px">
+        <th class="em-min-7" style="width:160px">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropIsChannelBusiness" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <%= isChannelBusinessText %>
@@ -172,11 +172,12 @@
             <% } %>
         </td>
         <td><%- dataArr[i].sourceText %></td>
-        <td style="width:130px">
+        <td style="width:160px">
             <% if(dataArr[i].isChannelBusiness==1 || dataArr[i].isChannelBusiness==2){ %>
             <%- dataArr[i].isChannelBusinessText %>
             <% if(dataArr[i].isChannelBusiness==1){ %>
-            <br><button class="btn btn-success" type="button" data-operate="copyUrl" style="margin-top: 5px">复制推广连接</button>
+            <br><button class="btn btn-success" type="button" data-operate="copyUrl" style="margin-top: 5px">复制推广链接</button>
+            <br><button class="btn btn-success" type="button" data-operate="copyRedPacketUrl" style="margin-top: 5px">复制红包推广链接</button>
             <% } %>
             <% } %>
         </td>

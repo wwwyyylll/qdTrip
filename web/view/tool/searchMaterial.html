@@ -126,6 +126,7 @@
         <th>渠道商昵称</th>
         <th>二维码海报</th>
         <th style="width:15%;word-wrap: break-word;word-break:break-all;">推广链接</th>
+        <th style="width:15%;word-wrap: break-word;word-break:break-all;">红包推广链接</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -162,6 +163,9 @@
         </td>
         <td style="width:15%;word-wrap: break-word;word-break:break-all;">
             <a href="<%= dataArr[i].url %>" target="_blank"> <%= dataArr[i].url %></a>
+        </td>
+        <td style="width:15%;word-wrap: break-word;word-break:break-all;">
+            <a href="<%= dataArr[i].redPacketUrl %>" target="_blank"> <%= dataArr[i].redPacketUrl %></a>
         </td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
@@ -224,6 +228,16 @@
                             <span class="input-group-text">推广链接</span>
                         </div>
                         <input type="text" name="url" placeholder="请输入推广链接" value="<%= dataArr.url %>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">红包推广链接</span>
+                        </div>
+                        <input type="text" name="redPacketUrl" placeholder="请输入红包推广链接" value="<%= dataArr.redPacketUrl %>" class="form-control">
                     </div>
                 </div>
             </div>

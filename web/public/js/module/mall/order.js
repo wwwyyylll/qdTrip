@@ -319,7 +319,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         orderNo:'',
         memberOperationId:'',
         time:'',
-        isSettlement:''
+        isSettlement:'',
+        itemTitle:''
     };
 
     $("input[name=warnParam]").on("click",function(){
@@ -492,11 +493,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //订单号搜索
             param.orderNo = $("#searchCont").val();
             param.memberOperationId = '';
+            param.itemTitle = '';
             loadData();
         }else if(selectSearchLabel=="会员运营ID"){
             //商品标题搜索
             param.memberOperationId = $("#searchCont").val();
             param.orderNo = '';
+            param.itemTitle = '';
+            loadData();
+        }else if(selectSearchLabel=="商品标题"){
+            //商品标题搜索
+            param.itemTitle = $("#searchCont").val();
+            param.orderNo = '';
+            param.memberOperationId = '';
             loadData();
         }
     });
