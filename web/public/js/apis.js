@@ -1633,6 +1633,12 @@ define("apis", function() {
                 c:'meituanOrder',
                 a:'getById'
             }
+        },
+        stat:{
+            getCashOut:{
+                c:'stat',
+                a:'getCashOut'
+            }
         }
     }
 });

@@ -1,0 +1,54 @@
+@@include('../../inc-header.html', {"title": "财务报表————提现"})
+@@include('../../top-nav.html')
+@@include('../../left-nav.html')
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-th-list"></i> 财务报表————提现</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb side">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item">Tables</li>
+      <li class="breadcrumb-item active"><a href="#">财务报表————提现</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <div class="form-row">
+            <div class="col-6">
+              <div class="tile">
+                <h5 id="resultText"></h5>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script id="resultDiv" type="text/html">
+  <% for(var i=0;i< dataArr.length;i++){ %>
+     <% if(dataArr[i].label=="totalMoney"){ %>
+     <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
+        <div class="col-12">
+        <%= dataArr[i].labelText %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= dataArr[i].money %>元
+        </div>
+     </div>
+     <% }else{ %>
+     <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
+       <div class="col-12">
+        <%= dataArr[i].labelText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].money %>元&nbsp;&nbsp;&nbsp;<%= dataArr[i].percent %>%
+        </div>
+     </div>
+     <% } %>
+  <% } %>
+</script>
+<script type="text/javascript" src="/public/js/plugins/chart.js"></script>
+<script data-main="/public/js/module/financialTable/withdrawal"></script>
+@@include('../../inc-footer.html')
+
