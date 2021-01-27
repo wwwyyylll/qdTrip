@@ -40,6 +40,7 @@
                         <div class="btn-group" style="float:right;margin-right: 5px">
                             <button class="btn btn-success" data-operate="syncOrder" style="outline:none;margin-left: 3px">同步订单</button>
                         </div>
+                        <div class="btn-group lastTime" style="float:right;margin-right: 20px;line-height: 37px;color: red;font-weight: bolder;font-size: 15px;"></div>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom:20px;display: none">
@@ -419,7 +420,7 @@
     <tr>
         <th>ID</th>
         <th>订单号</th>
-        <th>推广位ID</th>
+        <th>用户昵称</th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">商品标题</th>
         <th>支付金额</th>
         <th>佣金金额</th>
@@ -442,7 +443,7 @@
                 </div>
             </div>
         </th>
-        <th>同步时间</th>
+        <th>下单时间</th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">操作</th>
     </tr>
     </thead>
@@ -452,7 +453,7 @@
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
         <td><%= dataArr[i].orderSn %></td>
-        <td><%= dataArr[i].pId %></td>
+        <td><%= dataArr[i].nickName %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].goodsName %></td>
         <td><% if(dataArr[i].orderAmount){ %><%= dataArr[i].orderAmount %>元<% } %></td>
         <td><% if(dataArr[i].promotionRate){ %><%= dataArr[i].promotionRate %>元<% } %></td>
@@ -463,7 +464,7 @@
             <div style="margin-top: 5px"><%= dataArr[i].settlementTime_sys %></div>
             <% } %>
         </td>
-        <td><%= dataArr[i].updateTime %></td>
+        <td><%= dataArr[i].orderCreateTime %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;">
             <div class="d-flex flex-wrap justify-content-center">
                 <%- dataArr[i].materialButtonGroup %>

@@ -69,7 +69,7 @@
         <th>订单数量</th>
         <th>订单实际支付金额</th>
         <th>佣金金额</th>
-        <th style="width:12%;word-wrap: break-word;word-break:break-all;">媒体推广位sid</th>
+        <th style="width:12%;word-wrap: break-word;word-break:break-all;">用户昵称</th>
         <th>下单时间</th>
         <th>订单支付时间</th>
         <th>美团订单状态</th>
@@ -101,7 +101,7 @@
         <td><%= dataArr[i].quantity %></td>
         <td><% if(dataArr[i].direct){ %><%= dataArr[i].direct %>元<% } %></td>
         <td><% if(dataArr[i].profit){ %><%= dataArr[i].profit %>元<% } %></td>
-        <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].sid %></td>
+        <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].nickName %></td>
         <td><%= dataArr[i].ordertime %></td>
         <td><%= dataArr[i].paytime %></td>
         <td><%- dataArr[i].meituanStatusText %></td>

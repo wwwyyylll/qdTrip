@@ -181,7 +181,8 @@ define("consts", function() {
                 '1':'返佣收益',
                 '2':'推广佣金',
                 '3':'大神卡佣金',
-                '4':'红包'
+                '4':'红包',
+                '5':'拉新奖励'
             },
             fansType:{
                 '1':'<span style="color:orange">专属粉丝</span>',

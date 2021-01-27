@@ -280,10 +280,9 @@
                     <% if(dataArr[i].contentArr.type==3){ %> <span style="color: red">开启红包</span> <% }else if(dataArr[i].contentArr.type==4){ %> <span style="color: deeppink">分享红包</span> <% } %> &nbsp;&nbsp; <%= dataArr[i].createTime %>
                 </div>
                 <% }else if(dataArr[i].type==5){ %>
-                <!--订单取消-->
+                <!--拉新奖励-->
                 <div style="margin-bottom: 5px"><%= dataArr[i].contentArr.title %></div>
-                <div style="margin-bottom: 5px;text-decoration: underline;color: green">订单：<%= dataArr[i].contentArr.orderNo %></div>
-                <div><%= dataArr[i].createTime %></div>
+                <div>拉新计算截止日：<%= dataArr[i].contentArr.expireDate %></div>
                 <% }else if(dataArr[i].type==6){ %>
                 <!--现金券-->
                 <div style="margin-bottom: 5px"><span style="color: green">现金券领取</span></div>

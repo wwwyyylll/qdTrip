@@ -371,6 +371,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     n.materialButtonGroup = n.materialButtonGroup ;
                 }*/
             });
+            $(".lastTime").html("");
+            $(".lastTime").html("最后同步时间：" + data.lastSyncTime);
             data.statusText = listDropDown.statusText;
             data.settlementText = listDropDown.settlementText;
             $sampleTable.html(template('visaListItem', data));

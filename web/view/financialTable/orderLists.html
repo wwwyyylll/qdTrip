@@ -1,0 +1,78 @@
+@@include('../../inc-header.html', {"title": "财务报表————订单统计"})
+@@include('../../top-nav.html')
+@@include('../../left-nav.html')
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-th-list"></i> 财务报表————订单统计</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb side">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item">Tables</li>
+      <li class="breadcrumb-item active"><a href="#">财务报表————订单统计</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+              <div class="form-row" style="margin-bottom: 15px">
+                  <div class="col-3">
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text">类型</span>
+                          </div>
+                          <select name="type" class="form-control">
+                              <option value="3">所有</option>
+                              <option value="1">年-月</option>
+                              <option value="2">年</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-3 dateDiv" style="display: none">
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text">日期</span>
+                          </div>
+                          <input autocomplete="off" type="text" name="date" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="form-control dateInput">
+                      </div>
+                  </div>
+                  <div class="btn-group" style="margin-left:1%">
+                      <div id="search" class="btn btn-primary" style="outline:none">生成图表</div>
+                  </div>
+              </div>
+              <div class="form-row">
+                <div class="col-6">
+                  <div class="tile">
+                    <h5 id="resultText"></h5>
+                      <h5 style="color: orange">订单统计</h5>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script id="resultDiv" type="text/html">
+  <% for(var i=0;i< dataArr.length;i++){ %>
+     <% if(dataArr[i].label=="totalMoney"){ %>
+     <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
+         <div style="width: 100px"><%= dataArr[i].labelText %></div>
+         <div><%= dataArr[i].money %>元</div>
+     </div>
+     <% }else{ %>
+     <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
+         <div style="width: 100px"><%= dataArr[i].labelText %></div>
+         <div><%= dataArr[i].money %>元&nbsp;&nbsp;&nbsp;<%= dataArr[i].percent %>%</div>
+     </div>
+     <% } %>
+  <% } %>
+</script>
+<script type="text/javascript" src="/public/js/plugins/chart.js"></script>
+<script data-main="/public/js/module/financialTable/orderLists"></script>
+@@include('../../inc-footer.html')
+
