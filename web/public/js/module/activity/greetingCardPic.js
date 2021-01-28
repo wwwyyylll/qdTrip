@@ -16,19 +16,19 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         $("#searchCont").attr("data-id",'');
     });
 
+    //上传图片文件
     function blobToDataURL(blob,cb) {
         var reader = new FileReader();
         reader.onload = function (evt) {
-            var base64 = evt.target.result
+            var base64 = evt.target.result;
             cb(base64)
         };
         reader.readAsDataURL(blob);
     }
-
-    var picFile = "";
     function uploadFile(){
         //选择图片文件
         $(".uploadImg").change(function(){
+            var uploadFile = $(this).closest(".uploadFile");
             //判断是否支持FileReader
             if (window.FileReader) {
                 var reader = new FileReader();
@@ -38,11 +38,11 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var file = this.files[0];
             reader.onload = function(e) {
                 //获取图片dom
-                $(".imgUrl").html('<i class="fa fa-image mr-2"></i>' + file.name)
+                uploadFile.find(".imgUrl").html('<i class="fa fa-image mr-2"></i>' + file.name)
                 if(file.name!=""){
-                    $(".avatarUpload").removeAttr("disabled");
-                    $(".avatarUpload").removeClass("btn-default");
-                    $(".avatarUpload").addClass("btn-primary");
+                    uploadFile.find(".avatarUpload").removeAttr("disabled");
+                    uploadFile.find(".avatarUpload").removeClass("btn-default");
+                    uploadFile.find(".avatarUpload").addClass("btn-primary");
                 }
             };
             reader.readAsDataURL(file);
@@ -50,12 +50,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             if(file){
                 var url = URL.createObjectURL(file);
                 var base64 = blobToDataURL(file,function(base64Url) {
-                    picFile = base64Url;
+                    uploadFile.find(".temporaryFile").text(base64Url);
                 })
             }
-        });
+        })
         // 上传图片文件
-        $(".uploadFile").find('.avatarUpload').click(function () {
+        $('.avatarUpload').click(function () {
+            var uploadFile = $(this).closest(".uploadFile");
             $.ajax({
                 type:'POST',
                 url: "@@API",
@@ -66,14 +67,13 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     linkPassword:consts.param.linkPassword,
                     signature:consts.param.signature,
                     userToken: $.cookie('userToken'),
-                    content:picFile
+                    content:uploadFile.find(".temporaryFile").text()
                 },
                 dataType: 'json',
                 success: function (res) {
-                    $(".imgUrl").html("");
-                    $(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 100px;height: 33px' src='"+ res.result +"'></a>");
-                    $(".imgUrl").css({marginTop:0});
-                    $("input[name=picUrl]").val(res.result);
+                    uploadFile.find(".imgUrl").html("");
+                    uploadFile.find(".imgUrl").html("<a target='_blank' href='"+ res.result +"'><img style='display: inline-block;width: 45px;height: 20px' src='"+ res.result +"'></a>");
+                    uploadFile.find("input[type=hidden]").val(res.result);
                 }
             }).fail(function (jqXHR, textStatus) {
                 hound.error('Request failed: ' + textStatus);

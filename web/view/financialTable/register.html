@@ -1,15 +1,15 @@
-@@include('../../inc-header.html', {"title": "财务报表————用户统计"})
+@@include('../../inc-header.html', {"title": "用户统计"})
 @@include('../../top-nav.html')
 @@include('../../left-nav.html')
 <main class="app-content">
   <div class="app-title">
     <div>
-      <h1><i class="fa fa-th-list"></i> 财务报表————用户统计</h1>
+      <h1><i class="fa fa-th-list"></i> 用户统计</h1>
     </div>
     <ul class="app-breadcrumb breadcrumb side">
       <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
       <li class="breadcrumb-item">Tables</li>
-      <li class="breadcrumb-item active"><a href="#">财务报表————用户统计</a></li>
+      <li class="breadcrumb-item active"><a href="#">用户统计</a></li>
     </ul>
   </div>
   <div class="row">
@@ -23,18 +23,18 @@
                               <span class="input-group-text">类型</span>
                           </div>
                           <select name="type" class="form-control">
-                              <option value="3">所有</option>
-                              <option value="1">年-月</option>
-                              <option value="2">年</option>
+                              <option value="3">按年</option>
+                              <option value="1" selected>按日</option>
+                              <option value="2">按月</option>
                           </select>
                       </div>
                   </div>
-                  <div class="dateDiv" style="display: none;width: 180px;margin-left: 20px">
+                  <div class="dateDiv" style="width: 300px;margin-left: 20px">
                       <div class="input-group">
                           <div class="input-group-prepend">
                               <span class="input-group-text">日期</span>
                           </div>
-                          <input autocomplete="off" type="text" name="date" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="form-control dateInput">
+                          <input autocomplete="off" type="text" name="date" class="form-control dateInput">
                       </div>
                   </div>
                   <div class="btn-group" style="margin-left:1%">
@@ -45,7 +45,7 @@
                 <div class="col-6">
                   <div class="tile">
                     <h5 id="resultText"></h5>
-                      <h5 style="color: orange">用户注册数</h5>
+                      <h5 style="color: orange">用户注册数柱状图</h5>
                     <div class="embed-responsive embed-responsive-16by9">
                         <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
                     </div>
@@ -76,7 +76,7 @@
 <script id="orderDiv" type="text/html">
     <div style="border:1px solid lightgray;padding: 50px;border-radius:5px;background: #eeeeee;">
     <div class="form-row" style="margin-bottom: 15px;font-size: 15px">
-        <div style="width: 150px">订单Uv总数</div>
+        <div style="width: 150px">订单UV总数</div>
         <div><%= totalCnt %></div>
     </div>
     <% for(var i=0;i< dataArr.length;i++){ %>
@@ -84,11 +84,11 @@
     <div class="form-row" style="margin-bottom: 15px;font-size: 15px">
         <div style="width: 150px">
             <% if(dataArr[i].channel=='1'){ %>
-            淘宝
+            淘宝订单UV数
             <% }else if(dataArr[i].channel=='2'){ %>
-            拼多多
+            拼多多订单UV数
             <% }else if(dataArr[i].channel=='3'){ %>
-            美团
+            美团订单UV数
             <% } %>
         </div>
         <div><%= dataArr[i].cnt %></div>

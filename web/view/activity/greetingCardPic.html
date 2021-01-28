@@ -51,10 +51,12 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th style="width:12%;word-wrap: break-word;word-break:break-all;">标题</th>
         <th>图片</th>
+        <th>缩略图</th>
+        <th>合成用图片</th>
         <th>排序</th>
         <th>祝福语数量</th>
-        <th>祝福语X + Y坐标</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -76,6 +78,7 @@
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
         <td><%= dataArr[i].id %></td>
+        <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
         <td>
             <% if(dataArr[i].picUrl){ %>
             <a target="_blank" href="<%= dataArr[i].picUrl %>">
@@ -85,16 +88,26 @@
             <span style="color: red">暂无贺卡图片</span>
             <% } %>
         </td>
-        <td><%= dataArr[i].sort %></td>
-        <td><%= dataArr[i].blessingCnt %></td>
         <td>
-            <% if(dataArr[i].blessing_x){ %>
-            <div style="margin-bottom: 5px">X : <%= dataArr[i].blessing_x %></div>
-            <% } %>
-            <% if(dataArr[i].blessing_y){ %>
-            <div>Y : <%= dataArr[i].blessing_y %></div>
+            <% if(dataArr[i].sharePicUrl){ %>
+            <a target="_blank" href="<%= dataArr[i].sharePicUrl %>">
+                <img src="<%= dataArr[i].sharePicUrl %>" style="display: inline-block;width:50px;height: 50px">
+            </a>
+            <% }else{ %>
+            <span style="color: red">暂无缩略图</span>
             <% } %>
         </td>
+        <td>
+            <% if(dataArr[i].qrCodePicUrl){ %>
+            <a target="_blank" href="<%= dataArr[i].qrCodePicUrl %>">
+                <img src="<%= dataArr[i].qrCodePicUrl %>" style="display: inline-block;width:50px;height: 50px">
+            </a>
+            <% }else{ %>
+            <span style="color: red">暂无合成用图片</span>
+            <% } %>
+        </td>
+        <td><%= dataArr[i].sort %></td>
+        <td><%= dataArr[i].blessingCnt %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
@@ -106,7 +119,7 @@
     <% } %>
     <% } else { %>
     <tr>
-        <td colspan="9">没有符合条件的记录</td>
+        <td colspan="13">没有符合条件的记录</td>
     </tr>
     <% } %>
     </tbody>
@@ -117,43 +130,69 @@
         <fieldset>
             <input type="hidden" name="id" value="<%= dataArr.id %>">
             <div class="form-row uploadFile" style="margin-bottom: 15px">
-                <div class="col-5">
-                    <div class="input-group">
-                        <span style="margin-top:6px;margin-right: 10px">上传贺卡图片</span>
-                        <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar1" class="uploadImg d-none">选择图片文件</label>
-                        <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
-                    </div>
+                <div class="input-group">
+                    <span style="margin-top:6px;margin-right: 10px">上传贺卡图片</span>
+                    <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                    <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    <span class="temporaryFile" style="display: none"></span>
+                    <% if (dataArr.picUrl) { %>
+                    <h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">
+                        <a target='_blank' href='<%= dataArr.picUrl %>'>
+                            <img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.picUrl %>">
+                        </a>
+                    </h6>
+                    </h6>
+                    <% } else { %>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无贺卡图片</span></h6>
+                    <% } %>
+                    <input type="hidden" name="picUrl" value="<%= dataArr.picUrl %>">
                 </div>
-                <div class="col-7">
-                    <div class="input-group">
-                        <% if (dataArr.picUrl) { %>
-                        <h6 class="imgUrl">
-                            <a target='_blank' href='<%= dataArr.picUrl %>'>
-                                <img src="<%= dataArr.picUrl %>" style="display: inline-block;width:100px;height: 33px;">
-                            </a>
-                        </h6>
-                        <% } else { %>
-                        <h6 style="margin-top: 9px" class="imgUrl"><span style="color:red">暂无贺卡图片</span></h6>
-                        <% } %>
-                        <input type="hidden" name="picUrl" value="<%= dataArr.picUrl %>">
-                    </div>
+            </div>
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
+                <div class="input-group">
+                    <span style="margin-top:6px;margin-right: 10px">上传缩略图</span>
+                    <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                    <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    <span class="temporaryFile" style="display: none"></span>
+                    <% if (dataArr.sharePicUrl) { %>
+                    <h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">
+                        <a target='_blank' href='<%= dataArr.sharePicUrl %>'>
+                            <img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.sharePicUrl %>">
+                        </a>
+                    </h6>
+                    </h6>
+                    <% } else { %>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无缩略图</span></h6>
+                    <% } %>
+                    <input type="hidden" name="sharePicUrl" value="<%= dataArr.sharePicUrl %>">
+                </div>
+            </div>
+            <div class="form-row uploadFile" style="margin-bottom: 15px">
+                <div class="input-group">
+                    <span style="margin-top:6px;margin-right: 10px">上传合成用图片</span>
+                    <label class="file-label btn btn-primary mb-0 mr-2"><input type="file" name="avatar" class="uploadImg d-none">选择图片文件</label>
+                    <button type="button" class="btn btn-default avatarUpload" disabled>上传文件</button>
+                    <span class="temporaryFile" style="display: none"></span>
+                    <% if (dataArr.qrCodePicUrl) { %>
+                    <h6 style="margin-left: 10px;margin-bottom: 0" class="imgUrl">
+                        <a target='_blank' href='<%= dataArr.qrCodePicUrl %>'>
+                            <img style="display: inline-block;width: 65px;height: 35px" src="<%= dataArr.qrCodePicUrl %>">
+                        </a>
+                    </h6>
+                    </h6>
+                    <% } else { %>
+                    <h6 style="margin-top: 9px;margin-left: 10px" class="imgUrl"><span style="color:red">暂无合成用图片</span></h6>
+                    <% } %>
+                    <input type="hidden" name="qrCodePicUrl" value="<%= dataArr.qrCodePicUrl %>">
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">祝福语X坐标</span>
+                            <span class="input-group-text">标题</span>
                         </div>
-                        <input type="text" name="blessing_x" placeholder="请输入祝福语X坐标" value="<%= dataArr.blessing_x %>" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">祝福语Y坐标</span>
-                        </div>
-                        <input type="text" name="blessing_y" placeholder="请输入祝福语Y坐标" value="<%= dataArr.blessing_y %>" class="form-control" required>
+                        <input type="text" name="title" placeholder="请输入标题" value="<%= dataArr.title %>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -191,6 +230,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div style="width:100%;height:2px;border-bottom: 1px dashed gray;margin-bottom: 10px"></div>
                         <% } %>
                     </div>
                 </div>

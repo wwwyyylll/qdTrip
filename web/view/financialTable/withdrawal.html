@@ -1,15 +1,15 @@
-@@include('../../inc-header.html', {"title": "财务报表————提现"})
+@@include('../../inc-header.html', {"title": "提现"})
 @@include('../../top-nav.html')
 @@include('../../left-nav.html')
 <main class="app-content">
   <div class="app-title">
     <div>
-      <h1><i class="fa fa-th-list"></i> 财务报表————提现</h1>
+      <h1><i class="fa fa-th-list"></i> 提现</h1>
     </div>
     <ul class="app-breadcrumb breadcrumb side">
       <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
       <li class="breadcrumb-item">Tables</li>
-      <li class="breadcrumb-item active"><a href="#">财务报表————提现</a></li>
+      <li class="breadcrumb-item active"><a href="#">提现</a></li>
     </ul>
   </div>
   <div class="row">
@@ -35,13 +35,21 @@
   <% for(var i=0;i< dataArr.length;i++){ %>
      <% if(dataArr[i].label=="totalMoney"){ %>
      <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
-         <div style="width: 100px"><%= dataArr[i].labelText %></div>
+         <div style="width: 125px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
          <div><%= dataArr[i].money %>元</div>
      </div>
      <% }else{ %>
      <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
-         <div style="width: 100px"><%= dataArr[i].labelText %></div>
-         <div><%= dataArr[i].money %>元&nbsp;&nbsp;&nbsp;<%= dataArr[i].percent %>%</div>
+         <div style="width: 125px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
+         <div style="width: 120px"><%= dataArr[i].money %>元</div>
+         <div style="width: 80px"><%= dataArr[i].percent %>%</div>
+         <div>
+             <% if(dataArr[i].label=="waitMoney"){ %>
+             ( 其中：<%= userArr[0].nickName %>：<%= userArr[0].waitMoney %>元，<%= userArr[1].nickName %>：<%= userArr[1].waitMoney %>元)
+             <% }else if(dataArr[i].label=="takenMoney"){ %>
+             ( 其中：<%= userArr[0].nickName %>：<%= userArr[0].takenMoney %>元，<%= userArr[1].nickName %>：<%= userArr[1].takenMoney %>元)
+             <% } %>
+         </div>
      </div>
      <% } %>
   <% } %>

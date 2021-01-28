@@ -12,7 +12,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var pieData = [];                  //用来显示扇形图的数组（无百分比）  value + color + highlight + label
     function loadData() {
         utils.ajaxSubmit(apis.stat.getCashOut, "", function (data) {
-            $.each(data,function(i,n){
+            $.each(data.dataArr,function(i,n){
                 if(i=="totalMoney"){
                     totalNumber = Number(n);
                     totalDataArr.push({label: i, labelText:"总金额", money: Number(n), color:"#F7464A"})
@@ -24,6 +24,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     noTotalNumberDataArr.push({label: i, labelText:"可提现金额", money: Number(n), color:"#FDB45C", highlight:"#FFC870"});
                 }
             });
+
             for(var i=0;i<noTotalNumberDataArr.length;i++){
                 noTotalNumberDataArr[i].percent = Percentage(noTotalNumberDataArr[i].money,totalNumber);
                 for(var j=0;j<totalDataArr.length;j++) {
@@ -42,7 +43,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var ctxp = $("#pieChartDemo").get(0).getContext("2d");
             var pieChart = new Chart(ctxp).Pie(pieData);
             //文字统计结果显示
-            var getData = {dataArr:totalDataArr};
+            var getData = {dataArr:totalDataArr,userArr:data.userArr};
             $("#resultText").html(template('resultDiv', getData));
         });
     }

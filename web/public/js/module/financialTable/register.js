@@ -1,23 +1,54 @@
 require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var param = {
         date:"''",
-        type:3
+        type:1
     };
+    //获取当前时间
+    function getDate(){
+        var myDate = new Date();
+        var year = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+        var month = myDate.getMonth()+1;       //获取当前月份(0-11,0代表1月)
+        var date = myDate.getDate();        //获取当前日(1-31)
+        var hour = myDate.getHours();       //获取当前小时数(0-23)
+        var minutes = myDate.getMinutes();     //获取当前分钟数(0-59)
+        var seconds = myDate.getSeconds();     //获取当前秒数(0-59)
+
+        function addZero(a){
+            var aa = "";
+            if(a<10){
+                aa = "0" + a;
+            }else{
+                aa = a;
+            }
+            return aa;
+        }
+        month = addZero(month);
+        //date = addZero(date);
+        //hour = addZero(hour);
+        //minutes = addZero(minutes);
+        //seconds = addZero(seconds);
+
+        var dateData = year + "-" + month ;
+        return dateData;
+    }
+    param.date = getDate();
+    $(".dateInput").attr("placeholder",getDate());
+
     $("select[name=type]").on("change",function(){
-       if($(this).val()==3){
-           $(".dateDiv").hide();
-           param.date = "''";
-       }else if($(this).val()==1){
-           $(".dateDiv").show();
-           var dateInputParent = $(".dateInput").parent();
-           $(".dateInput").remove();
-           dateInputParent.append('<input autocomplete="off" type="text" name="date" onclick="laydate({istime: true, format: \'YYYY-MM\'})" class="form-control dateInput">');
-       }else if($(this).val()==2){
-           $(".dateDiv").show();
-           var dateInputParent = $(".dateInput").parent();
-           $(".dateInput").remove();
-           dateInputParent.append('<input autocomplete="off" type="text" name="date" onclick="laydate({istime: true, format: \'YYYY\'})" class="form-control dateInput">');
-       }
+        if($(this).val()==3){
+            $(".dateDiv").hide();
+            param.date = "''";
+        }else if($(this).val()==1){
+            $(".dateDiv").show();
+            var dateInputParent = $(".dateInput").parent();
+            $(".dateInput").remove();
+            dateInputParent.append('<input autocomplete="off" placeholder="' + "请输入如" + getDate() + "的日期格式" + '" type="text" name="date"class="form-control dateInput">');
+        }else if($(this).val()==2){
+            $(".dateDiv").show();
+            var dateInputParent = $(".dateInput").parent();
+            $(".dateInput").remove();
+            dateInputParent.append('<input autocomplete="off" placeholder="请输入如2021日期格式" type="text" name="date" class="form-control dateInput">');
+        }
     });
     $("#search").on("click",function(){
         param.type = $("select[name=type]").val();
