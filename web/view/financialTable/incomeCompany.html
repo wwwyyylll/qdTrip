@@ -12,24 +12,42 @@
       <li class="breadcrumb-item active"><a href="#">公司总收益</a></li>
     </ul>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tile">
-        <div class="tile-body">
-          <div class="form-row">
-            <div class="col-6">
-              <div class="tile">
-                <h5 id="resultText"></h5>
-                <div class="embed-responsive embed-responsive-16by9">
-                  <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+    <div class="row" style="margin-top: 10px">
+        <!--数据表格modelBuilder.js-->
+        <div class="col-lg-12" style="width: 97%">
+            <ul class="nav nav-tabs">
+                <li class="active" style="height: 28px">
+                    <a href="#qh1" id="headerTab1" data-toggle="tab" style="outline:none;background: #ffffff;color: orange;cursor: pointer">毛利润</a>
+                </li>
+                <li class="active" style="height: 28px">
+                    <a href="#qh2" id="headerTab2" data-toggle="tab" style="outline:none;background: #ffffff;cursor: pointer">净利润</a>
+                </li>
+                <li class="active" style="height: 28px">
+                    <a href="#qh3" id="headerTab3" data-toggle="tab" style="outline:none;background: #ffffff;cursor: pointer">服务费</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="tabContent">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tile">
+                            <div class="tile-body">
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <div class="tile">
+                                            <h5 id="resultText"></h5>
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </main>
 <script id="resultDiv" type="text/html">
   <% for(var i=0;i< dataArr.length;i++){ %>
