@@ -39,7 +39,7 @@
             </div>
         </li>
     <% for(var i=0;i < dataArr.length;i++){ %>
-        <% if (dataArr[i].type == 1 || dataArr[i].type == 2 || dataArr[i].type == 3 || dataArr[i].type == 5 || dataArr[i].type == 9) { %>
+        <% if (dataArr[i].type == 1 || dataArr[i].type == 2 || dataArr[i].type == 3 || dataArr[i].type == 5 || dataArr[i].type == 9 || dataArr[i].type == 10) { %>
         <li>
                 <div style="padding:6px 10px;width: 100%">
                     <% if (dataArr[i].type == 1) { %>
@@ -66,6 +66,11 @@
                     <p class="app-notification__message">
                         <i class="fa fa-envelope" style="font-size: 13px;color:#00635a"></i>
                         <a style="text-decoration: underline;word-wrap: break-word;word-break:break-all;margin-left: 4px" target="_blank" href="@@HOSTview/tool/searchMaterial.html?warn=1"><%= dataArr[i].title %></a>
+                    </p>
+                    <% }else if(dataArr[i].type == 10){ %>
+                    <p class="app-notification__message">
+                        <i class="fa fa-envelope" style="font-size: 13px;color:#00635a"></i>
+                        <a style="text-decoration: underline;word-wrap: break-word;word-break:break-all;margin-left: 4px" target="_blank" href="@@HOSTview/mall/meiTuanCashCouponOrder.html?warn=1"><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>个】</span></a>
                     </p>
                     <% }else{ %>
                     <p class="app-notification__message" style="word-wrap: break-word;word-break:break-all"><i class="fa fa-envelope" style="font-size: 13px;color:#00635a;margin-right: 4px"></i><%= dataArr[i].title %><span style="color:red">【<%= dataArr[i].cnt %>人】</span></p>

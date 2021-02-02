@@ -1180,6 +1180,10 @@ define("apis", function() {
             bindMemberOperationId:{
                 c:'taobaoOrder',
                 a:'bindMemberOperationId'
+            },
+            syncOrderForHand:{
+                c:'taobaoOrder',
+                a:'syncOrderForHand'
             }
         },
         tool:{
@@ -1714,6 +1718,46 @@ define("apis", function() {
             offById:{
                 c:'greetingCardPic',
                 a:'offById'
+            }
+        },
+        meituanCashCoupon:{
+            getLists:{
+                c:'meituanCashCoupon',
+                a:'getLists'
+            },
+            create:{
+                c:'meituanCashCoupon',
+                a:'create'
+            },
+            getById:{
+                c:'meituanCashCoupon',
+                a:'getById'
+            },
+            updateById:{
+                c:'meituanCashCoupon',
+                a:'updateById'
+            },
+            onById:{
+                c:'meituanCashCoupon',
+                a:'onById'
+            },
+            offById:{
+                c:'meituanCashCoupon',
+                a:'offById'
+            }
+        },
+        meituanCashCouponOrder:{
+            getLists:{
+                c:'meituanCashCouponOrder',
+                a:'getLists'
+            },
+            getById:{
+                c:'meituanCashCouponOrder',
+                a:'getById'
+            },
+            saveExchangeCodeById:{
+                c:'meituanCashCouponOrder',
+                a:'saveExchangeCodeById'
             }
         }
     }

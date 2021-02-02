@@ -336,6 +336,11 @@ define("consts", function() {
                 '2':'<span style="color:deeppink">待结算</span>',
                 '3':'<span style="color:green">已结算</span>',
                 '4':'<span style="color:red">已失效</span>'
+            },
+            meituanCashCouponOrderStatus:{
+                '1':'<span style="color:orange">已支付</span>',
+                '2':'<span style="color:deeppink">待结算</span>',
+                '3':'<span style="color:green">已结算</span>'
             }
         }
     }

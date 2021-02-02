@@ -5,6 +5,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var $visaPagination = $("#visaPagination");
     var $searchCont = $("#searchCont");
     var $batchImport = $("#batchImport");
+    var $batchSync = $("#batchSync");
     //按钮组集合
     var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看</button>',
         completeBouutn =  '<button class="btn btn-primary" type="button" data-operate="complete">完成</button>',
@@ -127,6 +128,23 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             });
         });
     });
+
+    $batchSync.on("click",function(){
+        utils.renderModal('批量同步', template('batchSyncModal', ''), function(){
+            if($("#syncForm").valid()) {
+                hound.confirm('确认批量同步吗?', '', function () {
+                    utils.loading(true);
+                    utils.ajaxSubmit(apis.taobaoOrder.syncOrderForHand, $("#syncForm").serialize(), function (data) {
+                        utils.loading(false);
+                        hound.success("批量同步成功", "", 1000);
+                        utils.modal.modal('hide');
+                        loadData();
+                    });
+                });
+            }
+        }, 'md');
+    });
+
     //页面操作配置
     var operates = {
         //查看

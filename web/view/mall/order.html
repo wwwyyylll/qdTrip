@@ -38,6 +38,9 @@
                         <div class="btn-group" style="float:right;margin-right: 5px">
                             <button id="batchImport" class="btn btn-primary" style="outline:none;margin-left: 3px">批量导入</button>
                         </div>
+                        <div class="btn-group" style="float:right;margin-right: 5px">
+                            <button id="batchSync" class="btn btn-success" style="outline:none;margin-left: 3px">批量同步</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom:20px;display: none">
@@ -75,6 +78,21 @@
     </div>
 
 </main>
+<!--批量同步-->
+<script id="batchSyncModal" type="text/html">
+    <form id="syncForm" disabled="true">
+        <div class="form-row" style="margin-bottom: 15px">
+            <div class="col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">同步日期</span>
+                    </div>
+                    <input autocomplete="off" type="text" name="date" placeholder="请输入同步日期" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" class="form-control" required>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
 <!--批量导入-->
 <script id="batchImportModal" type="text/html">
     <form id="importExcelForm" disabled="true">
