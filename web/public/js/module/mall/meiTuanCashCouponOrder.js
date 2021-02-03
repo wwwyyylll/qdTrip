@@ -4,7 +4,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     var $visaPagination = $("#visaPagination");
     //按钮组集合
     var lookButton = '<button class="btn btn-info" type="button" data-operate="look">查看详情</button>',
-        saveChangeCodeButton =  '<button class="btn btn-success" type="button" data-operate="saveChangeCode">填写兑换码</button>';
+        saveChangeCodeButton =  '<button class="btn btn-success" type="button" data-operate="saveChangeCode">填写兑换码</button>',
+        refundButton = '<button class="btn btn-danger" type="button" data-operate="refund">退款</button>';
 
     searchlabel.on("click",function(){
         $("#selectsearchlabel").text($(this).text());
@@ -42,6 +43,18 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     });
                 }
             }, 'md');
+        },
+        //退款
+        refund:function($this){
+            var id = $this.closest("tr").attr("data-id");
+            hound.reason('确认退款吗?','请输入退款原因',function(data){
+                utils.loading(true);
+                utils.ajaxSubmit(apis.meituanCashCouponOrder.refundById, {id: id,reason:data}, function (data) {
+                    utils.loading(false);
+                    hound.success("操作成功", "", 1000);
+                    loadData();
+                });
+            })
         }
     };
 
@@ -76,7 +89,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             //根据状态值显示对应的状态文字
             $.each(data.dataArr,function(i,n){
                 n.statusText = consts.status.meituanCashCouponOrderStatus[n.status];
-                (n.status=="1")? n.materialButtonGroup = lookButton + saveChangeCodeButton : n.materialButtonGroup = lookButton;
+                (n.status=="1")? n.materialButtonGroup = lookButton + saveChangeCodeButton + refundButton : n.materialButtonGroup = lookButton;
             });
             data.statusText = listDropDown.statusText;
             $sampleTable.html(template('visaListItem', data));

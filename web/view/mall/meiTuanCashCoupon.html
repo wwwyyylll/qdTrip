@@ -58,6 +58,7 @@
         <th>原价</th>
         <th>券后价</th>
         <th>佣金</th>
+        <th>成本价</th>
         <!--<th class="em-min-7">-->
             <!--<div class="dropdown">-->
                 <!--<span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
@@ -99,6 +100,7 @@
         <td><% if(dataArr[i].originPrice){ %><%= dataArr[i].originPrice %> 元<% } %></td>
         <td><% if(dataArr[i].promotionPrice){ %><%= dataArr[i].promotionPrice %> 元<% } %></td>
         <td><% if(dataArr[i].commissionPrice){ %><%= dataArr[i].commissionPrice %> 元<% } %></td>
+        <td><% if(dataArr[i].costPrice){ %><%= dataArr[i].costPrice %> 元<% } %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
@@ -178,6 +180,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">成本价</span>
+                        </div>
+                        <input type="text" name="costPrice" placeholder="请输入成本价" value="<%= dataArr.costPrice %>" class="form-control" required>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 15px">
                 <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">

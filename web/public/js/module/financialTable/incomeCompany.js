@@ -14,17 +14,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         function loadData() {
             utils.ajaxSubmit(apis.stat.getIncomeCompany, "", function (data) {
                 totalNumber = Number(data.totalMoney);
-                totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#F7464A"});
+                totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#ff00c8"});
                 $.each(data.dataArr,function(i,n){
                     if(n.channel=="1"){ //淘宝
-                        totalDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.money), color:"deepskyblue"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.money), color:"deepskyblue", highlight:"lightblue"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(255,165,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(255,165,0,1)", highlight:"rgba(255,165,0,0.5)"});
                     }else if(n.channel=="2"){ //拼多多
-                        totalDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.money), color:"#46BFBD"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.money), color:"#46BFBD", highlight:"#5AD3D1"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(70,191,189,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(70,191,189,1)", highlight:"rgba(70,191,189,0.5)"});
                     }else if(n.channel=="3"){ //美团
-                        totalDataArr.push({label: n.channel, labelText:"美团", money: Number(n.money), color:"#FDB45C"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"美团", money: Number(n.money), color:"#FDB45C", highlight:"#FFC870"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(0,128,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(0,128,0,1)", highlight:"rgba(0,128,0,0.5)"});
+                    }else if(n.channel=="4"){ //美团流量包
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
                     }
                 });
                 for(var i=0;i<noTotalNumberDataArr.length;i++){
@@ -70,17 +73,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         function loadData() {
             utils.ajaxSubmit(apis.stat.getIncomeCompany, "", function (data) {
                 totalNumber = Number(data.netIncomeTotalMoney);
-                totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#F7464A"});
+                totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#ff00c8"});
                 $.each(data.dataArr,function(i,n){
                     if(n.channel=="1"){ //淘宝
-                        totalDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.netIncomeMoney), color:"deepskyblue"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.netIncomeMoney), color:"deepskyblue", highlight:"lightblue"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.netIncomeMoney), color:"rgba(255,165,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.netIncomeMoney), color:"rgba(255,165,0,1)", highlight:"rgba(255,165,0,0.5)"});
                     }else if(n.channel=="2"){ //拼多多
-                        totalDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.netIncomeMoney), color:"#46BFBD"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.netIncomeMoney), color:"#46BFBD", highlight:"#5AD3D1"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.netIncomeMoney), color:"rgba(70,191,189,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.netIncomeMoney), color:"rgba(70,191,189,1)", highlight:"rgba(70,191,189,0.5)"});
                     }else if(n.channel=="3"){ //美团
-                        totalDataArr.push({label: n.channel, labelText:"美团", money: Number(n.netIncomeMoney), color:"#FDB45C"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"美团", money: Number(n.netIncomeMoney), color:"#FDB45C", highlight:"#FFC870"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.netIncomeMoney), color:"rgba(0,128,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.netIncomeMoney), color:"rgba(0,128,0,1)", highlight:"rgba(0,128,0,0.5)"});
+                    }else if(n.channel=="4"){ //美团流量包
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
                     }
                 });
                 for(var i=0;i<noTotalNumberDataArr.length;i++){
@@ -126,17 +132,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         function loadData() {
             utils.ajaxSubmit(apis.stat.getIncomeCompany, "", function (data) {
                 totalNumber = Number(data.serviceTotalMoney);
-                totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#F7464A"});
+                totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#ff00c8"});
                 $.each(data.dataArr,function(i,n){
                     if(n.channel=="1"){ //淘宝
-                        totalDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.serviceMoney), color:"deepskyblue"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.serviceMoney), color:"deepskyblue", highlight:"lightblue"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.serviceMoney), color:"rgba(255,165,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.serviceMoney), color:"rgba(255,165,0,1)", highlight:"rgba(255,165,0,0.5)"});
                     }else if(n.channel=="2"){ //拼多多
-                        totalDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.serviceMoney), color:"#46BFBD"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.serviceMoney), color:"#46BFBD", highlight:"#5AD3D1"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.serviceMoney), color:"rgba(70,191,189,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.serviceMoney), color:"rgba(70,191,189,1)", highlight:"rgba(70,191,189,0.5)"});
                     }else if(n.channel=="3"){ //美团
-                        totalDataArr.push({label: n.channel, labelText:"美团", money: Number(n.serviceMoney), color:"#FDB45C"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"美团", money: Number(n.serviceMoney), color:"#FDB45C", highlight:"#FFC870"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.serviceMoney), color:"rgba(0,128,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.serviceMoney), color:"rgba(0,128,0,1)", highlight:"rgba(0,128,0,0.5)"});
+                    }else if(n.channel=="4"){ //美团流量包
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
                     }
                 });
                 for(var i=0;i<noTotalNumberDataArr.length;i++){

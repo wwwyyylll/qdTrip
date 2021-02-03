@@ -16,14 +16,17 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             totalDataArr.push({label: "totalCnt", labelText:"总数量", cnt: totalNumber, color:"#F7464A"});
             $.each(data.dataArr,function(i,n){
                 if(n.channel=="1"){ //淘宝
-                    totalDataArr.push({label: n.channel, labelText:"淘宝", cnt: Number(n.cnt), color:"deepskyblue"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"淘宝", cnt: Number(n.cnt), color:"deepskyblue", highlight:"lightblue"});
+                    totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"deepskyblue"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"deepskyblue", highlight:"lightblue"});
                 }else if(n.channel=="2"){ //拼多多
-                    totalDataArr.push({label: n.channel, labelText:"拼多多", cnt: Number(n.cnt), color:"#46BFBD"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"拼多多", cnt: Number(n.cnt), color:"#46BFBD", highlight:"#5AD3D1"});
+                    totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"#46BFBD"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"#46BFBD", highlight:"#5AD3D1"});
                 }else if(n.channel=="3"){ //美团
-                    totalDataArr.push({label: n.channel, labelText:"美团", cnt: Number(n.cnt), color:"#FDB45C"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"美团", cnt: Number(n.cnt), color:"#FDB45C", highlight:"#FFC870"});
+                    totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"#FDB45C"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"#FDB45C", highlight:"#FFC870"});
+                }else if(n.channel=="4"){ //美团流量包
+                    totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"red"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"red", highlight:"indianred"});
                 }
             });
             for(var i=0;i<noTotalNumberDataArr.length;i++){

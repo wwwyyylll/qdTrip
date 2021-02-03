@@ -82,11 +82,14 @@
                                                     <div style="color: orange">
                                                         <div style="width: 80px;height: 10px;background: orange;float: left;margin-right: 10px;margin-top: 5px;"></div>淘宝
                                                     </div>
-                                                    <div style="color: red">
-                                                        <div style="width: 80px;height: 10px;background: red;float: left;margin-right: 10px;margin-top: 5px;margin-left: 20px"></div>拼多多
+                                                    <div style="color: #46BFBD">
+                                                        <div style="width: 80px;height: 10px;background: #46BFBD;float: left;margin-right: 10px;margin-top: 5px;margin-left: 20px"></div>拼多多
                                                     </div>
                                                     <div style="color: green">
                                                         <div style="width: 80px;height: 10px;background: green;float: left;margin-right: 10px;margin-top: 5px;margin-left: 20px"></div>美团
+                                                    </div>
+                                                    <div style="color: cornflowerblue">
+                                                        <div style="width: 80px;height: 10px;background: cornflowerblue;float: left;margin-right: 10px;margin-top: 5px;margin-left: 20px"></div>美团流量包
                                                     </div>
                                                 </div>
                                             </h5>
@@ -108,12 +111,12 @@
     <% for(var i=0;i< dataArr.length;i++){ %>
     <% if(dataArr[i].label=="totalCnt"){ %>
     <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
-        <div style="width: 105px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
+        <div style="width: 130px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
         <div><%= dataArr[i].cnt %>单</div>
     </div>
     <% }else{ %>
     <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
-        <div style="width: 105px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
+        <div style="width: 130px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
         <div><%= dataArr[i].cnt %>单&nbsp;&nbsp;&nbsp;<%= dataArr[i].percent %>%</div>
     </div>
     <% } %>

@@ -35,12 +35,12 @@
   <% for(var i=0;i< dataArr.length;i++){ %>
      <% if(dataArr[i].label=="totalCnt"){ %>
      <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
-         <div style="width: 105px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
+         <div style="width: 130px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
          <div><%= dataArr[i].cnt %>单</div>
      </div>
      <% }else{ %>
      <div class="form-row" style="margin-bottom: 5px;color:<%= dataArr[i].color %>">
-         <div style="width: 105px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
+         <div style="width: 130px"><i class="fa fa-pie-chart" aria-hidden="true" style="margin-right:5px;color:<%= dataArr[i].color %>"></i><%= dataArr[i].labelText %></div>
          <div><%= dataArr[i].cnt %>单&nbsp;&nbsp;&nbsp;<%= dataArr[i].percent %>%</div>
      </div>
      <% } %>

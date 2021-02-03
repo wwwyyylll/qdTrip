@@ -61,7 +61,7 @@
         <th>支付金额</th>
         <!--<th>佣金</th>-->
         <th>兑换码</th>
-        <th class="em-min-7">
+        <th class="em-min-7" style="width:12%;word-wrap: break-word;word-break:break-all;">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <%= statusText %>
@@ -92,10 +92,12 @@
         <td><% if(dataArr[i].amount){ %><%= dataArr[i].amount %> 元<% } %></td>
         <!--<td><% if(dataArr[i].commissionPrice){ %><%= dataArr[i].commissionPrice %> 元<% } %></td>-->
         <td><%= dataArr[i].exchangeCode %></td>
-        <td>
+        <td style="width:12%;word-wrap: break-word;word-break:break-all;">
             <%- dataArr[i].statusText %>
             <% if(dataArr[i].status==3){ %>
             <div style="margin-top: 5px"><%= dataArr[i].settlementTime_sys %></div>
+            <% }else if(dataArr[i].status==4){ %>
+            <div style="margin-top: 5px;color:red">原因：<%= dataArr[i].reason %></div>
             <% } %>
         </td>
         <td><%= dataArr[i].createTime %></td>
@@ -207,17 +209,17 @@
                 </div>
             </div>
             <div class="form-row" style="margin-bottom: 15px">
-                <div class="col-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">佣金</span>
-                        </div>
-                        <input type="text" name="commissionPrice" placeholder="请输入佣金" value="<%= dataArr.commissionPrice %>" class="form-control" required>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">元</span>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="col-6">-->
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-prepend">-->
+                            <!--<span class="input-group-text">佣金</span>-->
+                        <!--</div>-->
+                        <!--<input type="text" name="commissionPrice" placeholder="请输入佣金" value="<%= dataArr.commissionPrice %>" class="form-control" required>-->
+                        <!--<div class="input-group-prepend">-->
+                            <!--<span class="input-group-text">元</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="col-6">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -255,7 +257,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-row uploadFile" style="margin-bottom: 15px">
+            <div class="form-row uploadFile" style="margin-bottom: 15px;display: none">
                 <div style="line-height: 37px;padding-left: 15px">图片：</div>
                 <div class="col-7">
                     <div class="input-group">

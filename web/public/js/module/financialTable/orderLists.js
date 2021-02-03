@@ -14,17 +14,20 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         function loadData() {
             utils.ajaxSubmit(apis.stat.getTotalOrder, "", function (data) {
                 totalNumber = Number(data.totalCnt);
-                totalDataArr.push({label: "totalCnt", labelText:"总数量", cnt: totalNumber, color:"#F7464A"});
+                totalDataArr.push({label: "totalCnt", labelText:"总数量", cnt: totalNumber, color:"#ff00c8"});
                 $.each(data.dataArr,function(i,n){
                     if(n.channel=="1"){ //淘宝
-                        totalDataArr.push({label: n.channel, labelText:"淘宝", cnt: Number(n.cnt), color:"deepskyblue"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"淘宝", cnt: Number(n.cnt), color:"deepskyblue", highlight:"lightblue"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(255,165,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(255,165,0,1)", highlight:"rgba(255,165,0,0.5)"});
                     }else if(n.channel=="2"){ //拼多多
-                        totalDataArr.push({label: n.channel, labelText:"拼多多", cnt: Number(n.cnt), color:"#46BFBD"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"拼多多", cnt: Number(n.cnt), color:"#46BFBD", highlight:"#5AD3D1"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(70,191,189,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(70,191,189,1)", highlight:"rgba(70,191,189,0.5)"});
                     }else if(n.channel=="3"){ //美团
-                        totalDataArr.push({label: n.channel, labelText:"美团", cnt: Number(n.cnt), color:"#FDB45C"});
-                        noTotalNumberDataArr.push({label: n.channel, labelText:"美团", cnt: Number(n.cnt), color:"#FDB45C", highlight:"#FFC870"});
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(0,128,0,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(0,128,0,1)", highlight:"rgba(0,128,0,0.5)"});
+                    }else if(n.channel=="4"){ //美团流量包
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(100,149,237,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
                     }
                 });
                 for(var i=0;i<noTotalNumberDataArr.length;i++){
@@ -124,6 +127,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var taoArr = [];
             var pddArr = [];
             var meiArr = [];
+            var meiArr1 = [];
             utils.ajaxSubmit(apis.stat.getOrderLists, param, function (data) {
                 if(data.dataArr.length>0){
                     $.each(data.dataArr,function(i,n){
@@ -144,6 +148,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                 if(n.channel==3){
                                     meiArr.push(n.cnt);
                                 }
+                                if(n.channel==4){
+                                    meiArr1.push(n.cnt);
+                                }
                             }
                         }
                     });
@@ -162,12 +169,12 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                             },
                             {
                                 label: "拼多多",
-                                fillColor: "rgba(255,0,0,0.5)",
-                                strokeColor: "rgba(255,0,0,1)",
-                                pointColor: "rgba(255,0,0,1)",
+                                fillColor: "rgba(70,191,189,0.5)",
+                                strokeColor: "rgba(70,191,189,1)",
+                                pointColor: "rgba(70,191,189,1)",
                                 pointStrokeColor: "#fff",
                                 pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(255,0,0,1)",
+                                pointHighlightStroke: "rgba(70,191,189,1)",
                                 data: pddArr
                             },
                             {
@@ -179,6 +186,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                 pointHighlightFill: "#fff",
                                 pointHighlightStroke: "rgba(0,128,0,1)",
                                 data: meiArr
+                            },
+                            {
+                                label: "美团流量包",
+                                fillColor: "rgba(100,149,237,0.5)",
+                                strokeColor: "rgba(100,149,237,1)",
+                                pointColor: "rgba(100,149,237,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(100,149,237,1)",
+                                data: meiArr1
                             }
                         ]
                     };

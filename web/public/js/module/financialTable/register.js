@@ -73,8 +73,6 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 $.each(data.dataArr,function(i,n){
                     if(xArr.indexOf(n.date)=='-1'){
                         xArr.push(n.date);
-                    }
-                    if(yArr.indexOf(n.channel)=='-1'){
                         yArr.push(n.cnt);
                     }
                 });

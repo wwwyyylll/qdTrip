@@ -1758,6 +1758,10 @@ define("apis", function() {
             saveExchangeCodeById:{
                 c:'meituanCashCouponOrder',
                 a:'saveExchangeCodeById'
+            },
+            refundById:{
+                c:'meituanCashCouponOrder',
+                a:'refundById'
             }
         }
     }

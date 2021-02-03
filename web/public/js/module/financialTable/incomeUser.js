@@ -13,26 +13,29 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
     function loadData() {
         utils.ajaxSubmit(apis.stat.getIncomeUser, "", function (data) {
             totalNumber = Number(data.totalMoney);
-            totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"red"});
+            totalDataArr.push({label: "totalMoney", labelText:"总金额", money: totalNumber, color:"#ff00c8"});
             $.each(data.dataArr,function(i,n){
                 if(n.channel=="1"){ //淘宝
-                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"#ffcd56"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"淘宝", money: Number(n.money), color:"#ffcd56", highlight:"orange"});
+                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"rgba(255,165,0,1)"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(255,165,0,1)", highlight:"rgba(255,165,0,0.5)"});
                 }else if(n.channel=="2"){ //拼多多
-                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"deeppink"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"拼多多", money: Number(n.money), color:"deeppink", highlight:"pink"});
+                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"rgba(70,191,189,1)"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(70,191,189,1)", highlight:"rgba(70,191,189,0.5)"});
                 }else if(n.channel=="3"){ //美团
-                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"#46BFBD"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"美团", money: Number(n.money), color:"#46BFBD", highlight:"#1bb1ae"});
+                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"rgba(0,128,0,1)"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(0,128,0,1)", highlight:"rgba(0,128,0,0.5)"});
+                }else if(n.channel=="4"){ //美团流量包
+                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
                 }else if(n.channel=="90"){ //推广
                     totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"#b66ae2"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"推广", money: Number(n.money), color:"#b66ae2", highlight:"#9370db"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"#b66ae2", highlight:"#9370db"});
                 }else if(n.channel=="91"){ //红包
                     totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"#ea5c5c"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"红包", money: Number(n.money), color:"#ea5c5c", highlight:"red"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"#ea5c5c", highlight:"red"});
                 }else if(n.channel=="92"){ //拉新奖励
-                    totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"cornflowerblue"});
-                    noTotalNumberDataArr.push({label: n.channel, labelText:"拉新奖励", money: Number(n.money), color:"cornflowerblue", highlight:"#4e88ef"});
+                    totalDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(116,11,195,1)"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(116,11,195,1)", highlight:"rgba(116,11,195,0.5)"});
                 }
             });
             for(var i=0;i<noTotalNumberDataArr.length;i++){
