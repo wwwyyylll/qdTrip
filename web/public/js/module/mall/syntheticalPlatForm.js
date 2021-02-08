@@ -155,7 +155,8 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
         //第三方平台套餐
         packageList:function($this){
             var id = $this.closest("tr").attr("data-id");
-            window.open("@@HOSTview/mall/syntheticalPlatFormPackage.html?id=" + id);
+            var title = $this.closest("tr").find("td").eq(1).text();
+            window.open("@@HOSTview/mall/syntheticalPlatFormPackage.html?id=" + id + "&title=" + title);
         }
     };
 

@@ -268,7 +268,19 @@
                 <% }else if(dataArr[i].type==2){ %>
                 <!--推广佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
-                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% }else if(dataArr[i].channel==4){ %> <span style="color: orangered">美团流量包</span> <% } %> <%- dataArr[i].contentArr.typeText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].payTime %></div>
+                <div>
+                    <% if(dataArr[i].channel==1){ %>
+                    <span style="color: orange">淘宝</span>
+                    <% }else if(dataArr[i].channel==2){ %>
+                    <span style="color: red">拼多多</span>
+                    <% }else if(dataArr[i].channel==3){ %>
+                    <span style="color: orangered">美团</span>
+                    <% }else if(dataArr[i].channel==4){ %>
+                    <span style="color: orangered">美团流量包</span>
+                    <% }else if(dataArr[i].channel==5){ %>
+                    <span style="color: orangered">综合</span>
+                    <% } %>
+                    <%- dataArr[i].contentArr.typeText %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].payTime %></div>
                 <% }else if(dataArr[i].type==3){ %>
                 <!--销售佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
@@ -338,7 +350,19 @@
                 <% }else if(dataArr[i].type==2){ %>
                 <!--推广佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
-                <div><% if(dataArr[i].channel==1){ %> <span style="color: orange">淘宝</span> <% }else if(dataArr[i].channel==2){ %> <span style="color: red">拼多多</span> <% }else if(dataArr[i].channel==3){ %> <span style="color: orangered">美团</span> <% }else if(dataArr[i].channel==4){ %> <span style="color: orangered">美团流量包</span> <% } %> <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].contentArr.payTime %></div>
+                <div>
+                    <% if(dataArr[i].channel==1){ %>
+                    <span style="color: orange">淘宝</span>
+                    <% }else if(dataArr[i].channel==2){ %>
+                    <span style="color: red">拼多多</span>
+                    <% }else if(dataArr[i].channel==3){ %>
+                    <span style="color: orangered">美团</span>
+                    <% }else if(dataArr[i].channel==4){ %>
+                    <span style="color: orangered">美团流量包</span>
+                    <% }else if(dataArr[i].channel==5){ %>
+                    <span style="color: orangered">综合</span>
+                    <% } %>
+                    <%= dataArr[i].contentArr.title %>&nbsp;&nbsp;&nbsp;<%= dataArr[i].contentArr.payTime %></div>
                 <% }else if(dataArr[i].type==3){ %>
                 <!--销售佣金-->
                 <div style="margin-bottom: 5px"><%- dataArr[i].contentArr.fansTypeText %> ：<%= dataArr[i].contentArr.nickName %></div>
@@ -703,6 +727,19 @@
                         <span class="input-group-text">美团未结算金额</span>
                     </div>
                     <input type="text" value="<%= taobaoWalletArr.unSettlementMoney_meituan %>" class="form-control">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">综合未结算金额</span>
+                    </div>
+                    <input type="text" value="<%= taobaoWalletArr.unSettlementMoney_synthetical %>" class="form-control">
                     <div class="input-group-prepend">
                         <span class="input-group-text">元</span>
                     </div>

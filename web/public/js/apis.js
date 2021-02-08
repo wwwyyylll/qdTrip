@@ -1841,6 +1841,28 @@ define("apis", function() {
                 c:'syntheticalPlatFormPackage',
                 a:'offById'
             }
+        },
+        syntheticalOrder:{
+            getLists:{
+                c:'syntheticalOrder',
+                a:'getLists'
+            },
+            getById:{
+                c:'syntheticalOrder',
+                a:'getById'
+            },
+            refundById:{
+                c:'syntheticalOrder',
+                a:'refundById'
+            },
+            saveExchangeCodeById:{
+                c:'syntheticalOrder',
+                a:'saveExchangeCodeById'
+            },
+            completedById:{
+                c:'syntheticalOrder',
+                a:'completedById'
+            }
         }
     }
 });

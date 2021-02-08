@@ -346,6 +346,10 @@ define("consts", function() {
             exchangeMethod:{
                 '1':'<span style="color:orange">兑换码</span>',
                 '2':'<span style="color:deeppink">代充</span>'
+            },
+            exchangeMethod1:{
+                '1':'兑换码',
+                '2':'代充'
             }
         }
     }

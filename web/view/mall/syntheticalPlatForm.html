@@ -158,7 +158,7 @@
                         <select name="categoryId" class="form-control" required>
                             <option value="">请选择</option>
                             <% for(var i=0;i< categoryArr.length;i++){ %>
-                            <option value="<%= categoryArr[i].id %>"><%= categoryArr[i].title %></option>
+                            <option value="<%= categoryArr[i].id %>" <% if(categoryArr[i].id==dataArr.categoryId){ %> selected <% } %>><%= categoryArr[i].title %></option>
                             <% } %>
                         </select>
                     </div>

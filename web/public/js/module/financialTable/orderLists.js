@@ -28,6 +28,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                     }else if(n.channel=="4"){ //美团流量包
                         totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(100,149,237,1)"});
                         noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
+                    }else if(n.channel=="5"){ //综合
+                        totalDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(210,105,30,1)"});
+                        noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, cnt: Number(n.cnt), color:"rgba(210,105,30,1)", highlight:"rgba(210,105,30,0.5)"});
                     }
                 });
                 for(var i=0;i<noTotalNumberDataArr.length;i++){
@@ -128,6 +131,7 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
             var pddArr = [];
             var meiArr = [];
             var meiArr1 = [];
+            var syntheticalArr = [];
             utils.ajaxSubmit(apis.stat.getOrderLists, param, function (data) {
                 if(data.dataArr.length>0){
                     $.each(data.dataArr,function(i,n){
@@ -150,6 +154,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                 }
                                 if(n.channel==4){
                                     meiArr1.push(n.cnt);
+                                }
+                                if(n.channel==5){
+                                    syntheticalArr.push(n.cnt);
                                 }
                             }
                         }
@@ -196,6 +203,16 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                                 pointHighlightFill: "#fff",
                                 pointHighlightStroke: "rgba(100,149,237,1)",
                                 data: meiArr1
+                            },
+                            {
+                                label: "综合",
+                                fillColor: "rgba(210,105,30,0.5)",
+                                strokeColor: "rgba(210,105,30,1)",
+                                pointColor: "rgba(210,105,30,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(210,105,30,1)",
+                                data: syntheticalArr
                             }
                         ]
                     };

@@ -27,6 +27,9 @@ require(["consts", "apis", "utils", "common"], function(consts, apis, utils) {
                 }else if(n.channel=="4"){ //美团流量包
                     totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)"});
                     noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(100,149,237,1)", highlight:"rgba(100,149,237,0.5)"});
+                }else if(n.channel=="5"){ //综合
+                    totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"rgba(210,105,30,1)"});
+                    noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"rgba(210,105,30,1)", highlight:"rgba(210,105,30,0.5)"});
                 }else if(n.channel=="90"){ //推广
                     totalDataArr.push({label: n.channel, labelText: n.channelName, money: Number(n.money), color:"#b66ae2"});
                     noTotalNumberDataArr.push({label: n.channel, labelText:n.channelName, money: Number(n.money), color:"#b66ae2", highlight:"#9370db"});

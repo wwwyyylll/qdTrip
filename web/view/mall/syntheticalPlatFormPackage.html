@@ -19,17 +19,18 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="display: none">
                             <input type="text" class="form-control" id="searchCont" autocomplete="off" style="width:60%">
-                            <button class="btn btn-secondary" type="button" id="selectsearchlabel">标题</button>
+                            <button class="btn btn-secondary" type="button" id="selectsearchlabel">第三方平台标题</button>
                             <div class="btn-group" role="group">
                                 <button class="btn btn-primary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item searchlabel" href="#">标题</a>
+                                    <a class="dropdown-item searchlabel" href="#">第三方平台标题</a>
                                 </div>
                             </div>
                         </div>
                         <div class="btn-group" style="margin-left:1%;display: none">
                             <div id="search" class="btn btn-primary" style="outline:none">提交搜索</div>
                         </div>
+                        <div class="btn-group platFormTitle" style="margin-left:1%;color:red;font-size: 18px;font-weight: bolder"></div>
                         <div class="btn-group" style="float:right">
                             <button id="addModal" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="outline:none;margin-left: 3px">新增</button>
                         </div>
@@ -53,11 +54,10 @@
         <th>ID</th>
         <th style="width:12%;word-wrap: break-word;word-break:break-all;">标题</th>
         <th>兑换方式</th>
-        <th>排序</th>
-        <th>券后价</th>
-        <th>佣金</th>
+        <th>促销价</th>
         <th>成本价</th>
-        <th>备注</th>
+        <th>佣金</th>
+        <th>排序</th>
         <th class="em-min-7">
             <div class="dropdown">
                 <span class="dropdown-toggle" id="dropStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -78,14 +78,15 @@
     <% if (dataArr.length > 0) { %>
     <% for (var i = 0; i < dataArr.length; i++) { %>
     <tr data-id="<%= dataArr[i].id %>">
+        ID,标题，兑换方式，促销价，成本价，佣金，排序，状态，创建时间 ，操作
+
         <td><%= dataArr[i].id %></td>
         <td style="width:12%;word-wrap: break-word;word-break:break-all;"><%= dataArr[i].title %></td>
         <td><%- dataArr[i].exchangeMethodText %></td>
-        <td><%= dataArr[i].idx %></td>
         <td><% if(dataArr[i].promotionPrice){ %><%= dataArr[i].promotionPrice %> 元<% } %></td>
-        <td><% if(dataArr[i].commissionPrice){ %><%= dataArr[i].commissionPrice %> 元<% } %></td>
         <td><% if(dataArr[i].costPrice){ %><%= dataArr[i].costPrice %> 元<% } %></td>
-        <td><%= dataArr[i].memo %></td>
+        <td><% if(dataArr[i].commissionPrice){ %><%= dataArr[i].commissionPrice %> 元<% } %></td>
+        <td><%= dataArr[i].idx %></td>
         <td><%- dataArr[i].statusText %></td>
         <td><%= dataArr[i].createTime %></td>
         <td>
@@ -175,8 +176,8 @@
                         </div>
                         <select name="exchangeMethod" class="form-control" required>
                             <option value="">请选择</option>
-                            <option value="1">兑换码</option>
-                            <option value="2">代充</option>
+                            <option value="1" <% if(dataArr.exchangeMethod==1){ %> selected <% } %>>兑换码</option>
+                            <option value="2" <% if(dataArr.exchangeMethod==2){ %> selected <% } %>>代充</option>
                         </select>
                     </div>
                 </div>
