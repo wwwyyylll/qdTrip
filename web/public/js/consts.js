@@ -342,6 +342,10 @@ define("consts", function() {
                 '2':'<span style="color:deeppink">待结算</span>',
                 '3':'<span style="color:green">已结算</span>',
                 '4':'<span style="color:red">已退款</span>'
+            },
+            exchangeMethod:{
+                '1':'<span style="color:orange">兑换码</span>',
+                '2':'<span style="color:deeppink">代充</span>'
             }
         }
     }
